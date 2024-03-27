@@ -1,0 +1,63 @@
+{
+  "name": {
+    "key": "PxTraceAssignBuffer",
+    "display": "PxTraceAssignBuffer()"
+  },
+  "synopsis": [
+    "PxError_t PxTraceAssignBuffer (PxAligned_t *trcbuffer, PxULong_t capacity, PxULong_t size);"
+  ],
+  "arguments": [
+    {
+      "name": "trcbuffer",
+      "description": "The new trace buffer"
+    },
+    {
+      "name": "capacity",
+      "description": "Number of trace buffer entries"
+    },
+    {
+      "name": "size",
+      "description": "The size of a trace buffer entry in Byte"
+    }
+  ],
+  "errCodes": [
+    "PXERR_ACCESS_RIGHT - The calling task does not have the right to set the trace buffer",
+    "PXERR_PROT_PERMISSION - The calling task or kernel has no access to the passed buffer",
+    "PXERR_SERVICE_NOT_CONFIGURED - Service has not been configured into your PXROS",
+    "PXERR_ILLEGAL_ACCESS - No access permission for protection type"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Set a new trace buffer",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTraceAssignBuffer assigns a circular buffer to the PXROS trace mechanism. The buffer size must be a multiple of the size of a PxTrace entry (actual 24 bytes)."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxTraceAssignBuffer(trcbuffer, 2, PXV_ENTRY_SIZE);",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`trcbuffer` must be a pointer to a valid data area.\n",
+      "`capacity` must be a plausible value given as a constant (V) or a variable \\(C)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the trace buffer could be assigned. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions"]
+  }
+}

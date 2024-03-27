@@ -1,0 +1,30 @@
+{
+  "name": {
+    "key": "PxMcIdGet",
+    "display": "PxMcIdGet()"
+  },
+  "synopsis": ["PxObjId_t PxMcIdGet (PxMc_t Mc);"],
+  "arguments": [
+    {
+      "name": "Mc",
+      "description": "A Mc handle"
+    }
+  ],
+  "retValues": ["Object ID of the object handle Mc"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the object ID of the object handle Mc",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMcIdGet returns the object ID of the object handle Mc."
+      }
+    ]
+  },
+  "usage": ["#include \"pxdef.h\"", "", "PxObjId_t objid = PxMcIdGet(Mc);", ""]
+}

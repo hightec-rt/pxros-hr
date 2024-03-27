@@ -1,0 +1,78 @@
+{
+  "name": {
+    "key": "PxObjGetName",
+    "display": "PxObjGetName()"
+  },
+  "synopsis": [
+    "PxError_t PxObjGetName (PxObjId_t objid, PxChar_t *buffer, PxUInt_t bufsize);"
+  ],
+  "arguments": [
+    {
+      "name": "objid",
+      "description": "The object's id"
+    },
+    {
+      "name": "buffer",
+      "description": "Data area to copy the object's name to"
+    },
+    {
+      "name": "bufsize",
+      "description": "Size of data area"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_NAME_BUFOVERFLOW - The data area is too short to store the objects name",
+    "PXERR_OBJ_ILLOBJ - `objid` is not a valid object id",
+    "PXERR_PROT_PERMISSION - The data area is not writeable for the calling task",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object is not on the same core",
+    "PXERR_SERVICE_NOT_CONFIGURED - Service has not been configured"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the name of an object",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxObjGetName copies the name of objid into the `buffer` buffer of length `bufsize`. The result is zero-terminated."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxObjSetName",
+      "display": "PxObjSetName()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxObjGetName(objid, buffer, bufsize);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`objid` must be a valid PXROS-HR object, which may be checked with one of the following macros",
+      "   - `PxObjIdIsValid()` must be true",
+      "   - `PxObjIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxObjIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C).",
+      "`buffer` points to a valid memory area of `bufsize` bytes length, where the object's name is stored."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the object's name could be copied. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

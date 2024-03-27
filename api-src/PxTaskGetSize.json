@@ -1,0 +1,43 @@
+{
+  "name": {
+    "key": "PxTaskGetSize",
+    "display": "PxTaskGetSize()"
+  },
+  "synopsis": ["PxSize_t PxTaskGetSize (void);"],
+  "retValues": ["Size of a task control block"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the size of a task control block",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTaskGetSize returns the size of a task control block."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxTaskCreate",
+      "display": "PxTaskCreate()"
+    },
+    {
+      "key": "xref:chapter/section/Application_information_services.adoc",
+      "display": "Application Information Services"
+    },
+    {
+      "key": "xref:chapter/section/Task_mode_manipulation_services.adoc",
+      "display": "Task Mode Manipulation Services"
+    }
+  ],
+  "usage": ["#include \"pxdef.h\"", "", "PxSize_t Size = PxTaskGetSize();", ""],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

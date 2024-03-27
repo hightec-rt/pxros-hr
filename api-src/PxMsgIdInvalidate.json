@@ -1,0 +1,29 @@
+{
+  "name": {
+    "key": "PxMsgIdInvalidate",
+    "display": "PxMsgIdInvalidate()"
+  },
+  "synopsis": ["PxMsg_t PxMsgIdInvalidate (void);"],
+  "retValues": ["An invalid Msg handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return an invalid Msg handle for initialization",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgIdInvalidate returns an invalid Msg handle for initialization."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxMsg_t Msg = PxMsgIdInvalidate();",
+    ""
+  ]
+}

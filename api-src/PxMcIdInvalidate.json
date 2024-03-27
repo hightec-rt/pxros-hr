@@ -1,0 +1,24 @@
+{
+  "name": {
+    "key": "PxMcIdInvalidate",
+    "display": "PxMcIdInvalidate()"
+  },
+  "synopsis": ["PxMc_t PxMcIdInvalidate (void);"],
+  "retValues": ["An invalid Mc handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return an invalid Mc handle for initialization",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMcIdInvalidate returns an invalid Mc handle for initialization."
+      }
+    ]
+  },
+  "usage": ["#include \"pxdef.h\"", "", "PxMbx_t mc = PxMcIdInvalidate();", ""]
+}

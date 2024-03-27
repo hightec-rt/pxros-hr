@@ -1,0 +1,24 @@
+{
+  "name": {
+    "key": "PxToIdInvalidate",
+    "display": "PxToIdInvalidate()"
+  },
+  "synopsis": ["PxTo_t PxToIdInvalidate (void);"],
+  "retValues": ["An invalid To handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return an invalid To handle for initialization",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxToIdInvalidate returns an invalid To handle for initialization."
+      }
+    ]
+  },
+  "usage": ["#include \"pxdef.h\"", "", "PxTo_t To = PxToIdInvalidate();", ""]
+}

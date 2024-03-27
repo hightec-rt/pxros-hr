@@ -1,0 +1,105 @@
+{
+  "name": {
+    "key": "PxAwaitEvents",
+    "display": "PxAwaitEvents()"
+  },
+  "synopsis": ["PxEvents_t PxAwaitEvents (PxEvents_t events);"],
+  "arguments": [
+    {
+      "name": "events",
+      "description": "Event mask to wait for"
+    }
+  ],
+  "retValues": ["Events that caused the return"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Await specified events",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxAwaitEvents waits until one or more of the events specified in events are signalled. It returns the events that caused the return. If an event from events was already signalled, the call returns immediately. If the events overlap with a previous mask of a PxExpectAbort the behavior of the call depends on the right PXACCESS_OVERRIDE_ABORT_EVENT. If the task has the right, all events are handled by PxAwaitEvents. Otherwise the events to PxExpectAbort have a higher priority and are captured by PxExpectAbort. The events are not counted, if an event is sent multiple times it is only received once. If events is zero then the task waits forever."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxClearModebits",
+      "display": "PxClearModebits()"
+    },
+    {
+      "key": "PxPeChange",
+      "display": "PxPeChange()"
+    },
+    {
+      "key": "PxPeRelease",
+      "display": "PxPeRelease()"
+    },
+    {
+      "key": "PxPeRequest",
+      "display": "PxPeRequest()"
+    },
+    {
+      "key": "PxPeStart",
+      "display": "PxPeStart()"
+    },
+    {
+      "key": "PxPeStop",
+      "display": "PxPeStop()"
+    },
+    {
+      "key": "PxSetModebits",
+      "display": "PxSetModebits()"
+    },
+    {
+      "key": "PxTaskSignalEvents",
+      "display": "PxTaskSignalEvents()"
+    },
+    {
+      "key": "PxToChange",
+      "display": "PxToChange()"
+    },
+    {
+      "key": "PxToRelease",
+      "display": "PxToRelease()"
+    },
+    {
+      "key": "PxToRequest",
+      "display": "PxToRequest()"
+    },
+    {
+      "key": "PxToStart",
+      "display": "PxToStart()"
+    },
+    {
+      "key": "PxToStop",
+      "display": "PxToStop()"
+    },
+    {
+      "key": "xref:chapter/section/Event_handling_services.adoc",
+      "display": "Event Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "#define MY_EVENT 0x1l",
+    "",
+    "PxEvents_t Ev = PxAwaitEvents(MY_EVENT);",
+    "",
+    "if (!(Ev & EVENT_SUCCESS)) {",
+    "  // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The parameter `events` contains a bitmask of events awaited and should not be zero, as this will force `PxAwaitEvents` to wait forever (V). Typically the event mask is a constant (V)."
+    ],
+    "AfterCall": ["All events returned should be evaluated."],
+    "BestPractice": ["No restrictions."]
+  }
+}

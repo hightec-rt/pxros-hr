@@ -1,0 +1,41 @@
+{
+  "name": {
+    "key": "PxSetTraceFunc",
+    "display": "PxSetTraceFunc()"
+  },
+  "synopsis": ["PxError_t PxSetTraceFunc (PxTraceFunc_t PxTraceFunc);"],
+  "arguments": [
+    {
+      "name": "PxTraceFunc",
+      "description": "The new PXROS trace function"
+    }
+  ],
+  "errCodes": [
+    "PXERR_ACCESS_RIGHT - calling task does not have the right to set the trace function",
+    "PXERR_SERVICE_NOT_CONFIGURED - Service has not been configured into your PXROS"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Set a new trace function",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxSetTraceFunc sets the PXROS trace function to PxTraceFunc."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxSetTraceFunc(PxTraceFunc);",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ]
+}

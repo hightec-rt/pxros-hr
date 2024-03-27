@@ -1,0 +1,38 @@
+{
+  "name": {
+    "key": "PxPeIdIsValid",
+    "display": "PxPeIdIsValid()"
+  },
+  "synopsis": ["int PxPeIdIsValid (PxPe_t Pe);"],
+  "arguments": [
+    {
+      "name": "Pe",
+      "description": "A Pe handle"
+    }
+  ],
+  "retValues": ["TRUE if Pe is a valid Pe handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return TRUE if Pe holds a valid Pe handle",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxPeIdIsValid returns TRUE if obj holds a valid Pe handle."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "int valid = PxPeIdIsValid(Pe);",
+    "",
+    "if (!valid) {",
+    "    // Handle invalid Pe handle",
+    "}"
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "name": {
+    "key": "PxInit",
+    "display": "PxInit()"
+  },
+  "synopsis": [
+    "PxError_t PxInit (PxInitSpecsArray_t _initspecs, PxUInt_t noOfCores);"
+  ],
+  "arguments": [
+    {
+      "name": "_initspecs",
+      "description": "The array of initialization specifications"
+    },
+    {
+      "name": "noOfCores",
+      "description": "Number of cores to initialize"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_PROT_ILL_REGION - illegal protection region definition",
+    "PXERR_INIT_SCHEDULE_FAILED - the scheduling of the init task failed",
+    "PXERR_INIT_ILLALIGN - invalid memory block or size alignment in initialization",
+    "PXERR_INIT_ILLMCTYPE - type for PXMcSystemdefault is different from PXMcVarsized, PXMcVarsizedAdjusted and PXMcVarsizedAligned",
+    "PXERR_MC_ILLALIGN - incorrectly aligned memory for PXMcSystemdefault",
+    "PXERR_MC_ILLSIZE - size for PXMcSystemdefault is too small",
+    "PXERR_INIT_NOMEM - not enough memory for initialization",
+    "PXERR_OBJECT_SHORTAGE - not enough objects given in initstruct",
+    "PXERR_GLOBAL_ILLEGAL_CORE - number of cores not supported",
+    "PXERR_ILL_NULLPOINTER_PARAMETER - Invalid system stack specification",
+    "PXERR_PROT_PERMISSION - Memory protection unit cannot be activated",
+    "PXERR_ILLEGAL_ACCESS - Incorrect access permission for _initspecs elements",
+    "PXERR_GLOBAL_OBJLIST_INCONSISTENCY - Inconsistency between global and local init",
+    "PXERR_INIT_SEGBOUNDARY - block crosses segment boundary",
+    "PXERR_MC_ILLMC - mc is not a valid memory class ",
+    "PXERR_MC_SEGBOUNDARY - Block crosses segment boundary",
+    "PXERR_TASK_TCBMEM - Insufficient memory to allocate the task control block",
+    "PXERR_OPOOL_ILLOPOOL - The passed object pool handle is not valid",
+    "PXERR_OBJ_ABORTED - The request was aborted by an event",
+    "PXERR_OBJ_NOOBJ - No free object is available",
+    "PXERR_OBJ_ILLOBJ - The passed object handle is not valid",
+    "PXERR_TASK_SCHEDEXT_NOT_CONFIGURED - Task extensions not configured in this PXROS version",
+    "PXERR_TASK_STKMEM - Insufficient memory to allocate task stack",
+    "PXERR_TASK_STACKUNKNOWN - Unknown Stack",
+    "PXERR_TASK_STACK_ILLALIGN - Invalid task stack alignment",
+    "PXERR_TASK_STACK_SEGBOUNDARY - Task stack crosses segment boundary",
+    "PXERR_TASK_ILLSTACKSPECTYPE - Error in stack specification",
+    "PXERR_TASK_ILLPRIV - Illegal privilege for tasks",
+    "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "PXROS initialization",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxInit initializes a PXROS application system according to the specification array _initspecs for given number of cores (noOfCores). PxInit creates PXMcSystemdefault, and PXOpoolSystemdefault creates generic PXROS objects, puts them into the PXOpoolSystemdefault object pool, and creates and activates the initialization task."
+      },
+      {
+        "type": "PP",
+        "text": "One element of the specification array is of type PxInitSpec_T."
+      },
+      {
+        "type": "PP",
+        "text": "This data structure specifies the initial properties of a PXROS application system. Current specification items include:"
+      },
+      {
+        "type": "BL",
+        "text": [
+          "A description of the system memory class and first initial block",
+          "A description of the memory for the generic PXROS objects",
+          "The number of PXROS objects and the maximum size of their names",
+          "The number of objects which should be defined for intercore communication",
+          "A specification of the initialization tasks priorities"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "The four initial parameters specify the system memory class properties and the initial block. This block must be large enough to allocate all task control blocks. The size of a task control block is defined by PXTASK_SIZE."
+      },
+      {
+        "type": "PP",
+        "text": "The memory block for the PXROS objects must be large enough to hold all generic PXROS objects and their names. The size of an object is defined by PXOBJ_SIZE."
+      },
+      {
+        "type": "PP",
+        "text": "The parameter is_obj_number specifies the total number of generic PXROS objects (tasks, messages, mailboxes, delay jobs, etc.) existing at any given moment. The parameter is_obj_namelength determines an additional memory area (following immediately the object memory) which can be used for naming individual objects. PXROS requires a certain amount of objects for internal purposes like e.g.:"
+      },
+      {
+        "type": "BL",
+        "text": [
+          "The default system memory class PXMcSystemdefault",
+          "the default object pool PXOpoolSystemdefault"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "During initialization, all PXROS objects are created and stored in the object pool PXOpoolSystemdefault. From this object pool, these objects may be requested and placed into other object pools or transformed into special PXROS objects."
+      },
+      {
+        "type": "PP",
+        "text": "The parameter is_global_obj_number specifies the amount of available objects for the communication across cores. These objects are stored in the global object pool PXOpoolGlobalSystemdefault. If is_global_obj_number is 0, all objects are treated as global objects."
+      },
+      {
+        "type": "PP",
+        "text": "Memory Protection initialization:"
+      },
+      {
+        "type": "PP",
+        "text": "The Memory Protection Unit provides a certain amount (depending on architecture version) of data protection register pairs and code protection register pairs which are defined through a lower and upper bound address and the protection rights. These protection register pairs are divided between system and application."
+      },
+      {
+        "type": "CS",
+        "TC23": [
+          "// the code protection register definition for the PXROS system",
+          "const PxCodeProtectSet_T *is_sys_code;",
+          "// the data protection register definition for the PXROS system",
+          "const PxDataProtectSetInit_T *is_sys_data;",
+          "// the code protection register definition for the application",
+          "const PxCodeProtectSet_T *is_task_code;"
+        ],
+        "ARM-CMX": [
+          "// the protection register definition for code and read only data",
+          "PxProtectRegion_T is_sys_ro_protection[1];",
+          "// the protection register definition for system memory",
+          "PxProtectRegion_T is_sys_memory_protection[1];"
+        ]
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxOpoolResolveDefault",
+      "display": "PxOpoolResolveDefault()"
+    },
+    {
+      "key": "PxSysInfoGetNumberOfObjects",
+      "display": "PxSysInfoGetNumberOfObjects()"
+    },
+    {
+      "key": "PxTaskCreate",
+      "display": "PxTaskCreate()"
+    },
+    {
+      "key": "PxTaskSetPrio",
+      "display": "PxTaskSetPrio()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t error = PxInit(InitSpecsArray, CORE_COUNT);",
+    "",
+    "if (error != PXERR_NOERROR) {",
+    "    // Report error",
+    "    PxPanic();",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "   - `initspecs` has to be a valid PXROS-HR initialization structure. (V)",
+      "   - `noOfCores` must not exceed the number of available cores. (V)"
+    ],
+    "AfterCall": [
+      "On success `PxInit` never returns. If the call fails, the reason is given as return value of type `PxError_t`. \\(C)"
+    ],
+    "BestPractice": [
+      "`PxInit` initializes PXROS-HR and must be called once only."
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "name": {
+    "key": "PxIntInitVectab",
+    "display": "PxIntInitVectab()"
+  },
+  "synopsis": [
+    {
+      "ARM-CMX": "void PxIntInitVectab(PxInt_t maxintno, ArmInstallExceptionHandler_t InstallInterruptHandler, ArmInstallExceptionHandler_t InstallTrapHandler);",
+      "TC23": "void PxIntInitVectab (void);"
+    }
+  ],
+  "arguments": [
+    {
+      "ARM-CMX": [
+        {
+          "name": "maxintno",
+          "description": "maximum interrupt number"
+        },
+        {
+          "name": "InstallInterruptHandler",
+          "description": "a pointer to a interrupt handler function"
+        },
+        {
+          "name": "InstallTrapHandler",
+          "description": "a pointer to a trap handler function"
+        }
+      ]
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Initialize the C interrupt interface",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxIntInitVectab initializes the C interrupt interface."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxTrapInitVectab",
+      "display": "PxTrapInitVectab()"
+    }
+  ],
+  "usage": [
+    {
+      "ARM-CMX": [
+        "#include \"pxdef.h\"",
+        "",
+        "PxIntInitVectab(5, interruptHandler, trapHandler);",
+        ""
+      ],
+      "TC23" : [
+        "#include \"pxdef.h\"",
+        "",
+        "PxIntInitVectab();",
+        ""
+      ]
+    }
+  ],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": [
+      "This function is automatically executed in `PxInit` and must not be called by the application!"
+    ]
+  }
+}

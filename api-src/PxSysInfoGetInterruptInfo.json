@@ -1,0 +1,99 @@
+{
+  "name": {
+    "key": "PxSysInfoGetInterruptInfo",
+    "display": "PxSysInfoGetInterruptInfo()"
+  },
+  "synopsis": [
+    "PxError_t PxSysInfoGetInterruptInfo (PxInfoInterrupt_t *InterruptInfo, PxInterrupt_t interruptId);"
+  ],
+  "arguments": [
+    {
+      "name": "InterruptInfo",
+      "description": "Pointer to data area to store interrupt information to"
+    },
+    {
+      "name": "interruptId",
+      "description": "Id of interrupt object"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_INTERRUPT_ILLINTERRUPT - The given object is no interrupt object",
+    "PXERR_PROT_PERMISSION - The task has no write permission on the `InterruptInfo` object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Function to get interrupt info",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxSysInfoGetInterruptInfo stores the contents of the interrupt structure interruptId into the info structure InterruptInfo. The structure InterruptInfo has the following format:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef struct",
+          "{",
+          "\tPxUInt_t  PxInfoInterrupt_Number; // interrupt number",
+          "\tvoid     (*PxInfoInterrupt_Handler) (PxArg_t); // interrupt handler function",
+          "\tPxULong_t PxInfoInterrupt_Param; //interrupt handler function’s arguments",
+          "\tPxTask_t  PxInfoInterrupt_RequestingTask; // task which requested the interrupt object",
+          "} PxInfoInterrupt_t;"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "There is a union available containing all sysinfo types:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef union",
+          "{",
+          "\tPxInfoMC_t  McInfo; // memory class information struct",
+          "\tPxInfoOpool_t  OpoolInfo; // Opool information struct",
+          "\tPxInfoMsg_t  MsgInfo; // message information struct",
+          "\tPxInfoMbx_t  MbxInfo; // mailbox information struct",
+          "\tPxInfoDelay_t  DelayInfo; // delay object information struct",
+          "\tPxInfoPe_t  PeInfo; // periodic event information struct",
+          "\tPxInfoTo_t  ToInfo; // timeout object information struct",
+          "\tPxInfoInterrupt_t  InterruptInfo; // interrupt object information struct",
+          "} PxObjInfo_T;"
+        ]
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "xref:chapter/section/Interrupt_and_trap_services.adoc",
+      "display": "Interrupt and Trap Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxSysInfoGetInterruptInfo(&InterruptInfo, interruptId);",
+    "",
+    "if (err == PXERR_NOERROR) {",
+    "    // Handle info",
+    "}",
+    "else {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`InterruptInfo` must be a pointer to a valid data area.\n",
+      "`interruptId` must be a valid PXROS-HR interrupt object created with a `PxInterruptRequest` call (V). The validity of `interruptId` may also be checked by the `PxInterruptIsValid` macro (F)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the system information could be delivered. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions"]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": {
+    "key": "PxMbxIdGet",
+    "display": "PxMbxIdGet()"
+  },
+  "synopsis": ["PxObjId_t PxMbxIdGet (PxMbx_t Mbx);"],
+  "arguments": [
+    {
+      "name": "Mbx",
+      "description": "A Mbx handle"
+    }
+  ],
+  "retValues": ["Object ID of the object handle Mbx"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the object ID of the object handle Mbx",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMbxIdGet returns the object ID of the object handle Mbx."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxObjId_t objid = PxMbxIdGet(Mbx);",
+    ""
+  ]
+}

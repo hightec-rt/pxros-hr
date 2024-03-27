@@ -1,0 +1,38 @@
+{
+  "name": {
+    "key": "PxInterruptIdError",
+    "display": "PxInterruptIdError()"
+  },
+  "synopsis": ["PxError_t PxInterruptIdError (PxInterrupt_t Interrupt);"],
+  "arguments": [
+    {
+      "name": "Interrupt",
+      "description": "An Interrupt handle"
+    }
+  ],
+  "retValues": ["The last error of the object handle Interrupt"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the last error of the object handle Interrupt",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxInterruptIdError returns the last error of the object handle Interrupt."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxInterruptIdError(Interrupt);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ]
+}

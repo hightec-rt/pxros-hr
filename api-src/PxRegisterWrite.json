@@ -1,0 +1,68 @@
+{
+  "name": {
+    "key": "PxRegisterWrite",
+    "display": "PxRegisterWrite()"
+  },
+  "synopsis": [
+    "PxError_t PxRegisterWrite (volatile PxULong_t *addr, PxULong_t val);"
+  ],
+  "arguments": [
+    {
+      "name": "addr",
+      "description": "Address of the desired register to write"
+    },
+    {
+      "name": "val",
+      "description": "Value to write to the register"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_ACCESS_RIGHT - The task has not the right to access peripheral registers",
+    "PXERR_PROT_ILL_REGION - `addr` is not within additional protection region"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Write a value to a SFR register",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxRegisterWrite sets the content of the peripheral register addr to val if the calling task has write access right to this special function register. It should only be used from tasks (not from handlers)."
+      },
+      {
+        "type": "PP",
+        "text": "The peripheral register addr must be covered in the additional protection region table passed in the element ts_protect_region of PxTaskSpec_t during PxTaskCreate."
+      },
+      {
+        "type": "PP",
+        "text": "PxRegisterWrite_Hnd is the corresponding handler function. It should only be used from handlers running in a task's context."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t error = PxRegisterWrite(addr, val);",
+    "",
+    "if (error != PXERR_NOERROR) {",
+    "    // Report error",
+    "}",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`addr` has to be a valid pointer to a special function register (V)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the register could be written. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "The peripheral register `addr` must be covered in the additional protection region table passed in the element `ts_protect_region` of `PxTaskSpec_t` during `PxTaskCreate`."
+    ]
+  }
+}

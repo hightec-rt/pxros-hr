@@ -1,0 +1,35 @@
+{
+    "name": {
+      "key": "PxStrlen",
+      "display": "PxStrlen()"
+    },
+    "synopsis": ["PxSize_t PxStrlen(char const *s);"],
+    "arguments": [
+      {
+        "name": "s",
+        "description": "String which length is counted"
+      }
+    ],
+    "retValues": [ "length of string s" ],
+    "appliesTo": [
+      {
+        "ARM-CMX": ["1.0.0"],
+        "TC23": ["8.2.0"]
+      }
+    ],
+    "description": {
+      "short": "Get string length",
+      "long": [
+        {
+          "type": "PP",
+          "text": "PxStrlen returns the length of the null terminated string starting at s. The terminating null is not counted."
+        }
+      ]
+    },
+    "usage": [
+      "#include \"pxdef.h\"",
+      "",
+      "PxSize_t len = PxStrlen(str);",
+      ""
+    ]
+  }

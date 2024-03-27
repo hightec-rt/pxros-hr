@@ -1,0 +1,75 @@
+{
+  "name": {
+    "key": "PxOpoolGetName",
+    "display": "PxOpoolGetName()"
+  },
+  "synopsis": [
+    "PxError_t PxOpoolGetName (PxOpool_t opool, PxChar_t *buffer, PxUInt_t bufsize);"
+  ],
+  "arguments": [
+    {
+      "name": "opool",
+      "description": "The object pool whose name will be returned"
+    },
+    {
+      "name": "buffer",
+      "description": "Pointer to data area to copy the object's name to"
+    },
+    {
+      "name": "bufsize",
+      "description": "Size of data area"
+    }
+  ],
+  "retValues": ["PXROS-HR error code"],
+  "errCodes": [
+    "PXERR_NAME_BUFOVERFLOW - The data area is too short to store the object's name",
+    "PXERR_PROT_PERMISSION - The data area is not writeable for the calling task",
+    "PXERR_SERVICE_NOT_CONFIGURED - Service has not been configured",
+    "PXERR_OBJ_ILLOBJ - The passed object pool handle is not valid",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The object pool is not on the same core"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the name of an object pool",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxOpoolGetName retrieves the name of the object pool `opool` by copying characters into the `buffer` of length `bufsize`. The result is null-terminated."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxOpoolSetName",
+      "display": "PxOpoolSetName()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "const char opoolName[13] = \"PERIODIC-OBJ-NAME\"; // 12 characters + null character",
+    "",
+    "PxError_t err = PxOpoolSetName(opool, opoolName, 13);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}",
+    "",
+    "char retOpoolName[13];",
+    "",
+    "PxError_t err = PxOpoolGetName(opool, opoolName, 13);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "name": {
+    "key": "PxInterruptRelease",
+    "display": "PxInterruptRelease()"
+  },
+  "synopsis": ["PxInterrupt_t PxInterruptRelease (PxInterrupt_t Interrupt);"],
+  "arguments": [
+    {
+      "name": "Interrupt",
+      "description": "Interrupt object to be released"
+    }
+  ],
+  "retValues": [
+    "Invalid interrupt object on success",
+    "Interrupt object on failure"
+  ],
+  "errCodes": [
+    "PXERR_INTERRUPT_ILLINTERRUPT - Interrupt is not a valid interrupt object",
+		"PXERR_OPOOL_ILLOPOOL - Not a valid object pool",
+		"PXERR_GLOBAL_ILLEGAL_CORE - the requested object pool is not on the same core",
+		"PXERR_TASK_ILLTASK - not a valid task object",
+		"PXERR_INTERNAL_INCONSISTENCY - allocated object not convertible"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Release an interrupt object",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxInterruptRelease releases the interrupt object Interrupt by converting it into a generic object and releasing this object."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxInterruptRequest",
+      "display": "PxInterruptRequest()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxInterrupt_t Interrupt = PxInterruptRelease(Interrupt);",
+    "",
+    "if (PxInterruptIdError(Interrupt) == PXERR_NOERROR) {",
+    "  // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`Interrupt` must be a valid PXROS-HR interrupt object created with a `PxInterruptRequest` call (V). The validity of `Interrupt` may also be checked by the `PxInterruptIsValid` macro (F)."
+    ],
+    "AfterCall": [
+      "`PxInterruptRelease` returns the interrupt object to the object pool it has been taken from. On success `PxInterruptRelease` returns the invalidated interrupt object. This may be checked with one of the following macros:\n",
+      "   - `PxInterruptIdIsValid()` must be false.",
+      "   - `PxInterruptIdGet()` must be `_PXIllegalObjId`.",
+      "   - `PxInterruptIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "After `PxInterruptRelease`, the given interrupt object `Interrupt` is no longer valid and may never be used as interrupt object!"
+    ]
+  }
+}

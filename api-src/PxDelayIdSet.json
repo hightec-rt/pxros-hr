@@ -1,0 +1,30 @@
+{
+  "name": {
+    "key": "PxDelayIdSet",
+    "display": "PxDelayIdSet()"
+  },
+  "synopsis": ["PxDelay_t PxDelayIdSet (PxObjId_t id);"],
+  "arguments": [
+    {
+      "name": "id",
+      "description": "The object id"
+    }
+  ],
+  "retValues": ["Delay handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return an object handle which holds id as the object ID",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxDelayIdSet returns an object handle which holds id as the object ID"
+      }
+    ]
+  },
+  "usage": ["#include \"pxdef.h\"", "", "PxDelay_t id = PxDelayIdSet(oid);", ""]
+}

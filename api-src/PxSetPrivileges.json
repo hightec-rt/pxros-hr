@@ -1,0 +1,42 @@
+{
+  "name": {
+    "key": "PxSetPrivileges",
+    "display": "PxSetPrivileges()"
+  },
+  "synopsis": ["PxArg_t PxSetPrivileges (PxArg_t privs);"],
+  "arguments": [
+    {
+      "name": "privs",
+      "description": "New privileges of the calling task"
+    }
+  ],
+  "retValues": ["Privileges of the calling task before the change"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Set privileges of the calling task",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxSetPrivileges gets the privileges specified by privs. This service returns the privileges aquired before the change."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxArg_t arg = PxSetPrivileges(1);",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": [
+      "`PxGetError` must be called to check if an error has occurred. (F)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

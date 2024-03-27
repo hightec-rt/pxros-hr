@@ -1,0 +1,78 @@
+{
+  "name": {
+    "key": "PxMsgSetSize",
+    "display": "PxMsgSetSize()"
+  },
+  "synopsis": ["PxError_t PxMsgSetSize (PxMsg_t msgid, PxSize_t size);"],
+  "arguments": [
+    {
+      "name": "msgid",
+      "description": "Message object for which the size is set"
+    },
+    {
+      "name": "size",
+      "description": "New message size"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_MSG_ILLMSG - The passed message handle is invalid",
+    "PXERR_MSG_ILLSIZE - `size` exceeds the size of the corresponding data area",
+    "PXERR_MSG_ILLUSER - The calling task is not the user of the message"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Set message size",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgSetSize sets the size of message msgid to size (specified in byte units). The calling task must be the user of msgid."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgGetSize",
+      "display": "PxMsgGetSize()"
+    },
+    {
+      "key": "PxMsgRequest",
+      "display": "PxMsgRequest()"
+    },
+    {
+      "key": "PxMsgSetData",
+      "display": "PxMsgSetData()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxMsgSetSize(msgid, 10);",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`msgid` must be a valid message object, requested via `PxMsgRequest...` or `PxMsgEnvelop...` or received by a `PxMsgReceive...` call (V). This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C).\n",
+      "`size` must have a plausible value (V)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the message's size is changed. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

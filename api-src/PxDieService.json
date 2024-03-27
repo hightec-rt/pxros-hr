@@ -1,0 +1,65 @@
+{
+  "name": {
+    "key": "PxDieService",
+    "display": "PxDieService()"
+  },
+  "synopsis": ["PxError_t PxDieService (void);"],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_OPOOL_ILLOPOOL - The object pool is not valid",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+    "PXERR_TASK_ILLTASK - The task is not a valid task object",
+    "PXERR_INIT_ILLMCTYPE - The type for PXMcSystemdefault is different from PXMcVarsized, PXMcVarsizedAdjusted and PXMcVarsizedAligned",
+    "PXERR_MC_ILLMC - Invalid memory class",
+    "PXERR_MC_DAMAGED_BLOCK - The block in the memory class has been damaged",
+    "PXERR_MC_INCONSISTENCY - Inconsistency in memory class: blk",
+    "PXERR_MC_ILLALIGN - Invalid memory block or size alignment in memory insert",
+    "PXERR_MC_ILLSIZE - Insufficient block size",
+    "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "The PXROS die service",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxDieService removes a task from the system which has called PxDie before. This function has to be called by the PXROS service task after receiving the event PXSERVICE_TASK_DIED."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxServiceTaskInit",
+      "display": "PxServiceTaskInit()"
+    },
+    {
+      "key": "PxTerminate",
+      "display": "PxTerminate()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxDieService();",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the die service was successfully executed. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

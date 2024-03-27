@@ -1,0 +1,72 @@
+{
+  "name": {
+    "key": "PxMessage",
+    "display": "PxMessage()"
+  },
+  "synopsis": [
+    "void PxMessage (PxMessageClass_t cls, PxError_t err, PxArg_t arg1, PxArg_t arg2);"
+  ],
+  "arguments": [
+    {
+      "name": "cls",
+      "description": "Error class"
+    },
+    {
+      "name": "err",
+      "description": "PXROS error code"
+    },
+    {
+      "name": "arg1",
+      "description": "First argument to error message format string"
+    },
+    {
+      "name": "arg2",
+      "description": "Second argument to error message format string"
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Message by current message function",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMessage reports problem err at class cls through the current PXROS error reporting function. cls may be chosen as PXWarning, PXLogError, PXError or PXFatal."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMessageFunDefault",
+      "display": "PxMessageFunDefault()"
+    },
+    {
+      "key": "PxSetMessageFun",
+      "display": "PxSetMessageFun()"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxMessage(PXLogError, PXERR_ILLEGAL_SERVICE_CALLED, 0, 0);",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The PXROS-HR error class given in `cls` must be of type `PxMessageClass_t` and may have one of the following values (V):",
+      "   - `PXWarning`",
+      "   - `PXError`",
+      "   - `PXLogError`",
+      "   - `PXFatal`",
+      "The PXROS-HR error number `err` must be greater or equal `PXERR_NOERROR` and lower than `PXERR_LAST_ERRNO` (V)"
+    ],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": [
+      "If no application specific error function is installed, the default error function `PxMessageFunDefault` will call `PxPanic()`, if `cls` is greater than `PXLogError`."
+    ]
+  }
+}

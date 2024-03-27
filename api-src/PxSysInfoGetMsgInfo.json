@@ -1,0 +1,128 @@
+{
+  "name": {
+    "key": "PxSysInfoGetMsgInfo",
+    "display": "PxSysInfoGetMsgInfo()"
+  },
+  "synopsis": [
+    "PxError_t PxSysInfoGetMsgInfo (PxInfoMsg_t *MsgInfo, PxMsg_t msgId);"
+  ],
+  "arguments": [
+    {
+      "name": "MsgInfo",
+      "description": "Pointer to the data area to store information to"
+    },
+    {
+      "name": "msgId",
+      "description": "Id of message object"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_MSG_ILLMSG - The given object is not a message object",
+    "PXERR_PROT_PERMISSION - The task has no write permission on the `MsgInfo` object",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Function to get info about a PXROS message",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxSysInfoGetMsgInfo stores the owner, user, and pointer to message data, message size, message buffer size, and message type of the message object msgId into the info structure MsgInfo."
+      },
+      {
+        "type": "PP",
+        "text": "The structure MsgInfo has the following format:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef struct",
+          "{",
+          "\tPxInfoMsgType_t PxInfoMsg_Type; // message type",
+          "\tPxTask_t PxInfoMsg_Owner; // message owner",
+          "\tPxTask_t PxInfoMsg_User; // message user",
+          "\tPxMbx_t PxInfoMsg_Mbx; // mailbox, where message lies",
+          "\tPxUChar_t *PxInfoMsg_Data; // message data area",
+          "\tPxULong_t PxInfoMsg_Size; // actual size of data area",
+          "\tPxULong_t PxInfoMsg_BufSize; // size of requested data area",
+          "\tPxTask_t PxInfoMsg_RequestingTask; // task, which has requested the message",
+          "\tPxMbx_t PxInfoMsg_RelMbx; // message's release mailbox",
+          "} PxInfoMsg_t;"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "The message msgId may have one of the following types:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "// Message type",
+          "typedef enum",
+          "{",
+          "\tMsgType_Unknown, // unknown type",
+          "\tMsgType_Enveloped, // requested via PxMsgEnvelop",
+          "\tMsgType_Requested // requested via PxMsgRequest",
+          "} PxInfoMsgType_t;"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "There is a union available containing all sysinfo types:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef union",
+          "{",
+          "\tPxInfoMC_t  McInfo; // memory class information struct",
+          "\tPxInfoOpool_t  OpoolInfo; // Opool information struct",
+          "\tPxInfoMsg_t  MsgInfo; // message information struct",
+          "\tPxInfoMbx_t  MbxInfo; // mailbox information struct",
+          "\tPxInfoDelay_t  DelayInfo; // delay object information struct",
+          "\tPxInfoPe_t  PeInfo; // periodic event information struct",
+          "\tPxInfoTo_t  ToInfo; // timeout object information struct",
+          "\tPxInfoInterrupt_t  InterruptInfo; // interrupt object information struct",
+          "} PxObjInfo_T;"
+        ]
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "xref:chapter/section/Message-related_services.adoc",
+      "display": "Message-related Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxSysInfoGetMsgInfo(&MsgInfo, msgId);",
+    "",
+    "if (err == PXERR_NOERROR) {",
+    "    // Handle info",
+    "}",
+    "else {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`MsgInfo` must be a pointer to a valid data area.\n",
+      "`msgid` must be a valid message object, requested via `PxMsgRequest...` or `PxMsgEnvelop...` or received by a `PxMsgReceive...` call (V). This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the system information could be delivered. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions"]
+  }
+}

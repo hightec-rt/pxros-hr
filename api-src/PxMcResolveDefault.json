@@ -1,0 +1,68 @@
+{
+  "name": {
+    "key": "PxMcResolveDefault",
+    "display": "PxMcResolveDefault()"
+  },
+  "synopsis": ["PxMc_t PxMcResolveDefault (PxMc_t mcid);"],
+  "arguments": [
+    {
+      "name": "mcid",
+      "description": "Memory class to resolve"
+    }
+  ],
+  "retValues": ["Resolved memory class"],
+  "errCodes": ["PXERR_MC_ILLMC - `mcid` is not a valid memory class."],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Resolve a memory class default",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMcResolveDefault resolves a memory class default. More precisely, it returns mcid, if mcid is not PXMcSystemdefault or PXMcTaskdefault; otherwise it returns the memory class id corresponding to the specified default."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMcGetSize",
+      "display": "PxMcGetSize()"
+    },
+    {
+      "key": "PxMcGetType",
+      "display": "PxMcGetType()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxMc_t RetMc = PxMcResolveDefault(mcid)",
+    "",
+    "if ((PxmcidError(RetMc) != PXERR_NOERROR) || (PxmcidGet(RetMc) != PxmcidGet(Mc))) {",
+    "    // Report error;",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`mcid` must be:\n",
+      "   - a valid PXROS-HR memory class created with a `PxMcRequest` call (V). The validity of `mcid` may also be checked by the `PxMcIsValid` macro (F).",
+      "   - the symbolic value `PXMcSystemdefault` specifying the system memory class (V)",
+      "   - the symbolic value `PXMcTaskdefault` specifying the task's memory class (V)"
+    ],
+    "AfterCall": [
+      "The returned value is the id of type `PxMc_t`. This id may be checked with one of the following macros:\n",
+      "   - `PxmcidIsValid()` must be true.",
+      "   - `PxmcidGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxmcidError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

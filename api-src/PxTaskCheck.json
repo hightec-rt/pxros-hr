@@ -1,0 +1,56 @@
+{
+  "name": {
+    "key": "PxTaskCheck",
+    "display": "PxTaskCheck()"
+  },
+  "synopsis": ["PxBool_t PxTaskCheck (PxTask_t TaskId);"],
+  "arguments": [
+    {
+      "name": "TaskId",
+      "description": "The task object"
+    }
+  ],
+  "retValues": [
+    "True if TaskId is a task object",
+    "False if TaskId is not a task object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Check the validity of a task",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTaskCheck checks the validity of a task object. The function returns true if the parameter is a valid task object, else false."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "xref:chapter/section/Application_information_services.adoc",
+      "display": "Application Information Services"
+    },
+    {
+      "key": "xref:chapter/section/Task_mode_manipulation_services.adoc",
+      "display": "Task Mode Manipulation Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "if (!PxTaskCheck(TaskId)) {",
+    "    // Report not a task object",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`TaskId` must be a valid PXROS-HR task object created with a `PxTaskCreate` call (V). The validity of `TaskId` may also be checked by the `PxTaskIsValid` macro (F)."
+    ],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": {
+    "key": "PxSysInfoGetNumberOfObjects",
+    "display": "PxSysInfoGetNumberOfObjects()"
+  },
+  "synopsis": ["PxUInt_t PxSysInfoGetNumberOfObjects (void);"],
+  "retValues": ["The number of objects in the PXROS system"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Request the number of PXROS objects",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxSysInfoGetNumberOfObjects returns the number of objects in the PXROS system. This value represents the value given in the system description used in the PxInit function."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxInit",
+      "display": "PxInit()"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxUInt_t no = PxSysInfoGetNumberOfObjects();",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions"]
+  }
+}

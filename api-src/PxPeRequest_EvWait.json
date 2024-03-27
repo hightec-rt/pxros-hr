@@ -1,0 +1,110 @@
+{
+  "name": {
+    "key": "PxPeRequest_EvWait",
+    "display": "PxPeRequest_EvWait()"
+  },
+  "synopsis": [
+    "PxPe_t PxPeRequest_EvWait (PxOpool_t OpoolId, PxTicks_t period, PxEvents_t events, PxEvents_t abortevents);"
+  ],
+  "arguments": [
+    {
+      "name": "OpoolId",
+      "description": "The object pool to request the periodic event object from"
+    },
+    {
+      "name": "period",
+      "description": "Number of ticks after which the event is signalled"
+    },
+    {
+      "name": "events",
+      "description": "Events to be signaled"
+    },
+    {
+      "name": "abortevents",
+      "description": "Event mask with events making the call return"
+    }
+  ],
+  "retValues": [
+    "Invalid periodic event object on failure",
+    "Periodic event object on success",
+    "Events, if request aborted by an event"
+  ],
+  "errCodes": [
+    "PXERR_ACCESS_RIGHT - The calling task has not the right to access the object pool",
+    "PXERR_OPOOL_ILLOPOOL - The passed object pool handle is not valid",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+    "PXERR_OBJ_ABORTED - The request was aborted by an event",
+    "PXERR_OBJ_NOOBJ - No free object is available",
+    "PXERR_OBJ_ILLOBJ - The passed object handle is not valid",
+    "PXERR_EVENT_ZERO - The given event mask is zero",
+    "PXERR_PE_ILLPE - The given object is not a periodic event object",
+    "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Request a periodic event object while waiting for events",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxPeRequest_EvWait creates and initializes a periodic event object, which is returned. It is associated with period PXROS ticks and events which are signalled periodically. Signalling is active after the periodic event is started with PxPeStart. It is necessary to finish up with PxPeRelease, when the periodic event is no longer used. If there is no free object available, the PxPeRequest_EvWait waits until a free object is available or until an event from mask of events arrives."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxAwaitEvents",
+      "display": "PxAwaitEvents()"
+    },
+    {
+      "key": "PxPeRelease",
+      "display": "PxPeRelease()"
+    },
+    {
+      "key": "PxResetEvents",
+      "display": "PxResetEvents()"
+    },
+    {
+      "key": "xref:chapter/section/Delay_job_services.adoc",
+      "display": "Delay Job Services"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "#define MY_EVENT 0x1l",
+    "#define TICKS 0x1l",
+    "",
+    "PxPeEvent_t Pe = PxPeRequest_EvWait(OpoolId, TICKS, MY_EVENT, AbortEv);",
+    "",
+    "if (PxPeIdError(Pe) != PXERR_NOERROR) {",
+    "  // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`OpoolId` must be a valid PXROS-HR object pool and the calling task must have the access right to take objects from this object pool (V). The validity of `OpoolId` may also be checked by the `PxOpoolIsValid` macro (F). The object pool must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxOpoolCoreId` and the own core id with `PxGetCoreId` \\(C). Typically the task's default object pool `PXOpoolTaskdefault` is used for this purpose.",
+      "The `period` parameter must have a plausible value. It should be a constant or the result of a `PxTickGetTicksFromMilliSeconds` call (V);",
+      "The parameter `events` contains an event bit  and should not be zero. Typically the event is a constant (V).",
+      "The parameter `abortevents` contains a bitmask of events awaited and should not be zero. Typically the event mask is a constant (V)."
+    ],
+    "AfterCall": [
+      "The returned value is a structure of type `PxPeEvent_t`. The received events are stored in the `events` part, the delay id is given in the `pe` part of the structure. This id may be checked with one of the following macros:",
+      "   - `PxPeIdIsValid()` must be true.",
+      "   - `PxPeIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxPeIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "`PxPeRequest_EvWait` may block, if no PXROS-HR object is available and no instance (task or handler) sends an event. If blocking calls are prohibited, `PxPeRequest_NoWait` should be used instead or the call should be monitored by the PXROS-HR `PxTo` mechanism.",
+      "`PxPeRequest_EvWait` should only be called during initialization to ensure the availability of the periodic event  object."
+    ]
+  }
+}

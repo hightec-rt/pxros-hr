@@ -1,0 +1,85 @@
+{
+  "name": {
+    "key": "PxToRelease",
+    "display": "PxToRelease()"
+  },
+  "synopsis": ["PxTo_t PxToRelease(PxTo_t To);"],
+  "arguments": [
+    {
+      "name": "To",
+      "description": "Timeout object"
+    }
+  ],
+  "retValues": [
+    "Invalid timeout object on success",
+    "Timeout object on failure"
+  ],
+  "errCodes": [
+    "PXERR_TO_ILLTO - To is not a valid timeout object",
+    "PXERR_DELAY_USED_BY_INTERRUPT - Delay object currently in use by the interrupt handler",
+    "PXERR_OPOOL_ILLOPOOL - The object pool is not valid",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+    "PXERR_TASK_ILLTASK - The task is not a valid task object",
+    "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Release the timeout object",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxToRelease stops the timeout object To (if necessary) and releases the associated resources (allocated by PxToRequest). After this call, To may not be used."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxAwaitEvents",
+      "display": "PxAwaitEvents()"
+    },
+    {
+      "key": "PxResetEvents",
+      "display": "PxResetEvents()"
+    },
+    {
+      "key": "PxToRequest",
+      "display": "PxToRequest()"
+    },
+    {
+      "key": "xref:chapter/section/Delay_job_services.adoc",
+      "display": "Delay Job Services"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxTo_t To = PxToRelease(To);",
+    "",
+    "if (PxToIdError(To) != PXERR_NOERROR){",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`To` must be a valid PXROS-HR timeout object created with a `PxToRequest` call (V). The validity of `To` may also be checked by the `PxToIsValid` macro (F)."
+    ],
+    "AfterCall": [
+      "`PxToRelease` returns the timeout object to the object pool it has been taken from. On success `PxToRelease` returns the invalidated timeout object. This may be checked with one of the following macros:",
+      "   - `PxToIdIsValid()` must be false.",
+      "   - `PxToIdGet()` must be `_PXIllegalObjId`.",
+      "   - `PxToIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "After `PxToRelease`, the given timeout object `To` is no longer valid and may never be used as timeout object!"
+    ]
+  }
+}

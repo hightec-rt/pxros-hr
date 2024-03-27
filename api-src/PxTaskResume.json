@@ -1,0 +1,76 @@
+{
+  "name": {
+    "key": "PxTaskResume",
+    "display": "PxTaskResume()"
+  },
+  "synopsis": ["PxError_t PxTaskResume (PxTask_t TaskId);"],
+  "arguments": [
+    {
+      "name": "TaskId",
+      "description": "Task whose scheduling inhibition should be removed"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_ACCESS_RIGHT - The calling task has not the right to resume other tasks",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested task is not on the same core",
+    "PXERR_TASK_ILLRDYFUN - Invalid ready function detected",
+    "PXERR_TASK_ILLTASK - `TaskId` is not a valid task object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Remove the scheduling inhibition",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTaskResume removes the scheduling inhibition for the task."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxTaskSuspend",
+      "display": "PxTaskSuspend()"
+    },
+    {
+      "key": "xref:chapter/section/Application_information_services.adoc",
+      "display": "Application Information Services"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    },
+    {
+      "key": "xref:chapter/section/Task_mode_manipulation_services.adoc",
+      "display": "Task Mode Manipulation Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxTaskResume(TaskId);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The parameter `TaskId` must be a valid task object id. This id may be",
+      "   - the calling task's own id read by calling `PxGetId()` (V)",
+      "   - the return value of a `PxTaskCreate()` call (V)",
+      "   - the result of a nameserver query (V)",
+      "   - part of a message sent by another task (V)",
+      "The task object must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxTaskCoreId` and the own core id with `PxGetCoreId` \\(C). Additionally the task id may be checked with `PxTaskCheck()` (F)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the task could be resumed. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

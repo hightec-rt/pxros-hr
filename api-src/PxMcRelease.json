@@ -1,0 +1,78 @@
+{
+  "name": {
+    "key": "PxMcRelease",
+    "display": "PxMcRelease()"
+  },
+  "synopsis": ["PxMc_t PxMcRelease (PxMc_t Mc);"],
+  "arguments": [
+    {
+      "name": "Mc",
+      "description": "Memory class object to be released"
+    }
+  ],
+  "retValues": ["Invalid memory class handle on success", "Mc on failure"],
+  "errCodes": [
+    "PXERR_MC_ILLMC - `Mc` is not a valid memory class object",
+    "PXERR_MC_NOTEMPTY - Memory class delete failed: not empty",
+    "PXERR_OPOOL_ILLOPOOL - The object pool is not valid",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested memory class is not on the same core",
+    "PXERR_TASK_ILLTASK - The task is not a valid task object",
+    "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Release a memory class object",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMcRelease releases the memory class handle Mc by converting it into a generic object and releasing this object."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMcGetSize",
+      "display": "PxMcGetSize()"
+    },
+    {
+      "key": "PxMcGetType",
+      "display": "PxMcGetType()"
+    },
+    {
+      "key": "PxMcRequest",
+      "display": "PxMcRequest()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxMc_t Mc = PxMcRelease(Mc);",
+    "",
+    "if (PxMsgIdIsValid (Mc)) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`Mc` must be a valid PXROS-HR memory class created with a `PxMcRequest` call (V). The validity of `Mc` may also be checked by the `PxMcIsValid` macro (F). The memory class must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxMcCoreId` and the own core id with `PxGetCoreId` \\(C)."
+    ],
+    "AfterCall": [
+      "`PxMcRelease` returns the memory class object to the object pool it has been taken from. On success `PxMcRelease` returns the invalidated delay object. This may be checked with one of the following macros:\n",
+      "   - `PxMcIdIsValid()` must be false.",
+      "   - `PxMcIdGet()` must be `_PXIllegalObjId`.",
+      "   - `PxMcIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "After `PxMcRelease`, the given memory class object `Mc` is no longer valid and may never be used as memory class object!"
+    ]
+  }
+}

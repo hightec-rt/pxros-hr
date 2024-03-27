@@ -1,0 +1,44 @@
+{
+  "name": {
+    "key": "PxInit_Start_Cores",
+    "display": "_PxInit_Start_Cores()"
+  },
+  "synopsis": [
+    "PxError_t _PxInit_Start_Cores (PxUChar_t coreId, PxInitSpec_ct initspec);"
+  ],
+  "arguments": [
+    {
+      "name": "coreId",
+      "description": "Core to start (remark: no gap for TC39x, i.e. highest id is 5)"
+    },
+    {
+      "name": "initspec",
+      "description": "Initialization structure with core specific start address"
+    }
+  ],
+  "retValues": [
+    "`PXERR_NOERROR` if successful, or a PXROS-HR error code otherwise."
+  ],
+  "errCodes": ["PXERR_GLOBAL_ILLEGAL_CORE - unsupported coreId"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Start core according to initialization structure",
+    "long": [
+      {
+        "type": "PP",
+        "text": "_PxInit_Start_Cores implements a default function for starting other cores in a multicore environment. This function is called inside of PxInit. It can be overridden by the user to customize the application."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxInit",
+      "display": "PxInit()"
+    }
+  ]
+}

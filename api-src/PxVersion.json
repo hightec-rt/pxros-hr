@@ -1,0 +1,38 @@
+{
+  "name": {
+    "key": "PxVersion",
+    "display": "PxVersion()"
+  },
+  "synopsis": ["const PxChar_t * PxVersion (void);"],
+  "retValues": ["PXROS version string"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return PXROS version string",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxVersion returns the PXROS version string."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "cp = PxVersion();",
+    "",
+    "if (*cp == 0) {",
+    "    // Report error",
+    "}",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "name": {
+    "key": "PxTaskGetName",
+    "display": "PxTaskGetName()"
+  },
+  "synopsis": [
+    "PxError_t PxTaskGetName(PxTask_t task, PxChar_t *buffer, PxUInt_t bufsize);"
+  ],
+  "arguments": [
+    {
+      "name": "task",
+      "description": "Task Id"
+    },
+    {
+      "name": "buffer",
+      "description": "Data area to copy the task's name to"
+    },
+    {
+      "name": "bufsize",
+      "description": "Size of data area "
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_NAME_BUFOVERFLOW - data area is too short to store the task's name",
+    "PXERR_OBJ_ILLOBJ - task is not a valid task id",
+    "PXERR_PROT_PERMISSION - data area is not writeable for the calling task"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the name of a task",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTaskGetName copies the name of task into the `buffer` buffer of length `bufsize`. The result is zero-terminated."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxObjGetName",
+      "display": "PxObjGetName()"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "if (PxTaskGetName(task, buffer, bufsize) == Err)",
+    "{",
+    "    // Report error",
+    "}",
+    " "
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The parameter `task` must be a valid task object id.\n",
+      "This id may be:\n",
+      "   - the calling task’s own id read by calling `PxGetId()` (V)",
+      "   - the return value of a `PxTaskCreate()` call (V)",
+      "   - the result of a nameserver query (V)",
+      "   - part of a message sent by another task (V)\n",
+      "Additionally the task id may be checked with `PxTaskCheck()` (F).",
+      "`buffer` should point to a valid memory area, where the task’s name is stored.",
+      "`bufsize` should be a constant or a `sizeof()` operator (V)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the task’s name could be stored. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

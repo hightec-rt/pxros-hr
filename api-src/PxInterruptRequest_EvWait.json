@@ -1,0 +1,98 @@
+{
+  "name": {
+    "key": "PxInterruptRequest_EvWait",
+    "display": "PxInterruptRequest_EvWait()"
+  },
+  "synopsis": [
+    "PxInterrupt_t PxInterruptRequest_EvWait (PxOpool_t opoolid, PxEvents_t events);"
+  ],
+  "arguments": [
+    {
+      "name": "events",
+      "description": "Event mask with events making the call return"
+    },
+    {
+      "name": "opoolid",
+      "description": "The object pool, where the interrupt object is requested from"
+    }
+  ],
+  "retValues": [
+    "Valid interrupt object handle on success",
+    "Invalid interrupt object handle on failure",
+    "Events that aborted the request"
+  ],
+  "errCodes": [
+    "PXERR_OPOOL_ILLOPOOL - `opoolid` is not a valid object pool",
+    "PXERR_OBJ_ABORTED - Request aborted by an event ",
+    "PXERR_ACCESS_RIGHT - The calling task has not the right to access the object pool",
+    "PXERR_INTERRUPT_ILLINTERRUPT - The interrupt is not a valid interrupt object",
+    "PXERR_EVENT_ZERO - The given event mask is zero",
+    "PXERR_OBJ_NOOBJ - No free object is available",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+    "PXERR_OBJ_ILLOBJ - The passed object handle is not valid",
+    "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Request an interrupt object while waiting for `events`",
+    "long": [
+      {
+        "type": "PP",
+        "text": "The PxInterruptRequest_EvWait function creates an interrupt object by converting a free object from object pool opool. The object handle is returned. If there is no free object available, PxInterruptRequest_EvWait waits until either there is a free object or an event specified in the set events occurs."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxInterruptRequest",
+      "display": "PxInterruptRequest()"
+    },
+    {
+      "key": "PxInterruptRequest_NoWait",
+      "display": "PxInterruptRequest_NoWait()"
+    },
+    {
+      "key": "PxInterruptRelease",
+      "display": "PxInterruptRelease()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "#define MY_EVENT_MASK 0x1l",
+    "",
+    "PxInterrupt_t Interrupt = PxInterruptRequest_EvWait(opoolid, MY_EVENT_MASK);",
+    "",
+    "if (Interrupt & MY_EVENT_MASK) {",
+    "    // Handle interrupt object",
+    "}",
+    "else if (PxInterruptIdError(Interrupt) != PXERR_NOERROR){",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`opoolid` must be a valid PXROS-HR object pool and the calling task must have the access right to take objects from this object pool (V). The validity of `opoolid` may also be checked by the `PxOpoolIsValid` macro (F). The object pool must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxOpoolCoreId` and the own core id with `PxGetCoreId` \\(C). Typically the task's default object pool `PXOpoolTaskdefault` is used for this purpose.\n",
+      "The parameter `events` contains a bitmask of events awaited and should not be zero. Typically the event mask is a constant (V)."
+    ],
+    "AfterCall": [
+      "The returned value is a structure of type `PxInterruptEvent_t`. The received events are stored in the `events` part, the interrupt object id is given in the `interrupt` part of the structure. This id may be checked with one of the following macros:\n",
+      "   - `PxInterruptIdIsValid()` must be true.",
+      "   - `PxInterruptIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxInterruptIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "`PxInterruptRequest_EvWait` may block, if no PXROS-HR object is available and no instance (task or handler) sends an event. If blocking calls are prohibited, `PxInterruptRequest_NoWait()` should be used instead or the call should be monitored by the PXROS-HR `PxTo` mechanism.",
+      "`PxInterruptRequest_EvWait` should only be called during initialization to ensure the availability of the interrupt object."
+    ]
+  }
+}

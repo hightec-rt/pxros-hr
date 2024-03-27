@@ -1,0 +1,99 @@
+{
+  "name": {
+    "key": "PxResetEvents",
+    "display": "PxResetEvents()"
+  },
+  "synopsis": ["PxEvents_t PxResetEvents (PxEvents_t events);"],
+  "arguments": [
+    {
+      "name": "events",
+      "description": "Events to be reset"
+    }
+  ],
+  "retValues": ["The events that are reset by the call"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Reset events",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxResetEvents resets the events specified in events. The events actually reset (i.e., those that were set before the call) are returned."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxClearModebits",
+      "display": "PxClearModebits()"
+    },
+    {
+      "key": "PxPeChange",
+      "display": "PxPeChange()"
+    },
+    {
+      "key": "PxPeRelease",
+      "display": "PxPeRelease()"
+    },
+    {
+      "key": "PxPeRequest",
+      "display": "PxPeRequest()"
+    },
+    {
+      "key": "PxPeStart",
+      "display": "PxPeStart()"
+    },
+    {
+      "key": "PxPeStop",
+      "display": "PxPeStop()"
+    },
+    {
+      "key": "PxSetModebits",
+      "display": "PxSetModebits()"
+    },
+    {
+      "key": "PxToChange",
+      "display": "PxToChange()"
+    },
+    {
+      "key": "PxToRelease",
+      "display": "PxToRelease()"
+    },
+    {
+      "key": "PxToRequest",
+      "display": "PxToRequest()"
+    },
+    {
+      "key": "PxToStart",
+      "display": "PxToStart()"
+    },
+    {
+      "key": "PxToStop",
+      "display": "PxToStop()"
+    },
+    {
+      "key": "xref:chapter/section/Task_mode_manipulation_services.adoc",
+      "display": "Task Mode Manipulation Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "#define MY_EVENT 0x1l",
+    "",
+    "PxEvents_t Ev = PxResetEvents(MY_EVENT);",
+    "",
+    "if (Ev.error != PXERR_NOERROR) {",
+    "  // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["All events returned should be evaluated."],
+    "BestPractice": ["No restrictions."]
+  }
+}

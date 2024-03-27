@@ -1,0 +1,64 @@
+{
+  "name": {
+    "key": "PxDelayResched_Pxhnd",
+    "display": "PxDelayResched_Pxhnd()"
+  },
+  "synopsis": [
+    "PxError_t PxDelayResched_Pxhnd(PxDelay_t delay, PxTicks_t ticks, void PXFun_q (*handler)(PxArg_t), PxArg_t arg);"
+  ],
+  "arguments": [
+    {
+      "name": "delay",
+      "description": "Delay job object."
+    },
+    {
+      "name": "ticks",
+      "description": "Number of the PXROS-HR ticks after which the job is executed."
+    },
+    {
+      "name": "handler",
+      "description": "Pointer to the handler function to be executed."
+    },
+    {
+      "name": "arg",
+      "description": "Argument for the handler function"
+    }
+  ],
+  "retValues": [
+    "`PXERR_NOERROR` if successful, or a PXROS-HR error code otherwise."
+  ],
+  "errCodes": [
+    "PXERR_DELAY_ILLDELAY - `delay` is not a valid delay handler",
+    "PXERR_REQUEST_ILLEGAL - The caller task is not the requester of the `delay` object",
+    "PXERR_TASK_ILLCALL - Task service called by the handler"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Schedule a delay job (handler service)",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxDelayResched_Pxhnd cancels a potential delay job associated with `delay`. If `ticks` is not zero, PXROS schedules activation of the handler call handler(arg) after ticks PXROS ticks and associates this delay job with `delay` object. The PxDelayResched_Pxhnd can only be called from handler level, otherwise PXERR_PXHND_ILLCALL error is returned."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxDelaySched",
+      "display": "PxDelaySched()"
+    },
+    {
+      "key": "PxTickSetTicksPerSecond",
+      "display": "PxTickSetTicksPerSecond()"
+    },
+    {
+      "key": "xref:chapter/section/Time_management.adoc",
+      "display": "Time Management"
+    }
+  ]
+}

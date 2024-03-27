@@ -1,0 +1,75 @@
+{
+  "name": {
+    "key": "PxMsgSetName",
+    "display": "PxMsgSetName()"
+  },
+  "synopsis": [
+    "PxError_t PxMsgSetName (PxMsg_t msg, const PxChar_t *buffer, PxUInt_t bufsize);"
+  ],
+  "arguments": [
+    {
+      "name": "msg",
+      "description": "The message object to which the name will be set"
+    },
+    {
+      "name": "buffer",
+      "description": "Pointer to C string to be copied to the object's name"
+    },
+    {
+      "name": "bufsize",
+      "description": "Length of C string including the null character"
+    }
+  ],
+  "retValues": ["PXROS-HR error code"],
+  "errCodes": [
+    "PXERR_NAME_BUFOVERFLOW - The name has been truncated",
+    "PXERR_PROT_PERMISSION - The name is not readable for the calling task",
+    "PXERR_SERVICE_NOT_CONFIGURED - Service has not been configured",
+    "PXERR_OBJ_ILLOBJ - The passed message handle is not valid",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The message object is not on the same core"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Assign a name to a message object",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgSetName assigns a name to the message object `msg` by copying `bufsize` characters from memory pointed to by `buffer`. If the `bufzise` is grater than the internal buffer for the object name, the name is truncated. The name is null terminated."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgGetName",
+      "display": "PxMsgGetName()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "const char msgName[13] = \"MESSAGE-NAME\"; // 12 characters + null character",
+    "",
+    "PxError_t err = PxMsgSetName(msg, msgName, 13);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}",
+    "",
+    "char retMsgName[13];",
+    "",
+    "PxError_t err = PxMsgGetName(msg, retMsgName, 13);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ]
+}

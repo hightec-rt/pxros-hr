@@ -1,0 +1,43 @@
+{
+  "name": {
+    "key": "PxHndcallVA",
+    "display": "_PxHndcallVA()"
+  },
+  "synopsis": ["PxArg_t _PxHndcallVA (handler, parms...);"],
+  "arguments": [
+    {
+      "name": "handler",
+      "description": "Function to be called in supervisor mode"
+    },
+    {
+      "name": "parms...",
+      "description": "Arguments for handler function"
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "PXROS-HR handler call",
+    "long": [
+      {
+        "type": "PP",
+        "text": "_PxHndcallVA calls the passed variadic function handler with its arguments parms... in supervisor mode."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "int HandlerFunc(va_list ap) {",
+    " int arg1 = va_arg(ap, int);",
+    " return arg1;",
+    "}",
+    "",
+    "PxArg_t retval = _PxHndcallVA(HandlerFunc, 0);",
+    ""
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": {
+    "key": "PxPeIdGet",
+    "display": "PxPeIdGet()"
+  },
+  "synopsis": ["PxObjId_t PxPeIdGet (PxPe_t Pe);"],
+  "arguments": [
+    {
+      "name": "Pe",
+      "description": "A Pe handle"
+    }
+  ],
+  "retValues": ["Object ID of the object handle Pe"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the object ID of the object handle Pe",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxPeIdGet returns the object ID of the object handle Pe."
+      }
+    ]
+  },
+  "usage": ["#include \"pxdef.h\"", "", "PxObjId_t objid = PxPeIdGet(Pe);", ""]
+}

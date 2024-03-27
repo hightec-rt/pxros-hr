@@ -1,0 +1,40 @@
+{
+  "name": {
+    "key": "PxSetError",
+    "display": "PxSetError()"
+  },
+  "synopsis": ["void PxSetError (PxError_t error);"],
+  "arguments": [
+    {
+      "name": "error",
+      "description": "The error code"
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Remember specified error code",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxSetError sets error as the task’s last remembered error."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxGetError",
+      "display": "PxGetError()"
+    }
+  ],
+  "usage": ["#include \"pxdef.h\"", "", "PxSetError(PXERR_NOERROR);", ""],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "name": {
+    "key": "PxMsgReleaseAllMsg",
+    "display": "PxMsgReleaseAllMsg()"
+  },
+  "synopsis": ["PxError_t PxMsgReleaseAllMsg (void);"],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    {
+      "ARM-CMX": [
+        "PXERR_MSG_ILLMSG - The passed message handle is invalid",
+        "PXERR_MSG_ILLOWNER - The message has no owner",
+        "PXERR_MC_ILLMC - The memory class for the message is invalid",
+        "PXERR_OPOOL_ILLOPOOL - The passed object pool handle is invalid",
+        "PXERR_MSG_ILLUSER - The calling task is not the user of the message",
+        "PXERR_PROT_ILL_HANDLE - The associated protection handle is not valid",
+        "PXERR_REQUEST_INVALID_PARAMETER - Request with invalid parameter",
+        "PXERR_ILL_NULLPOINTER_PARAMETER - Illegal null pointer parameter in the call",
+        "PXERR_PROT_ILL_SIZE - The size of the protection region is not valid",
+        "PXERR_PROT_ILL_ALIGN - Alignment of protection region is not valid",
+        "PXERR_MBX_ILLMBX - The passed mailbox handle is invalid",
+        "PXERR_INIT_ILLMCTYPE - The type for PXMcSystemdefault is different from PXMcVarsized, PXMcVarsizedAdjusted and PXMcVarsizedAligned",
+        "PXERR_MC_DAMAGED_BLOCK - The block in memory class has been damaged",
+        "PXERR_MC_INCONSISTENCY - Inconsistency in memory class: blk",
+        "PXERR_MC_ILLALIGN - Invalid memory block or size alignment in memory insert",
+        "PXERR_MC_ILLSIZE - Insufficient block size",
+        "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+        "PXERR_TASK_ILLTASK - The task is not a valid task object",
+        "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures"
+      ],
+      "TC23": [
+        "PXERR_MSG_ILLMSG - The passed message handle is invalid",
+        "PXERR_MSG_ILLOWNER - The message has no owner",
+        "PXERR_MC_ILLMC - The memory class for the message is invalid",
+        "PXERR_OPOOL_ILLOPOOL - The passed object pool handle is invalid",
+        "PXERR_MSG_ILLUSER - The calling task is not the user of the message",
+        "PXERR_PROT_ILL_HANDLE - The associated protection handle is not valid",
+        "PXERR_REQUEST_INVALID_PARAMETER - Request with invalid parameter",
+        "PXERR_MBX_ILLMBX - The passed mailbox handle is invalid",
+        "PXERR_INIT_ILLMCTYPE - The type for PXMcSystemdefault is different from PXMcVarsized, PXMcVarsizedAdjusted and PXMcVarsizedAligned",
+        "PXERR_MC_DAMAGED_BLOCK - The block in memory class has been damaged",
+        "PXERR_MC_INCONSISTENCY - Inconsistency in memory class: blk",
+        "PXERR_MC_ILLALIGN - Invalid memory block or size alignment in memory insert",
+        "PXERR_MC_ILLSIZE - Insufficient block size",
+        "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+        "PXERR_TASK_ILLTASK - The task is not a valid task object",
+        "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structure"
+      ]
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Release all messages of PxRuntask",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgReleaseAllMsg will release all messages where the caller is user. If the caller is the owner of the message, PxMsgForceRelease marks this message to release. The flag for PxMsgAwaitRel is cleared and any defined release mailbox will be deleted."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgForceRelease",
+      "display": "PxMsgForceRelease()"
+    },
+    {
+      "key": "PxMsgRelease",
+      "display": "PxMsgRelease()"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxMsgReleaseAllMsg();",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the messages could be released. Any other return value describes an error, which has to be interpreted. \\(C)"
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "name": {
+    "key": "PxTickGetTicksFromMilliSeconds",
+    "display": "PxTickGetTicksFromMilliSeconds()"
+  },
+  "synopsis": ["PxTicks_t PxTickGetTicksFromMilliSeconds (PxULong_t millis);"],
+  "arguments": [
+    {
+      "name": "millis",
+      "description": "Milliseconds to convert"
+    }
+  ],
+  "retValues": ["PXROS ticks"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Convert time from milliseconds to PXROS ticks",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTickGetTicksFromMilliSeconds converts the time given in milliseconds to the number of PXROS ticks."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "xref:chapter/section/Delay_job_services.adoc",
+      "display": "Delay Job Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxTicks_t ticks = PxTickGetTicksFromMilliSeconds(10);",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`millis` must be a plausible value given as a constant (V) or a variable \\(C)."
+    ],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

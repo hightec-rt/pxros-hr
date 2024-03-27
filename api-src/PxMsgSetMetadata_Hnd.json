@@ -1,0 +1,70 @@
+{
+  "name": {
+    "key": "PxMsgSetMetadata_Hnd",
+    "display": "PxMsgSetMetadata_Hnd()"
+  },
+  "synopsis": [
+    "PxError_t PxMsgSetMetadata_Hnd (PxMsg_t msgid, PxMsgMetadata_t metadata);"
+  ],
+  "arguments": [
+    {
+      "name": "msgid",
+      "description": "The message object"
+    },
+    {
+      "name": "metadata",
+      "description": "The metadata"
+    }
+  ],
+  "errCodes": [
+    "PXERR_MSG_ILLMSG - `msgid` is not a valid message object",
+    "PXERR_MSG_ILLUSER - The calling task is not user of this message",
+    "PXERR_MSG_NOT_IMPLEMENTED - The function is called by a system interrupt handler"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Set the metadata for the message (handler service)",
+    "long": [
+      {
+        "type": "PP",
+        "text": "The PxMsgSetMetadata_Hnd sets the metadata for the message. The size of the metadata is 8 byte. The PxMsgSetMetadata_Hnd should only be called from handlers running in a task’s context."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgRequest",
+      "display": "PxMsgRequest()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxMsgSetMetadata_Hnd(msgid, metadata);",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`msgid` must be a valid message object, requested via `PxMsgRequest...` or `PxMsgEnvelop...` or received by a `PxMsgReceive...` call (V). This message object may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the message's metadata is set. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["This function should be called from handlers only. (V)"]
+  }
+}

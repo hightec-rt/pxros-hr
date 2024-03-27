@@ -1,0 +1,74 @@
+{
+  "name": {
+    "key": "PxTaskGetMbx",
+    "display": "PxTaskGetMbx()"
+  },
+  "synopsis": ["PxMbx_t PxTaskGetMbx (PxTask_t TaskId);"],
+  "arguments": [
+    {
+      "name": "TaskId",
+      "description": "Task whose mailbox is asked for"
+    }
+  ],
+  "retValues": ["Invalid mailbox handle on failure", "Mailbox on success"],
+  "errCodes": ["PXERR_TASK_ILLTASK - The task is not a valid task object"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Get task's mailbox",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTaskGetMbx returns the private mailbox of the task TaskId."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxTaskCreate",
+      "display": "PxTaskCreate()"
+    },
+    {
+      "key": "xref:chapter/section/Application_information_services.adoc",
+      "display": "Application Information Services"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    },
+    {
+      "key": "xref:chapter/section/Task_mode_manipulation_services.adoc",
+      "display": "Task Mode Manipulation Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxMbx_t Mbx = PxTaskGetMbx(TaskId);",
+    "",
+    "if (!PxMbxIdIsValid(Mbx)) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The parameter `TaskId` must be a valid task object id. This id may be",
+      "   - the calling task's own id read by calling `PxGetId()` (V)",
+      "   - the return value of a `PxTaskCreate()` call (V)",
+      "   - the result of a nameserver query (V)",
+      "   - part of a message sent by another task (V)",
+      "Additionally the task id may be checked with `PxTaskCheck()` (F)."
+    ],
+    "AfterCall": [
+      "The returned value is the id of type `PxMbx_t`. This id may be checked with one of the following macros:",
+      "   - `PxMbxIdIsValid()` must be true.",
+      "   - `PxMbxIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMbxIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C).\n\n+\nor with a call of `PxMbxCheck()` \\(C)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

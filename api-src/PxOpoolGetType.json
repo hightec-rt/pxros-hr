@@ -1,0 +1,61 @@
+{
+  "name": {
+    "key": "PxOpoolGetType",
+    "display": "PxOpoolGetType()"
+  },
+  "synopsis": ["PxOpoolType_t PxOpoolGetType (PxOpool_t OpoolId);"],
+  "arguments": [
+    {
+      "name": "OpoolId",
+      "description": "An object pool id"
+    }
+  ],
+  "retValues": ["The object pool type"],
+  "errCodes": [
+    "PXERR_OPOOL_ILLOPOOL - OpoolId is not a valid object pool id",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the object pool type",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxOpoolGetType returns the type of the given object pool. The type can be either PXOpoolVirtual, PXOpoolReal, or PXOpoolIllegalType if an invalid object pool is given."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxOpoolRequest",
+      "display": "PxOpoolRequest()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxOpoolType_t Type = PxOpoolGetType(OpoolId);",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`OpoolId` must be a valid PXROS-HR object pool. The validity of `OpoolId` may be checked by the following macros:",
+      "   - `PxOpoolIdIsValid()` must be true.",
+      "   - `PxOpoolIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxOpoolIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "AfterCall": [
+      "The function returns `PXOpoolIllegalType` if the given object pool is invalid. In this case `PxGetError` must be called to check which error has occurred. (F)"
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

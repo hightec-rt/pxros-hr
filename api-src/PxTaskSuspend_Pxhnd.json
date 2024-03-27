@@ -1,0 +1,70 @@
+{
+  "name": {
+    "key": "PxTaskSuspend_Pxhnd",
+    "display": "PxTaskSuspend_Pxhnd()"
+  },
+  "synopsis": ["PxError_t PxTaskSuspend_Pxhnd(PxTask_t TaskId);"],
+  "arguments": [
+    {
+      "name": "TaskId",
+      "description": "Task to be suspended"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_ACCESS_RIGHT - the calling task has not the right to suspend other tasks",
+    "PXERR_GLOBAL_ILLEGAL_CORE - the requested task is not on the same core",
+    "PXERR_TASK_ILLRDYFUN - invalid ready function detected",
+    "PXERR_TASK_ILLTASK - `TaskId` is not a valid task object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Prevent a task from being scheduled (handler service)",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTaskSuspend_Pxhnd suspends task, i.e., prevents task from being scheduled. If the task is waiting for a resource, the resource may eventually be delivered to task but task remains in a waiting state until resumed by PxTaskResume. This function can only be called from handler."
+      },
+      {
+        "type": "PP",
+        "text": "Note the `PxTaskSuspend_Pxhnd()` is functionally identical to `PxTaskSuspendEvents_Hnd()`."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxTaskResume",
+      "display": "PxTaskResume()"
+    },
+    {
+      "key": "PxTaskSuspend_Hnd",
+      "display": "PxTaskSuspend_Hnd()"
+    },
+    {
+      "key": "xref:chapter/section/Application_information_services.adoc",
+      "display": "Application Information Services"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    },
+    {
+      "key": "xref:chapter/section/Task_mode_manipulation_services.adoc",
+      "display": "Task Mode Manipulation Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxTaskSuspend_Pxhnd(TaskId);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ]
+}

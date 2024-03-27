@@ -1,0 +1,112 @@
+{
+  "name": {
+    "key": "PxTrapInstallHandler",
+    "display": "PxTrapInstallHandler()"
+  },
+  "synopsis": [
+    {
+      "ARM-CMX": "PxError_t PxTrapInstallHandler (PxUInt_t trapno, PxTrapHandler_t traphandler, PxUInt_t arg);",
+      "TC23": "PxError_t PxTrapInstallHandler (PxUInt_t trapno, PxBool_t (* traphandler) (PxTrapTin_t, PxUInt_t, PxUInt_t, PxUInt_t, PxUInt_t *, TC_CSA_t *), PxUInt_t arg);"
+    }
+  ],
+  "arguments": [
+    {
+      "name": "trapno",
+      "description": "Trap number"
+    },
+    {
+      "name": "traphandler",
+      "description": "The traphandler"
+    },
+    {
+      "name": "arg",
+      "description": "Traphandler's argument"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_ACCESS_RIGHT - The calling task has not the right to install handlers",
+    "PXERR_REQUEST_INVALID_PARAMETER - Invalid trap number"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Install a traphandler for a trap",
+    "long": [
+      {
+        "type": "PP",
+        "text": "Installs the C-function handler as trap handler for trap class trapno. Whenever this trap occurs, handler is called with 6 arguments."
+      },
+      {
+        "type": "BL",
+        "ARM-CMX": [
+          "The trap number",
+					"The user defined argument",
+					"The identifier of the task that caused the trap",
+					"The contents of FSR (Fault Status Register)",
+					"The contents of MMFAR (MemManage Fault Address Register) or BFAR (BusFault Address Register)",
+					"A pointer to the saved register frame"
+        ],
+        "TC23": [
+          "The trap number and TIN (Trap Indication Number)",
+					"The user defined argument",
+					"The identifier of the task that caused the trap",
+					"The contents of DSTR (Data Synchronous Error Trap Register)",
+					"The contents of DEAD (Data Error Address Register)",
+					"A pointer to the saved CSA"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "The traphandler should return 1 if the trap could be handled, otherwise 0."
+      },
+      {
+        "type": "PP",
+        "text": "Handler MUST FOLLOW the standard GNU calling conventions!"
+      },
+      {
+        "type": "PP",
+        "text": "The function is not protected against the abort mechanism!"
+      },
+      {
+        "type": "PP",
+        "text": "The installation is NOT ATOMIC! The application MUST ENSURE that no traps of class trapno occur during a call to PxTrapInstallHandler(trapno, ...)!"
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxIntInstallHandler",
+      "display": "PxIntInstallHandler()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxTrapInstallHandler(TRAP_CLASS, myHandler, (PxArg_t) (0));",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The parameter `trapno` must be a valid trap id. (V)\n",
+      "`traphandler` must be a pointer to a trap handler function.(V)"
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the trap handler could be installed. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "The calling task must have the right to install trap handlers `(PXACCESS_HANDLERS)`. (V)"
+    ]
+  }
+}

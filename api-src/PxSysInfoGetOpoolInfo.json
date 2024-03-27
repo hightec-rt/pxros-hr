@@ -1,0 +1,123 @@
+{
+  "name": {
+    "key": "PxSysInfoGetOpoolInfo",
+    "display": "PxSysInfoGetOpoolInfo()"
+  },
+  "synopsis": [
+    "PxError_t PxSysInfoGetOpoolInfo (PxInfoOpool_t *OpoolInfo, PxOpool_t OpoolId);"
+  ],
+  "arguments": [
+    {
+      "name": "OpoolInfo",
+      "description": "Pointer to data area to store object pool information to"
+    },
+    {
+      "name": "OpoolId",
+      "description": "Id of object pool object"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_OPOOL_ILLOPOOL - The given object is not a mailbox object",
+    "PXERR_PROT_PERMISSION - The task has no write permission on the `OpoolInfo` object",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Function to get object pool info",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxSysInfoGetOpoolInfo stores the object pool OpoolId's type (real/virtual), its capacity, its minimal capacity, and -if virtual- the superior object pool into the info structure OpoolInfo."
+      },
+      {
+        "type": "PP",
+        "text": "The structure of OpoolInfo has the following format:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "// object pool info",
+          "typedef struct",
+          "{",
+          "\tPxInfoOpoolType_t PxInfoOpool_Type; // opool’s type",
+          "\tPxOpool_t  PxInfoOpool_Superior; // real opool, where virtual opools get their objects",
+          "\tPxULong_t  PxInfoOpool_Capacity; // opool’s capacity",
+          "\tPxULong_t  PxInfoOpool_MinCapacity; // opool’s lowest capacity",
+          "\tPxTask_t   PxInfoOpool_RequestingTask; // task, which requested this opool",
+          "} PxInfoOpool_t;"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "The object pool OpoolId may be one of the following types:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef enum",
+          "{",
+          "\tOpoolType_Real,",
+          "\tOpoolType_Virtual",
+          "} PxInfoOpoolType_t;"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "There is a union available containing all sysinfo types:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef union",
+          "{",
+          "\tPxInfoMC_t  McInfo; // memory class information struct",
+          "\tPxInfoOpool_t  OpoolInfo; // Opool information struct",
+          "\tPxInfoMsg_t  MsgInfo; // message information struct",
+          "\tPxInfoMbx_t  MbxInfo; // mailbox information struct",
+          "\tPxInfoDelay_t  DelayInfo; // delay object information struct",
+          "\tPxInfoPe_t  PeInfo; // periodic event information struct",
+          "\tPxInfoTo_t  ToInfo; // timeout object information struct",
+          "\tPxInfoInterrupt_t  InterruptInfo; // interrupt object information struct",
+          "} PxObjInfo_T;"
+        ]
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "xref:chapter/section/Object_pool.adoc",
+      "display": "Object Pool"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxSysInfoGetOpoolInfo(&OpoolInfo, opoolId);",
+    "",
+    "if (err == PXERR_NOERROR) {",
+    "    // Handle info",
+    "}",
+    "else {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`OpoolInfo` must be a pointer to a valid data area.\n",
+      "`OpoolId` must be:\n",
+      "   - a valid PXROS-HR object pool created with a `PxOpoolRequest` call (V). The validity of `OpoolId` may also be checked by the `PxOpoolIsValid` macro (F).",
+      "   - the symbolic value `PXOpoolSystemdefault` specifying the system object pool(V)",
+      "   - the symbolic value `PXOpoolTaskdefault` specifying the task's object pool(V)"
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the system information could be delivered. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions"]
+  }
+}

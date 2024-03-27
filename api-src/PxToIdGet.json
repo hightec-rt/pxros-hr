@@ -1,0 +1,30 @@
+{
+  "name": {
+    "key": "PxToIdGet",
+    "display": "PxToIdGet()"
+  },
+  "synopsis": ["PxObjId_t PxToIdGet (PxTo_t To);"],
+  "arguments": [
+    {
+      "name": "To",
+      "description": "A To handle"
+    }
+  ],
+  "retValues": ["Object ID of the object handle To"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the object ID of the object handle To",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxToIdGet returns the object ID of the object handle To."
+      }
+    ]
+  },
+  "usage": ["#include \"pxdef.h\"", "", "PxObjId_t objid = PxToIdGet(To);", ""]
+}

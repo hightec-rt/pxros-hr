@@ -1,0 +1,38 @@
+{
+  "name": {
+    "key": "PxInterruptIdIsValid",
+    "display": "PxInterruptIdIsValid()"
+  },
+  "synopsis": ["int PxInterruptIdIsValid (PxInterrupt_t Interrupt);"],
+  "arguments": [
+    {
+      "name": "Interrupt",
+      "description": "An Interrupt handle"
+    }
+  ],
+  "retValues": ["TRUE if Interrupt is a valid Interrupt handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return TRUE if Interrupt holds a valid Interrupt handle",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxInterruptIdIsValid returns TRUE if obj holds a valid Interrupt handle."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "int valid = PxInterruptIdIsValid(Interrupt);",
+    "",
+    "if (!valid) {",
+    "    // Handle invalid Interrupt handle",
+    "}"
+  ]
+}

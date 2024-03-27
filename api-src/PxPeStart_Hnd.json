@@ -1,0 +1,69 @@
+{
+  "name": {
+    "key": "PxPeStart_Hnd",
+    "display": "PxPeStart_Hnd()"
+  },
+  "synopsis": ["PxError_t PxPeStart_Hnd (PxPe_t PeId);"],
+  "arguments": [
+    {
+      "name": "PeId",
+      "description": "Periodic event object handle"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_PE_ILLPE - `PeId` is not a valid periodic event object handle",
+    "PXERR_REQUEST_ILLEGAL - The caller is not the requester of the PeId object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Start periodic event object (handler service)",
+    "long": [
+      {
+        "type": "PP",
+        "text": "The PxPeStart_Hnd function starts signalling periodic events associated with PeId object. The PxPeStart_Hnd can only be called from a handler, not from the task."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxAwaitEvents",
+      "display": "PxAwaitEvents()"
+    },
+    {
+      "key": "PxResetEvents",
+      "display": "PxResetEvents()"
+    },
+    {
+      "key": "xref:chapter/section/Delay_job_services.adoc",
+      "display": "Delay Job Services"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxPeStart_Hnd(PeId);",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`PeId` must be a valid PXROS-HR periodic event object created with a `PxPeRequest` call (V). The validity of `PeId` may also be checked by the `PxPeIsValid` macro (F)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the periodic event could be started. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["This function should be called from handlers only. (V)"]
+  }
+}

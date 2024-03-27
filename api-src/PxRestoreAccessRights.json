@@ -1,0 +1,55 @@
+{
+  "name": {
+    "key": "PxRestoreAccessRights",
+    "display": "PxRestoreAccessRights()"
+  },
+  "synopsis": ["PxError_t PxRestoreAccessRights (PxUInt_t accessrights);"],
+  "arguments": [
+    {
+      "name": "accessrights",
+      "description": "The accessrights to store"
+    }
+  ],
+  "errCodes": [
+    "PXERR_ACCESS_RIGHT - The calling task does not have the right to restore its access rights"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Restore access rights",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxRestoreAccessRights restores the given access rights the task abandoned earlier. The task must have the access right PXACCESS_TASK_RESTORE_ACCESS_RIGHTS to use this service."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxTaskCreate",
+      "display": "PxTaskCreate()"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxRestoreAccessRights(PXACCESS_TASK_SET_HIGHER_PRIO);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`accessrights` may be a combination of valid access rights (V)"
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the access rights could be restored. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

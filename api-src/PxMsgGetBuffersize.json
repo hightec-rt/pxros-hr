@@ -1,0 +1,48 @@
+{
+  "name": {
+    "key": "PxMsgGetBuffersize",
+    "display": "PxMsgGetBuffersize()"
+  },
+  "synopsis": ["PxSize_t PxMsgGetBuffersize (PxMsg_t msgid);"],
+  "arguments": [
+    {
+      "name": "msgid",
+      "description": "The message object"
+    }
+  ],
+  "retValues": ["Message data area size"],
+  "errCodes": [
+    "PXERR_MSG_ILLMSG - `msgid` is not a valid message object",
+    "PXERR_MSG_ILLUSER - The caller is not the user of this message"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the size of a message’s corresponding data area",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgGetBuffersize returns the messages data area size. If an invalid message is given, 0 is returned."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgRequest",
+      "display": "PxMsgRequest()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxSize_t Size = PxMsgGetBuffersize(msgid)"
+  ]
+}

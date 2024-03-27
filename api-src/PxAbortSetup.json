@@ -1,0 +1,64 @@
+{
+  "name": {
+    "key": "PxAbortSetup",
+    "display": "PxAbortSetup()"
+  },
+  "synopsis": [
+    {
+      "ARM-CMX": "PxEventsOrError_t PxAbortSetup(PxEvents_t events);",
+      "TC23": "PxEventsOrError_t PxAbortSetup(PxEvents_t events);"
+    }
+  ],
+  "arguments": [
+    {
+      "name": "events",
+      "description": "Events that let the call abort"
+    }
+  ],
+  "retValues": [
+    "If one of the aborting events is already received, no error status is returned.",
+    "An error code is returned if there is no abortstack free if the caller is not in user mode, or if the calling task's stack is invalid."
+  ],
+  "errCodes": [
+    "PXERR_NOERROR - one of the aborting events is already received",
+    "PXERR_TASK_STACKOVERFLOW - calling task's stack is too short",
+    "PXERR_TASK_ILLCALL - caller is not in user mode",
+    "PXERR_ABORTSTACK_OVERFLOW - no abortstack frame free"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Prepare abort mechanism",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxAbortSetup prepare abort mechanism"
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "xref:chapter/section/Abort_mechanism_services.adoc",
+      "display": "Abort Mechanism Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxEventsOrError_t EventsErr = PxAbortSetup(ev);",
+    "",
+    "if (EventsErr.error != PXERR_NOERROR)",
+    "{",
+    "   //Report Error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

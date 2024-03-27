@@ -1,0 +1,44 @@
+{
+  "name": {
+    "key": "PxGetAbortFrameSize",
+    "display": "PxGetAbortFrameSize()"
+  },
+  "synopsis": ["PxSize_t PxGetAbortFrameSize (void);"],
+  "retValues": ["Size of an abort frame"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the size of an abort frame",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxGetAbortFrameSize returns the size of an abort frame."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxExpectAbort",
+      "display": "PxExpectAbort()"
+    },
+    {
+      "key": "PxTaskCreate",
+      "display": "PxTaskCreate()"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxSize_t Size = PxGetAbortFrameSize();",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "name": {
+    "key": "PxSysInfoGetMbxInfo",
+    "display": "PxSysInfoGetMbxInfo()"
+  },
+  "synopsis": [
+    "PxError_t PxSysInfoGetMbxInfo (PxInfoMbx_t *MbxInfo, PxMbx_t mbxId);"
+  ],
+  "arguments": [
+    {
+      "name": "MbxInfo",
+      "description": "Pointer to data area to store mailbox information to"
+    },
+    {
+      "name": "mbxId",
+      "description": "Id of mailbox object"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_MBX_ILLMBX - The given object is not a mailbox object",
+    "PXERR_PROT_PERMISSION - The task has no write permission on the `MbxInfo` object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Function to get mailbox info",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxSysInfoGetMbxInfo stores the number of prio/normal messages in the mailbox mbxId and the number of tasks waiting at this mailbox into the info structure MbxInfo."
+      },
+      {
+        "type": "PP",
+        "text": "The structure of the MbxInfo has the following format:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef struct",
+          "{",
+          "\tPxULong_t PxInfoMbx_NormalMsgs; // number of normal messages in mailbox",
+          "\tPxMsg_t   PxInfoMbx_FirstNormalMsg; // first normal message in mailbox",
+          "\tPxULong_t PxInfoMbx_PrioMsgs; // number of prioritized messages in mailbox",
+          "\tPxMsg_t   PxInfoMbx_FirstPrioMsg; // first prioritized message in mailbox",
+          "\tPxULong_t PxInfoMbx_WaitingTasks; // number of tasks waiting at this mailbox",
+          "\tPxTask_t  PxInfoMbx_FirstWaitingTask; // first waiting task",
+          "\tPxTask_t  PxInfoMbx_RequestingTask; // task, which requested the mailbox",
+          "} PxInfoMbx_t;"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "There is a union available containing all sysinfo types:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef union",
+          "{",
+          "\tPxInfoMC_t  McInfo; // memory class information struct",
+          "\tPxInfoOpool_t  OpoolInfo; // Opool information struct",
+          "\tPxInfoMsg_t  MsgInfo; // message information struct",
+          "\tPxInfoMbx_t  MbxInfo; // mailbox information struct",
+          "\tPxInfoDelay_t  DelayInfo; // delay object information struct",
+          "\tPxInfoPe_t  PeInfo; // periodic event information struct",
+          "\tPxInfoTo_t  ToInfo; // timeout object information struct",
+          "\tPxInfoInterrupt_t  InterruptInfo; // interrupt object information struct",
+          "} PxObjInfo_T;"
+        ]
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "xref:chapter/section/Mailbox_services.adoc",
+      "display": "Mailbox Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxSysInfoGetMbxInfo(&MbxInfo, mbxId);",
+    "",
+    "if (err == PXERR_NOERROR) {",
+    "    // Handle info",
+    "}",
+    "else {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`MbxInfo` must be a pointer to a valid data area.\n",
+      "`mbxId` must be a valid PXROS-HR mailbox object created with a `PxMbxRequest` call or the task's private mailbox (V). The validity of `mbxId` may also be checked by the `PxMbxIsValid` macro (F)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the system information could be delivered. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions"]
+  }
+}

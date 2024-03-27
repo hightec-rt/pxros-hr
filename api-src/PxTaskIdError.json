@@ -1,0 +1,38 @@
+{
+  "name": {
+    "key": "PxTaskIdError",
+    "display": "PxTaskIdError()"
+  },
+  "synopsis": ["PxError_t PxTaskIdError (PxTask_t Task);"],
+  "arguments": [
+    {
+      "name": "Task",
+      "description": "A Task handle"
+    }
+  ],
+  "retValues": ["The last error of the object handle Task"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the last error of the object handle Task",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTaskIdError returns the last error of the object handle Task."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxTaskIdError(Task);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ]
+}

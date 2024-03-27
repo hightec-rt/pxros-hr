@@ -1,0 +1,38 @@
+{
+  "name": {
+    "key": "PxPeIdError",
+    "display": "PxPeIdError()"
+  },
+  "synopsis": ["PxError_t PxPeIdError (PxPe_t Pe);"],
+  "arguments": [
+    {
+      "name": "Pe",
+      "description": "A Pe handle"
+    }
+  ],
+  "retValues": ["The last error of the object handle Pe"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the last error of the object handle Pe",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxPeIdError returns the last error of the object handle Pe."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxPeIdError(Pe);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ]
+}

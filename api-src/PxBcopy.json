@@ -1,0 +1,36 @@
+{
+  "name": {
+    "key": "PxBcopy",
+    "display": "PxBcopy()"
+  },
+  "synopsis": ["void PxBcopy(PxUChar_t const *s, PxUChar_t *d, PxSize_t len);"],
+  "arguments": [
+    {
+      "name": "s",
+      "description": "Source where the bytes are copied from"
+    },
+    {
+      "name": "d",
+      "description": "Destination where the bytes are copied to"
+    },
+    {
+      "name": "len",
+      "description": "Number of bytes to be copied"
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Copy a byte string",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxBcopy copies `len` bytes starting from `s` to `d`. The areas `[s,s+len-1]` and `d,d+len-1]` must not overlap."
+      }
+    ]
+  }
+}

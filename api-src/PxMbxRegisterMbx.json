@@ -1,0 +1,63 @@
+{
+  "name": {
+    "key": "PxMbxRegisterMbx",
+    "display": "PxMbxRegisterMbx()"
+  },
+  "synopsis": [
+    "PxError_t PxMbxRegisterMbx (PxMbxReq_t mbxreqid, PxMbx_t mbxid);"
+  ],
+  "arguments": [
+    {
+      "name": "mbxreqid",
+      "description": "The request id of the server mailbox to register"
+    },
+    {
+      "name": "mbxid",
+      "description": "Of the mailbox to register"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_MBX_ILLMBX - The given mailbox is an illegal mailbox object",
+    "PXERR_NAME_ILL_REQUEST - The `mbxreqid` is not known or the task is not allowed to do this call"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Register an application-specific server mailbox",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMbxRegisterMbx registers an application-specific mailbox id (mbxid) for a defined system service (mbxreqid)."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxGetGlobalServerMbx",
+      "display": "PxGetGlobalServerMbx()"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxMbxRegisterMbx(mbxreqid, mbxid);",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`mbxreqid` must be a valid PXROS-HR service mailbox (V). `mbxid` must be a valid mailbox object (V)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the mailbox could be registered for the service mailbox. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions"]
+  }
+}

@@ -1,0 +1,326 @@
+{
+  "name": {
+    "key": "PxTaskCreate",
+    "display": "PxTaskCreate()"
+  },
+  "synopsis": [
+    "PxTask_t PxTaskCreate (PxOpool_t opool, PxTaskSpec_ct taskspec, PxPrio_t prio, PxEvents_t actevents);"
+  ],
+  "arguments": [
+    {
+      "name": "opool",
+      "description": "The object pool where to request the task object"
+    },
+    {
+      "name": "taskspec",
+      "description": "The task specification"
+    },
+    {
+      "name": "prio",
+      "description": "The task's priority"
+    },
+    {
+      "name": "actevents",
+      "description": "The event that activates the task"
+    }
+  ],
+  "retValues": ["Task handle on success", "Invalid task handle on failure"],
+  "errCodes": [
+    "PXERR_ACCESS_RIGHT - the new tasks get more access rights than the calling task or the task does not have the right to create a new task",
+    "PXERR_GLOBAL_ILLEGAL_CORE - the requested object pool is not on the same core",
+    "PXERR_ILLEGAL_ACCESS - taskspec is not readable for the calling task",
+    "PXERR_MC_ILLMC - task default memory class is invalid",
+    "PXERR_MC_SEGBOUNDARY - stack crosses segment boundary",
+    "PXERR_OBJ_ILLOBJ - unable to get an object for the task’s private mailbox",
+    "PXERR_OPOOL_ILLOPOOL - the passed object pool handle is not valid",
+    "PXERR_TASK_ILLPRIO - The new task gets a higher priority than the creator’s priority without the appropriate access right",
+    "PXERR_TASK_ILLREGION - The new task has protection regions that are not within its parents protection regions",
+    "PXERR_TASK_ILLSTACKSPECTYPE - invalid stack type",
+    "PXERR_TASK_SCHEDEXT_NOT_CONFIGURED - task extensions not configured in this PXROS version",
+    "PXERR_TASK_STACKUNKNOWN - stack begin could not be determined: specify stack size",
+    "PXERR_TASK_STKMEM - insufficient memory to allocate the task stack",
+    "PXERR_TASK_TCBMEM - insufficient memory to allocate the task control block",
+    "PXERR_OBJ_ABORTED - The request was aborted by an event",
+    "PXERR_OBJ_NOOBJ - No free object is available",
+    "PXERR_TASK_STACK_ILLALIGN - Invalid task stack alignment",
+    "PXERR_TASK_ILLPRIV - Illegal privilege for tasks",
+    "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Create a task object",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTaskCreate creates a PXROS task object according to the specification taskspec and returns its identifier. This new task, identified by its task handle, is scheduled by PXROS until termination."
+      },
+      {
+        "type": "PP",
+        "text": "If not done by the task linker description file, taskspec may specify (among other things) the new task stack and the abort stack. The task stack is used for all local data, procedure calls and calls to PXROS services. The task stack is required at all times. The abort stack is only used with calls to PxExpectAbort. Each nested PxExpectAbort call requires an abort frame."
+      },
+      {
+        "type": "PP",
+        "text": "After task creation all bits in the task mode are cleared. See Task Mode Manipulation Services for details."
+      },
+      {
+        "type": "PP",
+        "text": "The task starts when PxTaskSignalEvents... sends one of the events specified in the ts_actevents structure. If 0 was specified, the task starts immediately."
+      },
+      {
+        "type": "PP",
+        "text": "The structure type PxTaskSpec_t:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef struct",
+          "{",
+          "\t// task name --- for debugging",
+          "\tconst PxUChar_t *ts_name;",
+          "\t// task main function",
+          "\tvoid (*ts_fun) (PxTask_t task, PxMbx_t mbx, PxEvents_t events);",
+          "\t// the task's PXMcTaskdefault",
+          "\tPxMc_t ts_mc;",
+          "\t// the task's PXOpoolTaskdefault",
+          "\tPxOpool_t ts_opool;",
+          "\t// task stack specification",
+          "\tPxStackSpec_T ts_taskstack;",
+          "\t// task interrupt stack specification",
+          "\tPxStackSpec_T ts_inttaskstack;",
+          "\t// the tasks initial priority",
+          "\tPxPrio_t ts_prio;",
+          "\t// Events activating the task. If 0 the task is activated immediately, otherwise, it waits for one of these events.",
+          "\tPxEvents_t ts_actevents;",
+          "\t// Reload value for timeslice account, if 0 the default is used (currently 0, i.e. not participating in the timeslicing mechanism).",
+          "\tPxTicks_t ts_timeslices;",
+          "\t// The abort stack size (given in abort frames). [Refer to the abortion mechanism description PxExpectAbort (B)]",
+          "\tPxSize_t ts_abortstacksize;",
+          "\t// privileges for the task; its interpretation is processor dependent;",
+          "\tPxArg_t ts_privileges;",
+          "\t// Access rights of the task. The access rights are described by a mask of allowed access classes.",
+          "\tPxUInt_t ts_accessrights;",
+          "\t// In PXROS-HR description of the task address space.",
+          "\tPxTaskContext_ct ts_context;",
+          "\t// In PXROS-HR a table of memory regions accessible by the task.",
+          "\tPxProtectRegion_ct ts_protect_region;",
+          "} PxTaskSpec_T;"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "Description of the main function:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "void (*ts_fun) (PxTask_t task, PxMbx_t mbx, PxEvents_t events)"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "ts_fun must be a C routine which never returns to its caller. The task may only terminate by calling PxDie or PxTerminate, but many application tasks loop forever. ts_fun and all procedures called by ts_fun (including all of their local data) comprise the new task."
+      },
+      {
+        "type": "PP",
+        "text": "The function parameters specify the new task’s task handle (task), the mailbox handle mbx of its private mailbox, and the events (events) by which the task gets activated."
+      },
+      {
+        "type": "PP",
+        "text": "There are three different ways to specify a task stack by using the structure type PxStackSpec_t:"
+      },
+      {
+        "type": "OL",
+        "text": [
+          "Using the stack type PXStackAlloc. This type is used for automatic task stack creation. The specification includes the stack size in PxInt_t units (stk_size) and a specification of the memory class from which the stack memory must be taken (stk_src). Stack memory is requested as one block and released automatically as the task terminates.",
+          "Using the stack type PXStackGrow. This type specifies the stacks lowest address (stk_src) and its size (stk_size).",
+          "Using the stack type PXStackFall. This type specifies the address above the stack (stk_src) and its size in PxInt_t units (stk_size)."
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "In the last two cases, stack size information may be given as PXStackDontCheck. This method does not check for stack overflow. The address provided is taken directly for the stack pointer. If PxStackDontCheck is used for size information, the stack type must be compatible with the stack type used by the processor."
+      },
+      {
+        "type": "CS",
+        "text": [
+          "// stack specification",
+          "typedef struct",
+          "{",
+          "\t// specification type",
+          "\tPxStackSpecType_t stk_type;",
+          "\t// stacksize in \"PxInt_t\" units",
+          "\tPxSize_t stk_size;",
+          "\t// stack source: \"PxMc_t\" for PXStackAlloc, \"PxMemAligned_t *\" otherwise",
+          "\tunion {",
+          "\t\tPxStackAligned_t *stk;",
+          "\t\tPxMc_t mc;",
+          "\t} stk_src;",
+          "} PxStackSpec_T;"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "If the task wants to install interrupt handlers, delay handlers, etc., it is necessary that the task has an own interrupt stack. This interrupt stack has to be defined on task creation. This stack is used by each interrupt function, so only one interrupt stack is required. This stack must not be allocated, but has to be defined as PXStackFall, or PXStackGrow, depending on the processor architecture."
+      },
+      {
+        "type": "PP",
+        "text": "The member ts_privileges specifies the task's privileges. In PXROS-HR, there are two allowed privileges for tasks:"
+      },
+      {
+        "type": "BL",
+        "text": [
+          "PXUser0Privilege - the task will be executed in the User-0 mode",
+          "PXUser1Privilege - the task will be executed in the User-1 mode with access to the periphery."
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "A task may only create a new task with less or equal privileges, i.e., a task of privilege User-0 cannot create a task in privilege mode User-1."
+      },
+      {
+        "type": "PP",
+        "text": "The member ts_accessrights specifies the access rights of the task. Different access classes exist, and the access right is defined as a bit mask of the allowed access classes."
+      },
+      {
+        "type": "BL",
+        "text": [
+          "PXACCESS_HANDLERS - the right to execute PxHndcalls and install interrupt handlers with system privileges",
+          "PXACCESS_INSTALL_HANDLERS - the right to install interrupt handlers which are executed as PXROS handlers like delay jobs and normal interrupts",
+          "PXACCESS_INSTALL_SERVICES - the right to install PXROS services as handlers",
+          "PXACCESS_REGISTERS - the right to execute system functions with access to special core registers, these functions are normally processor dependent",
+          "PXACCESS_SYSTEMDEFAULT - the right to allocate from the system default resources PXMcSystemdefault and PXOpoolSystemdefault",
+          "PXACCESS_RESOURCES - the right to access resources which are not owned by the task itself, i.e., not Taskdefault and not created by the task itself",
+          "PXACCESS_NEW_RESOURCES - the right to create new resources, i.e., new objectpools and memory classes",
+          "PXACCESS_SYSTEM_CONTROL - the right to execute special system functions which can influence the system behavior (e.g., PxSetMessagefun, PxTaskSuspend)",
+          "PXACCESS_MODEBITS - the right for a task to set its modebits, a task may always clear its modebits",
+          "PXACCESS_OVERRIDE_ABORT_EVENTS - the right to override the aborting events from PxExpectAbort; a task can use aborting events itself inside a supervised function",
+          "PXACCESS_TASK_CREATE - the right to create a task",
+          "PXACCESS_TASK_CREATE_HIGHER_PRIO - the right to create a task with a higher priority",
+          "PXACCESS_TASK_SET_HIGHER_PRIO - the right for a task to set its priority to a higher priority than the one it has been created with",
+          "PXACCESS_CHANGE_PRIO - the right for a task to change its priority to a lower priority than the one it has been created with",
+          "PXACCESS_TASK_RESTORE_ACCESS_RIGHTS - the right for a task to restore its access rights to those it has been created with",
+          "PXACCESS_TASK_CREATE_HIGHER_ACCESS - the right to create a task without respecting memory inheritance rule",
+          "PXACCESS_TRACECTRL - the right for a task to use PxTraceCtrl",
+          "PXACCESS_GLOBAL_OBJECTS - the right to allocate from system default resource PXOPoolGlobalSystemdefault"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "On task creation PXROS will compare the access rights of the created task against the access rights of the creator and report an error if the created task would have more rights than the creator."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxDie",
+      "display": "PxDie()"
+    },
+    {
+      "key": "PxExpectAbort",
+      "display": "PxExpectAbort()"
+    },
+    {
+      "key": "PxGetAbortFrameSize",
+      "display": "PxGetAbortFrameSize()"
+    },
+    {
+      "key": "PxGetTimeslices",
+      "display": "PxGetTimeslices()"
+    },
+    {
+      "key": "PxInit",
+      "display": "PxInit()"
+    },
+    {
+      "key": "PxIntInstallHandler",
+      "display": "PxIntInstallHandler()"
+    },
+    {
+      "key": "PxOpoolResolveDefault",
+      "display": "PxOpoolResolveDefault()"
+    },
+    {
+      "key": "PxRemoveAccessRights",
+      "display": "PxRemoveAccessRights()"
+    },
+    {
+      "key": "PxRestoreAccessRights",
+      "display": "PxRestoreAccessRights()"
+    },
+    {
+      "key": "PxSetTimeslices",
+      "display": "PxSetTimeslices()"
+    },
+    {
+      "key": "PxTaskGetAccessRights",
+      "display": "PxTaskGetAccessRights()"
+    },
+    {
+      "key": "PxTaskGetMbx",
+      "display": "PxTaskGetMbx()"
+    },
+    {
+      "key": "PxTaskGetPrio",
+      "display": "PxTaskGetPrio()"
+    },
+    {
+      "key": "PxTaskGetSize",
+      "display": "PxTaskGetSize()"
+    },
+    {
+      "key": "PxTaskSetPrio",
+      "display": "PxTaskSetPrio()"
+    },
+    {
+      "key": "PxTerminate",
+      "display": "PxTerminate()"
+    },
+    {
+      "key": "xref:chapter/section/Application_information_services.adoc",
+      "display": "Application Information Services"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    },
+    {
+      "key": "xref:chapter/section/Event_handling_services.adoc",
+      "display": "Event Handling Services"
+    },
+    {
+      "key": "xref:chapter/section/Task_mode_manipulation_services.adoc",
+      "display": "Task Mode Manipulation Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxTask_t",
+    "CreateTask(void)",
+    "{",
+    "\treturn PxTaskCreate(opool, taskspec, TASK_PRIO, 0);",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`opool` must be a valid PXROS-HR object pool and the calling task must have the access right to take objects from this object pool (V). The validity of `opool` may also be checked by the `PxOpoolIsValid` macro (F). The object pool must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxOpoolCoreId` and the own core id with `PxGetCoreId` \\(C). Typically the task's default object pool `PXOpoolTaskdefault` is used for this purpose.",
+      "`taskspec` has to be a valid task specification structure (V).",
+      "`prio` must be a plausible value for the priority of the new task (typically 0 - 31) (V).",
+      "The parameter `actevents` contains a bitmask of events awaited and may be zero, if the task should be activated immediately. Typically the event mask is a constant (V)."
+    ],
+    "AfterCall": [
+      "The returned value is the id of type `PxTask_t`. This id may be checked with one of the following macros:",
+      "   - `PxTaskIdIsValid()` must be true.",
+      "   - `PxTaskIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxTaskIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C).\n\n+\nor with a call of `PxTaskCheck()` \\(C)."
+    ],
+    "BestPractice": [
+      "`PxTaskCreate` should only be called during initialization to ensure the availability of the task."
+    ]
+  }
+}

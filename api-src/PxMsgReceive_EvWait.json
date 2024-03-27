@@ -1,0 +1,110 @@
+{
+  "name": {
+    "key": "PxMsgReceive_EvWait",
+    "display": "PxMsgReceive_EvWait()"
+  },
+  "synopsis": [
+    "PxMsgEvent_t PxMsgReceive_EvWait (PxMbx_t mbxid, PxEvents_t events);"
+  ],
+  "arguments": [
+    {
+      "name": "mbxid",
+      "description": "The mailbox handle"
+    },
+    {
+      "name": "events",
+      "description": "Eventmask to wait for"
+    }
+  ],
+  "retValues": ["The received message handle and/or the received events"],
+  "errCodes": [
+    "PXERR_MBX_ILLMBX - The passed mailbox handle is invalid",
+    "PXERR_MSG_NOMSG - No message available",
+    "PXERR_MSG_ILLMSG - The passed message handle is invalid",
+    "PXERR_MSG_ILLUSER - The calling task is not the user of the message",
+    "PXERR_EVENT_ZERO - The given event mask is zero"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Receive a message from a mailbox while waiting for events",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgReceive_EvWait receives a message object from mailbox mbxid and returns the received message handle. The task becomes the user of the received message. If there is no message in the mailbox mbxid, the PxMsgReceive_EvWait waits until a message arrives or until an event from mask of events is signaled."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMbxInstallHnd",
+      "display": "PxMbxInstallHnd()"
+    },
+    {
+      "key": "PxMsgGetData",
+      "display": "PxMsgGetData()"
+    },
+    {
+      "key": "PxMsgGetSender",
+      "display": "PxMsgGetSender()"
+    },
+    {
+      "key": "PxMsgRelDataAccess",
+      "display": "PxMsgRelDataAccess()"
+    },
+    {
+      "key": "PxMsgSend",
+      "display": "PxMsgSend()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "#define MY_EVENT_MASK 0x1l",
+    "",
+    "PxMsgEvent_t msgEvHnd = PxMsgReceive_EvWait(mbxid, MY_EVENT_MASK);",
+    "",
+    "if (PxMsgIdIsValid (msgEvHnd.msg)) {",
+    "    /// Request successful - handle message",
+    "}",
+    "else if (msgEvHnd.events & MY_EVENT_MASK) {",
+    "    // Request not successful - interrupted by event ",
+    "}",
+    "else",
+    "{",
+    "    // Request not successful - check the msgEvHnd.msg.error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The parameter `mbxid` must be a valid mailbox object id. This id may be\n",
+      "   - the calling task's own mailbox (V)",
+      "   - the result of a nameserver query (V)",
+      "   - part of a message sent by another task (V)\n",
+      "The mailbox may be checked with the macros",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C).\n",
+      "or with a call of `PxMbxCheck()` \\(C).\n",
+      "The mailbox mbx must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxMbxCoreId` and the own core id with `PxGetCoreId` \\(C).\n",
+      "The parameter events contains a bitmask of events awaited and should not be zero. Typically the event mask is a constant (V)."
+    ],
+    "AfterCall": [
+      "The returned value is a structure of type `PxMsgEvent_t`. The received events are stored in the `events` part, the message id is given in the `msg` part of the structure, if a message is taken from the mailbox. This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "`PxMsgReceive_EvWait` may block, if no message is available at the mailbox  and no instance (task or handler) sends an event. If blocking calls are prohibited, `PxMsgReceive_NoWait()` should be used instead or the call should be monitored by the PXROS-HR `PxTo` mechanism."
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": {
+    "key": "PxOpoolIdResetError",
+    "display": "PxOpoolIdResetError()"
+  },
+  "synopsis": ["PxError_t PxOpoolIdResetError (PxOpool_t *Opool);"],
+  "arguments": [
+    {
+      "name": "Opool",
+      "description": "Pointer to the Opool handle"
+    }
+  ],
+  "retValues": ["The last error of the object handle Opool"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Reset the last error of the object handle Opool",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxOpoolIdResetError resets the last error of the object handle Opool."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxOpoolIdResetError(Opool);",
+    ""
+  ]
+}

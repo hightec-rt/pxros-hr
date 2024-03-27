@@ -1,0 +1,48 @@
+{
+  "name": {
+    "key": "PxSetTimeslices",
+    "display": "PxSetTimeslices()"
+  },
+  "synopsis": ["void PxSetTimeslices (PxTicks_t timeslices);"],
+  "arguments": [
+    {
+      "name": "timeslices",
+      "description": "Reload value for calling task's timeslice mechanism"
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Set timeslices",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxSetTimeslices installs timeslices as reload value for the calling task’s timeslice mechanism. If timeslices == 0, timeslicing is automatically disabled for the calling task."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxTaskCreate",
+      "display": "PxTaskCreate()"
+    },
+    {
+      "key": "xref:chapter/section/Application_information_services.adoc",
+      "display": "Application Information Services"
+    },
+    {
+      "key": "xref:chapter/section/Task_mode_manipulation_services.adoc",
+      "display": "Task Mode Manipulation Services"
+    }
+  ],
+  "usage": ["#include \"pxdef.h\"", "", "PxSetTimeslices(timeslices);", ""],
+  "cop": {
+    "BeforeCall": ["`timeslices` has to be a plausible value."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

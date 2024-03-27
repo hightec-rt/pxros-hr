@@ -1,0 +1,51 @@
+{
+  "name": {
+    "key": "PxMbxCheck",
+    "display": "PxMbxCheck()"
+  },
+  "synopsis": ["PxBool_t PxMbxCheck (PxMbx_t mbxid);"],
+  "arguments": [
+    {
+      "name": "mbxid",
+      "description": "The mailbox object"
+    }
+  ],
+  "retValues": [
+    "True if mbxid is a mailbox object",
+    "False if mbxid is not a mailbox object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Check the validity of a mailbox",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMbxCheck checks the validity of a mailbox object. The function returns true if the parameter is a valid mailbox object, else false."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxBool_t Val = PxMbxCheck(mbxid)",
+    "",
+    "if (Val == true) {",
+    "    // Handle mailbox object",
+    "}",
+    "else {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`mbxid` must be a valid PXROS-HR mailbox object created with a `PxMbxRequest` call or the task's private mailbox (V). The validity of `mbxid` may also be checked by the `PxMbxIsValid` macro (F)."
+    ],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

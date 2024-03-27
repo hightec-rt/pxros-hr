@@ -1,0 +1,31 @@
+{
+  "name": {
+    "key": "PxGetPrivileges",
+    "display": "PxGetPrivileges()"
+  },
+  "synopsis": ["PxArg_t PxGetPrivileges (void);"],
+  "retValues": ["Privileges of the calling task"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Get current privileges of the calling task",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxGetPrivileges returns the current privileges of the calling task."
+      }
+    ]
+  },
+  "usage": ["#include \"pxdef.h\"", "", "PxArg_t arg = PxGetPrivileges();", ""],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": [
+      "`PxGetError` must be called to check if an error has occurred. (F)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

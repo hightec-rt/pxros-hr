@@ -1,0 +1,85 @@
+{
+  "name": {
+    "key": "PxPeRelease",
+    "display": "PxPeRelease()"
+  },
+  "synopsis": ["PxPe_t PxPeRelease (PxPe_t Pe);"],
+  "arguments": [
+    {
+      "name": "Pe",
+      "description": "Periodic event handler object"
+    }
+  ],
+  "retValues": [
+    "Invalid periodic event object on success",
+    "Periodic event object on failure"
+  ],
+  "errCodes": [
+    "PXERR_PE_ILLPE - `Pe` is not a valid periodic event handler object",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+    "PXERR_DELAY_USED_BY_INTERRUPT - Delay object currently in use by the interrupt handler",
+    "PXERR_OPOOL_ILLOPOOL - The object pool is not valid",
+    "PXERR_TASK_ILLTASK - The task is not a valid task object",
+    "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Release the periodic event object",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxPeRelease stops the periodic event object Pe (if necessary) and releases the associated resources (allocated by PxPeRequest). After this call, Pe may not be used."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxAwaitEvents",
+      "display": "PxAwaitEvents()"
+    },
+    {
+      "key": "PxPeRequest",
+      "display": "PxPeRequest()"
+    },
+    {
+      "key": "PxResetEvents",
+      "display": "PxResetEvents()"
+    },
+    {
+      "key": "xref:chapter/section/Delay_job_services.adoc",
+      "display": "Delay Job Services"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxPe_t Pe = PxPeRelease(Pe);",
+    "",
+    "if (PxPeIdError(Pe) == PXERR_NOERROR) {",
+    "  // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`Pe` must be a valid PXROS-HR periodic event object created with a `PxPeRequest` call (V). The validity of `Pe` may also be checked by the `PxPeIsValid` macro (F)."
+    ],
+    "AfterCall": [
+      "`PxPeRelease` returns the periodic event object to the object pool it has been taken from. On success `PxPeRelease` returns the invalidated periodic event object. This may be checked with one of the following macros:",
+      "   - `PxPeIdIsValid()` must be false.",
+      "   - `PxPeIdGet()` must be `_PXIllegalObjId`.",
+      "   - `PxPeIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "After `PxPeRelease`, the given periodic event object `Pe` is no longer valid and may never be used as periodic event object!"
+    ]
+  }
+}

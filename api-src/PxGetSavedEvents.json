@@ -1,0 +1,55 @@
+{
+  "name": {
+    "key": "PxGetSavedEvents",
+    "display": "PxGetSavedEvents()"
+  },
+  "synopsis": ["PxEvents_t PxGetSavedEvents (void);"],
+  "retValues": ["Saved events of calling task"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return events saved for the calling task",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxGetSavedEvents returns the events saved for the calling task."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxClearModebits",
+      "display": "PxClearModebits()"
+    },
+    {
+      "key": "PxExpectAbort",
+      "display": "PxExpectAbort()"
+    },
+    {
+      "key": "PxSetModebits",
+      "display": "PxSetModebits()"
+    },
+    {
+      "key": "xref:chapter/section/Task_mode_manipulation_services.adoc",
+      "display": "Task Mode Manipulation Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxEvents_t Ev = PxGetSavedEvents();",
+    "",
+    "if (Ev.error != PXERR_NOERROR) {",
+    "  // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

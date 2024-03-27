@@ -1,0 +1,71 @@
+{
+  "name": {
+    "key": "PxMsgGetOwner",
+    "display": "PxMsgGetOwner()"
+  },
+  "synopsis": ["PxTask_t PxMsgGetOwner (PxMsg_t msgid);"],
+  "arguments": [
+    {
+      "name": "msgid",
+      "description": "The message object"
+    }
+  ],
+  "retValues": ["Message owner"],
+  "errCodes": [
+    "PXERR_MSG_ILLMSG - `msgid` is not a valid object id",
+    "PXERR_MSG_ILLUSER - The calling task is not user of this message"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the owner TaskId of the message",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgGetOwner returns the message's owner."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgRequest",
+      "display": "PxMsgRequest()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxTask_t Task = PxMsgGetOwner(msgid)",
+    "",
+    "if (PxTaskIdGet(task) == _PXIllegalObjId)  {",
+    "    // Report error",
+    "}",
+    "else {",
+    "    // Handle task",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`msgid` must be a valid message object, requested via `PxMsgRequest...` or `PxMsgEnvelop...` or received by a `PxMsgReceive...` call (V). This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "AfterCall": [
+      "The returned value is the id of type `PxTask_t`. This id may be checked with one of the following macros:\n",
+      "   - `PxTaskIdIsValid()` must be true.",
+      "   - `PxTaskIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxTaskIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C).\n",
+      "Additionally the task id may be checked with `PxTaskCheck()` (F)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

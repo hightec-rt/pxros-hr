@@ -1,0 +1,103 @@
+{
+  "name": {
+    "key": "PxMsgForceRelease",
+    "display": "PxMsgForceRelease()"
+  },
+  "synopsis": ["PxError_t PxMsgForceRelease (PxMsg_t msgId);"],
+  "arguments": [
+    {
+      "name": "msgId",
+      "description": "Message to release"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    {
+      "ARM-CMX": [
+        "PXERR_MSG_ILLMSG - The passed message handle is invalid",
+        "PXERR_MSG_ILLOWNER - The message has no owner",
+        "PXERR_MSG_ILLUSER - The caller is not the user of the message",
+        "PXERR_ILL_NULLPOINTER_PARAMETER - Illegal null pointer parameter in the call",
+        "PXERR_PROT_ILL_SIZE - The size of the protection region is not valid",
+        "PXERR_PROT_ILL_ALIGN - Alignment of protection region not valid",
+        "PXERR_PROT_ILL_HANDLE - The associated protection handle is not valid",
+        "PXERR_MBX_ILLMBX - The passed mailbox handle is invalid",
+        "PXERR_REQUEST_INVALID_PARAMETER - Request with invalid parameter",
+        "PXERR_OPOOL_ILLOPOOL - The passed object pool handle is invalid",
+        "PXERR_MC_ILLMC - The memory class for the message is invalid",
+        "PXERR_INIT_ILLMCTYPE - The type for PXMcSystemdefault is different from PXMcVarsized, PXMcVarsizedAdjusted and PXMcVarsizedAligned",
+        "PXERR_MC_DAMAGED_BLOCK - The block in memory class has been damaged",
+        "PXERR_MC_INCONSISTENCY - Inconsistency in memory class: blk",
+        "PXERR_MC_ILLALIGN - Invalid memory block or size alignment in memory insert",
+        "PXERR_MC_ILLSIZE - Insufficient block size",
+        "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+        "PXERR_TASK_ILLTASK - The task is not a valid task object",
+        "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures"
+      ],
+      "TC23": [
+        "PXERR_MSG_ILLMSG - The passed message handle is invalid",
+        "PXERR_MSG_ILLOWNER - The message has no owner",
+        "PXERR_MSG_ILLUSER - The caller is not the user of the message",
+        "PXERR_PROT_ILL_HANDLE - The associated protection handle is not valid",
+        "PXERR_MBX_ILLMBX - The passed mailbox handle is invalid",
+        "PXERR_REQUEST_INVALID_PARAMETER - Request with invalid parameter",
+        "PXERR_OPOOL_ILLOPOOL - The passed object pool handle is invalid",
+        "PXERR_MC_ILLMC - The memory class for the message is invalid",
+        "PXERR_INIT_ILLMCTYPE - The type for PXMcSystemdefault is different from PXMcVarsized, PXMcVarsizedAdjusted and PXMcVarsizedAligned",
+        "PXERR_MC_DAMAGED_BLOCK - The block in memory class has been damaged",
+        "PXERR_MC_INCONSISTENCY - Inconsistency in memory class: blk",
+        "PXERR_MC_ILLALIGN - Invalid memory block or size alignment in memory insert",
+        "PXERR_MC_ILLSIZE - Insufficient block size",
+        "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+        "PXERR_TASK_ILLTASK - The task is not a valid task object",
+        "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures"
+      ]
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Release messages if PxRuntask is owner/user",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgForceRelease will release the message if the caller is the user of the message. If the caller is the owner of the message, PxMsgForceRelease marks this message to release. The flag for PxMsgAwaitRel is cleared and any defined release mailbox will be deleted."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgRelease",
+      "display": "PxMsgRelease()"
+    },
+    {
+      "key": "PxMsgReleaseAllMsg",
+      "display": "PxMsgReleaseAllMsg()"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxMsgForceRelease(msgId);",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`msgId` must be a valid message object, requested via `PxMsgRequest...` or `PxMsgEnvelop...` or received by a `PxMsgReceive...` call (V). This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the message could be released. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

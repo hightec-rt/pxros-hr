@@ -1,0 +1,70 @@
+{
+  "name": {
+    "key": "PxTrapGetTaskProtection",
+    "display": "PxTrapGetTaskProtection()"
+  },
+  "synopsis": ["PxDataProtectSet_T *PxTrapGetTaskProtection(PxTask_t tId);"],
+  "arguments": [
+    {
+      "name": "tId",
+      "description": "Task Id"
+    }
+  ],
+  "retValues": ["Pointer to the protection set", "0 in case of error"],
+  "errCodes": [
+    "PXERR_TASK_ILLTASK - task ID tId is not valid",
+    "PXERR_REQUEST_INVALID_PARAMETER - called in an illegal context"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Get the protection set of a task",
+    "long": [
+      {
+        "type": "PP",
+        "text": "Returns a pointer to the actual protection set of the requested task.\nIt may only be used in supervisor context with protection set PRS_TSK_KERNEL. This context is valid inside an application defined trap handler."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxTrapInstallHandler",
+      "display": "PxTrapInstallHandler()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxDataProtectSet_T *pset = PxTrapGetTaskProtection(tId);",
+    "",
+    "if (pset != 0) {",
+    "    // Handle Trap context",
+    "}",
+    "else {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The parameter `tId` must be a valid task object id.\n",
+      "This id may be:\n",
+      "   - the calling task’s own id read by calling `PxGetId()` (V)",
+      "   - the return value of a `PxTaskCreate()` call (V)",
+      "   - the result of a nameserver query (V)",
+      "   - part of a message sent by another task (V)\n",
+      "Additionally the task id may be checked with `PxTaskCheck()` (F)."
+    ],
+    "AfterCall": [
+      "The function returns a pointer to the task’s protection set or a null pointer if tId is not a valid task object \\(C)."
+    ],
+    "BestPractice": ["The caller must be in supervisor mode."]
+  }
+}

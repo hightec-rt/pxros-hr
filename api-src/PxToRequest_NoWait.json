@@ -1,0 +1,99 @@
+{
+  "name": {
+    "key": "PxToRequest_NoWait",
+    "display": "PxToRequest_NoWait()"
+  },
+  "synopsis": [
+    "PxTo_t PxToRequest_NoWait (PxOpool_t OpoolId, PxTicks_t timeout, PxEvents_t events);"
+  ],
+  "arguments": [
+    {
+      "name": "OpoolId",
+      "description": "The object pool to request the timeout object from"
+    },
+    {
+      "name": "timeout",
+      "description": "Number of ticks after which the event is signalled"
+    },
+    {
+      "name": "events",
+      "description": "Events to be signalled after period ticks"
+    }
+  ],
+  "retValues": ["Timeout object"],
+  "errCodes": [
+    "PXERR_OPOOL_ILLOPOOL - The passed object pool handle is invalid",
+    "PXERR_OBJ_NOOBJ - No free object is available",
+    "PXERR_OBJ_ABORTED - The request was aborted by an event",
+    "PXERR_OBJ_ILLOBJ - The passed object handle is not valid",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+    "PXERR_EVENT_ZERO - The given event mask is zero",
+    "PXERR_ACCESS_RIGHT - The calling task has not the right to access the object pool",
+    "PXERR_INTERNAL_INCONSISTENCY- Inconsistency of internal structures",
+    "PXERR_TO_ILLTO - The given object is no timeout object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Request a timeout object with immediate return",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxToRequest_NoWait creates and initializes a timeout event handler object, which is returned. It is associated with period and events. System resources are allocated, as needed, to signal events to the calling task after a period of ticks has passed since the timeout is started (PxToStart). It is necessary to finish up with PxToRelease, when the timeout event is no longer used. If there is no object available in the object pool OpoolId, the PxToRequest_NoWait immediately returns with error PXERR_OBJ_NOOBJ."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxAwaitEvents",
+      "display": "PxAwaitEvents()"
+    },
+    {
+      "key": "PxResetEvents",
+      "display": "PxResetEvents()"
+    },
+    {
+      "key": "PxToRelease",
+      "display": "PxToRelease()"
+    },
+    {
+      "key": "xref:chapter/section/Delay_job_services.adoc",
+      "display": "Delay Job Services"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "#define MY_EVENT_MASK 0x1l",
+    "",
+    "PxTo_t To = PxToRequest_NoWait(OpoolId, 1, MY_EVENT_MASK);",
+    "",
+    "if (PxToIdError(To) != PXERR_NOERROR){",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`OpoolId` must be a valid PXROS-HR object pool and the calling task must have the access right to take objects from this object pool (V). The validity of `OpoolId` may also be checked by the `PxOpoolIsValid` macro (F). The object pool must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxOpoolCoreId` and the own core id with `PxGetCoreId` \\(C). Typically the task's default object pool `PXOpoolTaskdefault` is used for this purpose.",
+      "The `timeout` parameter must have a plausible value. It should be a constant or the result of a `PxTickGetTicksFromMilliSeconds` call (V);",
+      "The parameter `events` contains an event bit  and should not be zero. Typically the event is a constant (V)."
+    ],
+    "AfterCall": [
+      "The returned value is the id of type `PxTo_t`. This id may be checked with one of the following macros:",
+      "   - `PxToIdIsValid()` must be true.",
+      "   - `PxToIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxToIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "`PxToRequest_NoWait` should only be called during initialization to ensure the availability of the timeout object."
+    ]
+  }
+}

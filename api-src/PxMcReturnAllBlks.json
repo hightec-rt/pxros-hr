@@ -1,0 +1,41 @@
+{
+  "name": {
+    "key": "PxMcReturnAllBlks",
+    "display": "PxMcReturnAllBlks()"
+  },
+  "synopsis": ["PxError_t PxMcReturnAllBlks(void);"],
+  "retValues": ["All errors from PxMcReturnBlk"],
+  "errCodes": [
+    "PXERR_MC_ILLMC - mcid is not a valid memory class",
+    "PXERR_INIT_ILLMCTYPE - The type for PXMcSystemdefault is different from PXMcVarsized, PXMcVarsizedAdjusted and PXMcVarsizedAligned",
+    "PXERR_MC_DAMAGED_BLOCK - The block in memory class has been damaged",
+    "PXERR_MC_INCONSISTENCY - Inconsistency in memory class: blk",
+    "PXERR_MC_ILLALIGN - Invalid memory block or size alignment in memory insert",
+    "PXERR_MC_ILLSIZE - Insufficient block size",
+    "PXERR_MC_NOMEM - Not enough memory in the memory class to satisfy the request"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return all allocated memory blocks of the caller",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMcReturnAllBlks returns all blocks which are allocated by the calling task."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxMcReturnAllBlks()",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ]
+}

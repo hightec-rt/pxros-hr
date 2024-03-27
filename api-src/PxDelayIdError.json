@@ -1,0 +1,38 @@
+{
+  "name": {
+    "key": "PxDelayIdError",
+    "display": "PxDelayIdError()"
+  },
+  "synopsis": ["PxError_t PxDelayIdError (PxDelay_t Delay);"],
+  "arguments": [
+    {
+      "name": "Delay",
+      "description": "A Delay handle"
+    }
+  ],
+  "retValues": ["The last error of the object handle Delay"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the last error of the object handle Delay",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxDelayIdError returns the last error of the object handle Delay"
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxDelayIdError(Delay);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "name": {
+    "key": "PxMsgIdIsValid",
+    "display": "PxMsgIdIsValid()"
+  },
+  "synopsis": ["int PxMsgIdIsValid (PxMsg_t Msg);"],
+  "arguments": [
+    {
+      "name": "Msg",
+      "description": "A Msg handle"
+    }
+  ],
+  "retValues": ["TRUE if Msg is a valid Msg handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Returns TRUE if Msg holds a valid Msg handle",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgIdIsValid returns TRUE if obj holds a valid Msg handle."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "int valid = PxMsgIdIsValid(Msg);",
+    "",
+    "if (!valid) {",
+    "    // Handle invalid Msg handle",
+    "}"
+  ]
+}

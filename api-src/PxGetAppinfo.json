@@ -1,0 +1,29 @@
+{
+  "name": {
+    "key": "PxGetAppinfo",
+    "display": "PxGetAppinfo()"
+  },
+  "synopsis": ["PxArg_t PxGetAppinfo (void);"],
+  "retValues": ["Application information"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the calling task's application information",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxGetAppinfo returns the application information info from the calling task's task control block."
+      }
+    ]
+  },
+  "usage": ["#include \"pxdef.h\"", "", "PxArg_t info = PxGetAppinfo();", ""],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

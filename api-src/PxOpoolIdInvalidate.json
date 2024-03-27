@@ -1,0 +1,29 @@
+{
+  "name": {
+    "key": "PxOpoolIdInvalidate",
+    "display": "PxOpoolIdInvalidate()"
+  },
+  "synopsis": ["PxOpool_t PxOpoolIdInvalidate (void);"],
+  "retValues": ["An invalid Opool handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return an invalid Opool handle for initialization",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxOpoolIdInvalidate returns an invalid Opool handle for initialization."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxOpool_t Opool = PxOpoolIdInvalidate();",
+    ""
+  ]
+}

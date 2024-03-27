@@ -1,0 +1,34 @@
+{
+  "name": {
+    "key": "PxPanic",
+    "display": "PxPanic()"
+  },
+  "synopsis": ["void PxPanic (void);"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Panic routine",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxPanic tries to do something sensible in case of a fatal error. Its exact behavior depends on the processor. Usually, PxPanic performs a breakpoint or illegal instruction, hoping that it is caught by either a monitor or by the application itself."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxSetMessageFun",
+      "display": "PxSetMessageFun()"
+    }
+  ],
+  "usage": ["#include \"pxdef.h\"", "", "PxPanic();", ""],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

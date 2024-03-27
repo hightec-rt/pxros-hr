@@ -1,0 +1,43 @@
+{
+  "name": {
+    "key": "PxTickGetTimeInMilliSeconds",
+    "display": "PxTickGetTimeInMilliSeconds()"
+  },
+  "synopsis": ["PxULong_t PxTickGetTimeInMilliSeconds (void);"],
+  "retValues": [
+    "Actual time since the first call to PxTickDefine_Hnd in milliseconds",
+    "0, if the ticks per second are not (yet) set"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the actual time since the first call to PxTickDefine_Hnd in milliseconds",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTickGetTimeInMilliSeconds returns the actual time since the first call to PxTickDefine_Hnd in milliseconds."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "xref:chapter/section/Delay_job_services.adoc",
+      "display": "Delay Job Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxULong_t time = PxTickGetTimeInMilliSeconds();",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

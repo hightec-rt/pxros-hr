@@ -1,0 +1,104 @@
+{
+  "name": {
+    "key": "PxTaskSignalEvents",
+    "display": "PxTaskSignalEvents()"
+  },
+  "synopsis": [
+    "PxError_t PxTaskSignalEvents (PxTask_t TaskId, PxEvents_t events);"
+  ],
+  "arguments": [
+    {
+      "name": "TaskId",
+      "description": "Task to send the events to"
+    },
+    {
+      "name": "events",
+      "description": "Events to send"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    {
+      "ARM-CMX": ["PXERR_TASK_ILLTASK - `TaskId` is not a valid task object"],
+      "TC23": [
+        "PXERR_TASK_ILLTASK - `TaskId` is not a valid task object",
+        "PXERR_OPOOL_ILLOPOOL - The object pool is not valid",
+        "PXERR_OBJ_NOOBJ - No free objects available to send the request",
+        "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+        "PXERR_OBJ_ILLOBJ - The passed object handle is not valid",
+        "PXERR_ILLEGAL_ACCESS - Access through parameter pointer in size is illegal ",
+        "PXERR_INTERNAL_INCONSISTENCY - Allocated object not convertible"
+      ]
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Signal events to a task (task service)",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTaskSignalEvents signals the events specified in `events` to `TaskId`. There they are saved until handled by task."
+      },
+      {
+        "type": "PP",
+        "text": "If `TaskId` waits for any of the events (with a PxAwaitEvents call or a call with the _EvWait suffix), the task is readied and the service returns. If some of the task’s aborting events occur (see PxExpectAbort) and task’s abort mechanism is enabled, the PxExpectAbort call returns prematurely. If the events are signaled to a task on an other core, PXROS will allocate an object for intercore communication to send this request to the other core for execution."
+      },
+      {
+        "type": "PP",
+        "text": "PxTaskSignalEvents can only be called from a task (not handler)."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxClearModebits",
+      "display": "PxClearModebits()"
+    },
+    {
+      "key": "PxAwaitEvents",
+      "display": "PxAwaitEvents()"
+    },
+    {
+      "key": "PxSetModebits",
+      "display": "PxSetModebits()"
+    },
+    {
+      "key": "PxExpectAbort",
+      "display": "PxExpectAbort()"
+    },
+    {
+      "key": "xref:chapter/section/Event_handling_services.adoc",
+      "display": "Event Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "#define MY_EVENT 0x1l",
+    "",
+    "PxError_t Err = PxTaskSignalEvents(TaskId, MY_EVENT);",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The parameter `TaskId` must be a valid task object id. This id may be\n",
+      "   - the calling task's own id read by calling `PxGetId()` (V)",
+      "   - the return value of a `PxTaskCreate()` call (V)",
+      "   - the result of a nameserver query (V)",
+      "   - part of a message sent by another task (V)",
+      "Additionally the task id may be checked with `PxTaskCheck()` (F)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the event could be signaled to the task. Any other return value describes an error, which has to be interpreted. \\(C)"
+    ],
+    "BestPractice": ["This function may be called from tasks only. (V)"]
+  }
+}

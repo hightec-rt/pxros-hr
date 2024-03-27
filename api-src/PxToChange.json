@@ -1,0 +1,83 @@
+{
+  "name": {
+    "key": "PxToChange",
+    "display": "PxToChange()"
+  },
+  "synopsis": [
+    "PxError_t PxToChange (PxTo_t To, PxTicks_t timeout, PxEvents_t events);"
+  ],
+  "arguments": [
+    {
+      "name": "To",
+      "description": "Timeout object"
+    },
+    {
+      "name": "timeout",
+      "description": "New timeout"
+    },
+    {
+      "name": "events",
+      "description": "New events"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_REQUEST_ILLEGAL - The caller is not the requester of the `To` object",
+    "PXERR_TO_ILLTO - `To` is not a valid timeout object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Change the timeout and events associated with To",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxToChange changes the timeout and events associated with To. It implicitly stops To."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxAwaitEvents",
+      "display": "PxAwaitEvents()"
+    },
+    {
+      "key": "PxResetEvents",
+      "display": "PxResetEvents()"
+    },
+    {
+      "key": "xref:chapter/section/Delay_job_services.adoc",
+      "display": "Delay Job Services"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "#define MY_EVENT_MASK 0x1l",
+    "",
+    "PxError_t Err = PxToChange(To, 5, MY_EVENT_MASK);",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`ToId` must be a valid PXROS-HR timeout object created with a `PxToRequest` call (V). The validity of `ToId` may also be checked by the `PxToIsValid` macro (F).",
+      "The `timeout` parameter must have a plausible value. It should be a constant or the result of a `PxTickGetTicksFromMilliSeconds` call (V);",
+      "The parameter `events` contains an event bit  and should not be zero. Typically the event is a constant (V)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the timout could be changed. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

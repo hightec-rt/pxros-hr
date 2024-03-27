@@ -1,0 +1,56 @@
+{
+  "name": {
+    "key": "PxMbxRequestMbx",
+    "display": "PxMbxRequestMbx()"
+  },
+  "synopsis": ["PxMbx_t PxMbxRequestMbx (PxMbxReq_t mbxreqid);"],
+  "arguments": [
+    {
+      "name": "mbxreqid",
+      "description": "The requested id of the requested server mailbox"
+    }
+  ],
+  "retValues": [
+    "Mailbox id of the requested mailbox if available",
+    "Invalid mailbox id if mailbox is not available"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Request an application-specific server mailbox",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMbxRequestMbx requests an application-specific mailbox id that has been assigned before for a defined system service (mbxreqid) by PxMbxRegisterMbx."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxGetGlobalServerMbx",
+      "display": "PxGetGlobalServerMbx()"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxMbx_t mbx = PxMbxRequestMbx(mbxreqid);",
+    "",
+    "if (!PxMbxIdIsValid(mbx)) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": ["`mbxreqid` must be a valid PXROS-HR service mailbox (V)."],
+    "AfterCall": [
+      "The function returns the requested service mailbox. This mailbox id may be checked with one of the following macros:\n",
+      "   - `PxMbxIdIsValid()` must be true.",
+      "   - `PxMbxIdGet()` must not be `_PXIllegalObjId`."
+    ],
+    "BestPractice": ["No restrictions"]
+  }
+}

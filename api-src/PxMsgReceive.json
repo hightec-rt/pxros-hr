@@ -1,0 +1,94 @@
+{
+  "name": {
+    "key": "PxMsgReceive",
+    "display": "PxMsgReceive()"
+  },
+  "synopsis": ["PxMsg_t PxMsgReceive (PxMbx_t mbxid);"],
+  "arguments": [
+    {
+      "name": "mbxid",
+      "description": "The mailbox handle"
+    }
+  ],
+  "retValues": ["The received message handle"],
+  "errCodes": [
+    "PXERR_MBX_ILLMBX - The passed mailbox handle is invalid",
+    "PXERR_MSG_NOMSG - No message available",
+    "PXERR_MSG_ILLMSG - The passed message handle is invalid",
+    "PXERR_MSG_ILLUSER - The calling task is not the user of the message",
+    "PXERR_EVENT_ZERO - The given event mask is zero"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Receive a message from a mailbox",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgReceive receives a message object from mailbox mbxid and returns the received message handle. The task becomes the user of the received message. If there is no message in the mailbox mbxid, the PxMsgReceive waits until a message arrives."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMbxInstallHnd",
+      "display": "PxMbxInstallHnd()"
+    },
+    {
+      "key": "PxMsgGetData",
+      "display": "PxMsgGetData()"
+    },
+    {
+      "key": "PxMsgGetSender",
+      "display": "PxMsgGetSender()"
+    },
+    {
+      "key": "PxMsgRelDataAccess",
+      "display": "PxMsgRelDataAccess()"
+    },
+    {
+      "key": "PxMsgSend",
+      "display": "PxMsgSend()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxMsg_t Msg = PxMsgReceive(mbxid);",
+    "",
+    "if (!PxMsgIdIsValid(Msg)) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The parameter `mbxid` must be a valid mailbox object id. This id may be\n",
+      "   - the calling task's own mailbox (V)",
+      "   - the result of a nameserver query (V)",
+      "   - part of a message sent by another task (V)\n",
+      "The mailbox may be checked with the macros",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C).\n",
+      "or with a call of `PxMbxCheck()` \\(C).\n",
+      "The mailbox mbx must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxMbxCoreId` and the own core id with `PxGetCoreId` \\(C)."
+    ],
+    "AfterCall": [
+      "The returned value is the id of type `PxMsg_t`. This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "`PxMsgReceive` may block, if no message is available at the mailbox. If blocking calls are prohibited, `PxMsgReceive_NoWait` should be used instead."
+    ]
+  }
+}

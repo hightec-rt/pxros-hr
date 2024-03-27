@@ -1,0 +1,35 @@
+{
+  "name": {
+    "key": "PxGetError",
+    "display": "PxGetError()"
+  },
+  "synopsis": ["PxError_t PxGetError (void);"],
+  "retValues": ["The remembered error code"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return remembered error code",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxGetError returns the last error remembered."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxSetError",
+      "display": "PxSetError()"
+    }
+  ],
+  "usage": ["#include \"pxdef.h\"", "", "PxError_t Err = PxGetError();", ""],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

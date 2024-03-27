@@ -1,0 +1,111 @@
+{
+  "name": {
+    "key": "PxIntInstallFastContextHandler",
+    "display": "PxIntInstallFastContextHandler()"
+  },
+  "synopsis": [
+    {
+      "ARM-CMX": "PxError_t PxIntInstallFastContextHandler (PxInt_t intno, PxUInt_t prio, PxIntHandler_t inthandler, PxArg_t arg);",
+      "TC23": "PxError_t PxIntInstallFastContextHandler (PxUInt_t intno, PxIntHandler_t inthandler, PxArg_t arg);"
+    }
+  ],
+  "arguments": [
+    {
+      "ARM-CMX": [
+        {
+          "name": "intno",
+          "description": "The number of the interrupt for which the fast context handler is installed"
+        },
+        {
+          "name": "prio",
+          "description": "Priority for interrupt controller. Two lowest priorities are reserved for the kernel. For information on the number of priorities, please refer to the device specification."
+        },
+        {
+          "name": "inthandler",
+          "description": "The fast context interrupt handler to be installed"
+        },
+        {
+          "name": "arg",
+          "description": "Argument to fast context interrupt handler"
+        }
+      ],
+      "TC23": [
+        {
+          "name": "intno",
+          "description": "The number of the interrupt for which the fast context handler is installed"
+        },
+        {
+          "name": "inthandler",
+          "description": "The interrupt handler to be installed"
+        },
+        {
+          "name": "arg",
+          "description": "Argument for interrupt handler"
+        }
+      ]
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_REQUEST_INVALID_PARAMETER - `intno` out of specification",
+    "PXERR_ACCESS_RIGHT - The calling task has not the right to install handlers",
+    "PXERR_INTR_ILL - The handler already installed from another task",
+    "PXERR_INTERRUPT_ILLINTERRUPT - intObj not valid interrupt object ",
+    "PXERR_ILLEGAL_SERVICE_CALLED - Service invalid"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Install a fast interrupt handler handled in the context of the task",
+    "long": [
+      {
+        "type": "PP",
+        "text": "Installation of a C-function as fast context interrupt handler. This handler will be called in user mode with task protection of the installing task."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    {
+      "ARM-CMX": [
+        "#include \"pxdef.h\"",
+        "",
+        "PxError_t Err = PxIntInstallFastContextHandler(10, 1, interruptHandler, (PxArg_t) 0);",
+        "",
+        "if (Err != PXERR_NOERROR) {",
+        "    // Report error",
+        "}"
+      ],
+      "TC23": [
+        "#include \"pxdef.h\"",
+        "",
+        "PxError_t Err = PxIntInstallFastContextHandler(10, interruptHandler, (PxArg_t) 0);",
+        "",
+        "if (Err != PXERR_NOERROR) {",
+        "    // Report error",
+        "}"
+      ]
+    }
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The parameter `intno` must be a valid interrupt id. (V)\n",
+      "`inthandler` must be a pointer to a interrupt handler function.(V)"
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the interrupt handler could be installed. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "The calling task must have the right to install fast context interrupt handlers `(PXACCESS_INSTALL_HANDLERS)`. (V)"
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": {
+    "key": "PxMbxIdResetError",
+    "display": "PxMbxIdResetError()"
+  },
+  "synopsis": ["PxError_t PxMbxIdResetError (PxMbx_t *Mbx);"],
+  "arguments": [
+    {
+      "name": "Mbx",
+      "description": "Pointer to the Mbx handle"
+    }
+  ],
+  "retValues": ["The last error of the object handle Mbx"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Reset the last error of the object handle Mbx",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMbxIdResetError resets the last error of the object handle Mbx."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxMbxIdResetError(Mbx);",
+    ""
+  ]
+}

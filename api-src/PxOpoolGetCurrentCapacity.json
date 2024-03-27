@@ -1,0 +1,61 @@
+{
+  "name": {
+    "key": "PxOpoolGetCurrentCapacity",
+    "display": "PxOpoolGetCurrentCapacity()"
+  },
+  "synopsis": ["PxUInt_t PxOpoolGetCurrentCapacity (PxOpool_t OpoolId);"],
+  "arguments": [
+    {
+      "name": "OpoolId",
+      "description": "An object pool id"
+    }
+  ],
+  "retValues": ["The current capacity of the given object pool"],
+  "errCodes": [
+    "PXERR_OPOOL_ILLOPOOL - OpoolId is not a valid object pool id",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the current capacity of an object pool",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxOpoolGetCurrentCapacity returns the current capacity in opool. This is the actual number of available objects only for real object pools. For virtual objects pools, it describes the number of objects that can be obtained from the object pool, provided that its source has sufficient capacity. If PxOpoolGetCurrentCapacity returns 0, either the object pool is empty or an error has occurred. Call PxGetError to see if an error occurred."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxOpoolRequest",
+      "display": "PxOpoolRequest()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxUInt_t Cap = PxOpoolGetCurrentCapacity(OpoolId);",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`OpoolId` must be a valid PXROS-HR object pool. The validity of `OpoolId` may be checked by the following macros:",
+      "   - `PxOpoolIdIsValid()` must be true.",
+      "   - `PxOpoolIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxOpoolIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "AfterCall": [
+      "The function returns 0 if the given object pool is invalid. In this case `PxGetError` must be called to check which error has occurred. (F)"
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

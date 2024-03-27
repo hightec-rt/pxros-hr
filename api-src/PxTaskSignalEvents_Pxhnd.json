@@ -1,0 +1,88 @@
+{
+  "name": {
+    "key": "PxTaskSignalEvents_Pxhnd",
+    "display": "PxTaskSignalEvents_Pxhnd()"
+  },
+  "synopsis": [
+    "PxError_t PxTaskSignalEvents_Pxhnd (PxTask_t TaskId, PxEvents_t events);"
+  ],
+  "arguments": [
+    {
+      "name": "TaskId",
+      "description": "Task to send the events to"
+    },
+    {
+      "name": "events",
+      "description": "Events to send"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_GLOBAL_ILLEGAL_CORE - the requested task is not on the same core",
+		"PXERR_TASK_ILLTASK - `TaskId` is not a valid task object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Signal events to a task (handler service)",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTaskSignalEvents_Pxhnd signals the events specified in events to `TaskId`. There they are saved until handled by task."
+      },
+      {
+        "type": "PP",
+        "text": "If `TaskId` waits for any of the events (with a PxAwaitEvents call or a call with the _EvWait suffix), the task is readied and the service returns. If some of the task’s aborting events occur (see PxExpectAbort) and task’s abort mechanism is enabled, the PxExpectAbort call returns prematurely. If the events are signaled to a task on an other core, PXROS will allocate an object for intercore communication to send this request to the other core for execution."
+      },
+      {
+        "type": "PP",
+        "text": "PxTaskSignalEvents_Pxhnd is the handler service. The handler service can not send events to tasks on other cores because it can not allocate an object for the request intercore communication."
+      },
+      {
+        "type": "PP",
+        "text": "Note the `PxTaskSignalEvents_Pxhnd()` is functionally identical to `PxTaskSignalEvents_Hnd()`."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxClearModebits",
+      "display": "PxClearModebits()"
+    },
+    {
+      "key": "PxAwaitEvents",
+      "display": "PxAwaitEvents()"
+    },
+    {
+      "key": "PxSetModebits",
+      "display": "PxSetModebits()"
+    },
+    {
+      "key": "PxExpectAbort",
+      "display": "PxExpectAbort()"
+    },
+    {
+      "key": "PxTaskSignalEvents_Hnd",
+      "display": "PxTaskSignalEvents_Hnd()"
+    },
+    {
+      "key": "xref:chapter/section/Event_handling_services.adoc",
+      "display": "Event Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "#define MY_EVENT 0x1l",
+    "",
+    "PxError_t Err = PxTaskSignalEvents_Pxhnd(TaskId, MY_EVENT);",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ]
+}

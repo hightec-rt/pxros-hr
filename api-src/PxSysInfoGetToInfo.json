@@ -1,0 +1,104 @@
+{
+  "name": {
+    "key": "PxSysInfoGetToInfo",
+    "display": "PxSysInfoGetToInfo()"
+  },
+  "synopsis": [
+    "PxError_t PxSysInfoGetToInfo (PxInfoTo_t *ToInfo, PxTo_t toId);"
+  ],
+  "arguments": [
+    {
+      "name": "ToInfo",
+      "description": "Pointer to data area to store timeout object information to"
+    },
+    {
+      "name": "toId",
+      "description": "Id of timeout object"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_PROT_PERMISSION - The task has no write permission on the `ToInfo` object",
+    "PXERR_TO_ILLTO - The given object is no timeout object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Function to get To info",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxSysInfoGetToInfo stores the contents of the timout handler toId into the info structure ToInfo."
+      },
+      {
+        "type": "PP",
+        "text": "The structure ToInfo has the following format:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef struct",
+          "{",
+          "\tPxTask_t PxInfoTo_Task; // task to receive timeout event",
+          "\tPxEvents_t  PxInfoTo_Event; // timeout event",
+          "\tPxULong_t  PxInfoTo_Timeout; // timeout period",
+          "\tPxULong_t  PxInfoTo_RestTicks; // rest ticks",
+          "\tPxTask_t   PxInfoTo_RequestingTask; // task which requested the to object",
+          "} PxInfoTo_t;"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "There is a union available containing all sysinfo types:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef union",
+          "{",
+          "\tPxInfoMC_t  McInfo; // memory class information struct",
+          "\tPxInfoOpool_t  OpoolInfo; // Opool information struct",
+          "\tPxInfoMsg_t  MsgInfo; // message information struct",
+          "\tPxInfoMbx_t  MbxInfo; // mailbox information struct",
+          "\tPxInfoDelay_t  DelayInfo; // delay object information struct",
+          "\tPxInfoPe_t  PeInfo; // periodic event information struct",
+          "\tPxInfoTo_t  ToInfo; // timeout object information struct",
+          "\tPxInfoInterrupt_t  InterruptInfo; // interrupt object information struct",
+          "} PxObjInfo_T;"
+        ]
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "xref:chapter/section/Time_management.adoc",
+      "display": "Time Management"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxSysInfoGetToInfo(&ToInfo, toId);",
+    "",
+    "if (err == PXERR_NOERROR) {",
+    "    // Handle info",
+    "}",
+    "else {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`ToInfo` must be a pointer to a valid data area.\n",
+      "`toId` must be a valid PXROS-HR timeout handler object created with a `PxToRequest` call (V). The validity of `toId` may also be checked by the `PxToIsValid` macro (F)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the system information could be delivered. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions"]
+  }
+}

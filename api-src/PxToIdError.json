@@ -1,0 +1,38 @@
+{
+  "name": {
+    "key": "PxToIdError",
+    "display": "PxToIdError()"
+  },
+  "synopsis": ["PxError_t PxToIdError (PxTo_t To);"],
+  "arguments": [
+    {
+      "name": "To",
+      "description": "A To handle"
+    }
+  ],
+  "retValues": ["The last error of the object handle To"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the last error of the object handle To",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxToIdError returns the last error of the object handle To."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxToIdError(To);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ]
+}

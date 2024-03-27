@@ -1,0 +1,29 @@
+{
+  "name": {
+    "key": "PxMbxIdInvalidate",
+    "display": "PxMbxIdInvalidate()"
+  },
+  "synopsis": ["PxMbx_t PxMbxIdInvalidate (void);"],
+  "retValues": ["An invalid Mbx handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return an invalid Mbx handle for initialization",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMbxIdInvalidate returns an invalid Mbx handle for initialization."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxMbx_t Mbx = PxMbxIdInvalidate();",
+    ""
+  ]
+}

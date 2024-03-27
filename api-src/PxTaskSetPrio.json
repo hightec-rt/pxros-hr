@@ -1,0 +1,89 @@
+{
+  "name": {
+    "key": "PxTaskSetPrio",
+    "display": "PxTaskSetPrio()"
+  },
+  "synopsis": ["PxError_t PxTaskSetPrio (PxTask_t taskid, PxPrio_t prio);"],
+  "arguments": [
+    {
+      "name": "taskid",
+      "description": "Task whose priority is changed"
+    },
+    {
+      "name": "prio",
+      "description": "The new priority of the task"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_ACCESS_RIGHT - The calling task does not have the right to change the prio of the task",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested task is not on the same core",
+    "PXERR_TASK_ILLPRIO - `prio` is not a valid PXROS priority",
+    "PXERR_TASK_ILLTASK - `taskid` is not a valid task object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Set task priority",
+    "long": [
+      {
+        "type": "PP",
+        "text": "This service gives task the priority prio. If task is the calling tasks identifier and prio its current priority, the calling task is placed at the end of the appropriate ready list (i.e., scheduling is enforced)."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxInit",
+      "display": "PxInit()"
+    },
+    {
+      "key": "PxTaskCreate",
+      "display": "PxTaskCreate()"
+    },
+    {
+      "key": "PxTaskGetPrio",
+      "display": "PxTaskGetPrio()"
+    },
+    {
+      "key": "xref:chapter/section/Application_information_services.adoc",
+      "display": "Application Information Services"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    },
+    {
+      "key": "xref:chapter/section/Task_mode_manipulation_services.adoc",
+      "display": "Task Mode Manipulation Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxTaskSetPrio(taskid, 10);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The parameter `taskid` must be a valid task object id. This id may be",
+      "   - the calling task's own id read by calling `PxGetId()` (V)",
+      "   - the return value of a `PxTaskCreate()` call (V)",
+      "   - the result of a nameserver query (V)",
+      "   - part of a message sent by another task (V)",
+      "The task object must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxTaskCoreId` and the own core id with `PxGetCoreId` \\(C).Additionally the task id may be checked with `PxTaskCheck()` (F).",
+      "`prio` should be a plausible priority value (typically between 0 and 31) (V)"
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the task's priority could be changed. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

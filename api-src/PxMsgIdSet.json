@@ -1,0 +1,30 @@
+{
+  "name": {
+    "key": "PxMsgIdSet",
+    "display": "PxMsgIdSet()"
+  },
+  "synopsis": ["PxMsg_t PxMsgIdSet (PxObjId_t id);"],
+  "arguments": [
+    {
+      "name": "id",
+      "description": "The object id"
+    }
+  ],
+  "retValues": ["Msg handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return an object handle which holds id as the object ID",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgIdSet returns an object handle which holds id as the object ID."
+      }
+    ]
+  },
+  "usage": ["#include \"pxdef.h\"", "", "PxMsg_t id = PxMsgIdSet(oid);", ""]
+}

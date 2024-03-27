@@ -1,0 +1,74 @@
+{
+  "name": {
+    "key": "PxMessageFunDefault",
+    "display": "PxMessageFunDefault()"
+  },
+  "synopsis": [
+    "void PxMessageFunDefault (PxMessageClass_t msg_class, PxError_t err, PxArg_t arg1, PxArg_t arg2);"
+  ],
+  "arguments": [
+    {
+      "name": "msg_class",
+      "description": "PXROS error class"
+    },
+    {
+      "name": "err",
+      "description": "PXROS error number"
+    },
+    {
+      "name": "arg1",
+      "description": "Optional argument"
+    },
+    {
+      "name": "arg2",
+      "description": "Optional argument"
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Default message handling routine",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMessageFunDefault is the default message handling routine. This service calls PxAbort for messages of class PXFatal and ignores other classes."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxAbort",
+      "display": "PxAbort()"
+    },
+    {
+      "key": "PxSetMessageFun",
+      "display": "PxSetMessageFun()"
+    },
+    {
+      "key": "PxMessage",
+      "display": "PxMessage()"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxMessageFunDefault(PXLogError, PXERR_ILLEGAL_SERVICE_CALLED, 0, 0);",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The PXROS-HR error class given in `cls` must be of type `PxMessageClass_t` and may have one of the following values (V):",
+      "   - `PXWarning`",
+      "   - `PXError`",
+      "   - `PXLogError`",
+      "   - `PXFatal`",
+      "The PXROS-HR error number `err` must be greater or equal `PXERR_NOERROR` and lower than `PXERR_LAST_ERRNO` (V)"
+    ],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

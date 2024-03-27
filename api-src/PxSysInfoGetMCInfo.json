@@ -1,0 +1,124 @@
+{
+  "name": {
+    "key": "PxSysInfoGetMCInfo",
+    "display": "PxSysInfoGetMCInfo()"
+  },
+  "synopsis": [
+    "PxError_t PxSysInfoGetMCInfo (PxInfoMC_t *MCInfo, PxMc_t McId);"
+  ],
+  "arguments": [
+    {
+      "name": "MCInfo",
+      "description": "Pointer to data area to store memory class information to"
+    },
+    {
+      "name": "McId",
+      "description": "Id of memory class object"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_MC_ILLMC - The given object is not a memory class object",
+    "PXERR_PROT_PERMISSION - The task has no write permission on the `MCInfo` object",
+    "PXERR_SERVICE_NOT_CONFIGURED - MONITOR_OBJECTS is not configured",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Function to get memory class info",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxSysInfoGetMCInfo stores the memory class type (fix/var), the free memory and the lowest capacity of the memory class McId into the info structure MCInfo. In fixsized memory classes PxInfoMC_FreeMem and PxInfoMC_MinCapacity represent the number of blocks, in varsized memory classes the number of bytes."
+      },
+      {
+        "type": "PP",
+        "text": "The structure MCInfo has the following format:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef struct",
+          "{",
+          "\tPxInfoMCType_t PxInfoMC_Type; // memory class type",
+          "\tPxUChar_t *PxInfoMC_FirstBlock; // first memory block in memory class",
+          "\tPxULong_t PxInfoMC_FreeMem; // free memory in memory class",
+          "\tPxULong_t PxInfoMC_MinCapacity; // minimal capacity of memory class",
+          "\tPxTask_t PxInfoMC_RequestingTask; // task, which requested the memory class",
+          "} PxInfoMC_t;"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "The memory class McId may have one of the following types:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef enum",
+          "{",
+          "\tMCType_FixSized,",
+          "\tMCType_VarSized",
+          "} PxInfoMCType_t;"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "There is a union available containing all sysinfo types:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef union",
+          "{",
+          "\tPxInfoMC_t  McInfo; // memory class information struct",
+          "\tPxInfoOpool_t  OpoolInfo; // Opool information struct",
+          "\tPxInfoMsg_t  MsgInfo; // message information struct",
+          "\tPxInfoMbx_t  MbxInfo; // mailbox information struct",
+          "\tPxInfoDelay_t  DelayInfo; // delay object information struct",
+          "\tPxInfoPe_t  PeInfo; // periodic event information struct",
+          "\tPxInfoTo_t  ToInfo; // timeout object information struct",
+          "\tPxInfoInterrupt_t  InterruptInfo; // interrupt object information struct",
+          "} PxObjInfo_T;"
+        ]
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "xref:chapter/section/Memory_management.adoc",
+      "display": "Memory Management"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxSysInfoGetMCInfo(&McInfo, mcId);",
+    "",
+    "if (err == PXERR_NOERROR) {",
+    "    // Handle info",
+    "}",
+    "else {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`MCInfo` must be a pointer to a valid data area.\n",
+      "`McId` must be:\n",
+      "   - a valid PXROS-HR memory class object created with a `PxMcRequest` call (V).",
+      "   - the symbolic value `PXMcSystemdefault` specifying the system memory class (V)",
+      "   - the symbolic value `PXMcTaskdefault` specifying the task's memory class (V)\n",
+      "The validity of `McId` may also be checked by the `PxMcIsValid` macro (F)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the system information could be delivered. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions"]
+  }
+}

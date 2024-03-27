@@ -1,0 +1,30 @@
+{
+  "name": {
+    "key": "PxMcIdSet",
+    "display": "PxMcIdSet()"
+  },
+  "synopsis": ["PxMc_t PxMcIdSet (PxObjId_t id);"],
+  "arguments": [
+    {
+      "name": "id",
+      "description": "The object id"
+    }
+  ],
+  "retValues": ["Mc handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return an object handle which holds id as the object ID",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMcIdSet returns an object handle which holds id as the object ID."
+      }
+    ]
+  },
+  "usage": ["#include \"pxdef.h\"", "", "PxMc_t id = PxMcIdSet(oid);", ""]
+}

@@ -1,0 +1,58 @@
+{
+  "name": {
+    "key": "PxDelayGetName",
+    "display": "PxDelayGetName()"
+  },
+  "synopsis": [
+    "PxError_t PxDelayGetName (PxDelay_t delay, PxChar_t *buffer, PxUInt_t bufsize);"
+  ],
+  "arguments": [
+    {
+      "name": "delay",
+      "description": "The delay's id"
+    },
+    {
+      "name": "buffer",
+      "description": "Data area to copy the object name to"
+    },
+    {
+      "name": "bufsize",
+      "description": "The length of the delay object name."
+    }
+  ],
+  "retValues": [
+    "`PXERR_NOERROR` if successful, or a PXROS-HR error code otherwise."
+  ],
+  "errCodes": [
+    "PXERR_NAME_BUFOVERFLOW - The data area is too short to store the objects name",
+    "PXERR_OBJ_ILLOBJ - `delay` is not a valid object id",
+    "PXERR_PROT_PERMISSION - The data area is not writeable for the calling task",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object is not on the same core",
+    "PXERR_SERVICE_NOT_CONFIGURED - Service has not been configured"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the name of an object",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxDelayGetName copies the name of the given `delay type` object into the `buffer` buffer, which has a length of `bufsize`. The resulting string is zero-terminated."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxObjGetName",
+      "display": "PxObjGetName()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ]
+}

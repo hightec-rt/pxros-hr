@@ -1,0 +1,58 @@
+{
+  "name": {
+    "key": "PxMsgGetMetadata_Hnd",
+    "display": "PxMsgGetMetadata_Hnd()"
+  },
+  "synopsis": ["PxMsgMetadata_t PxMsgGetMetadata_Hnd (PxMsg_t msgid);"],
+  "arguments": [
+    {
+      "name": "msgid",
+      "description": "The message object"
+    }
+  ],
+  "errCodes": [
+    "PXERR_MSG_NOT_IMPLEMENTED - function is called by a system interrupt handler"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Get the metadata of the message",
+    "long": [
+      {
+        "type": "PP",
+        "text": "The PxMsgGetMetadata_Hnd returns the metadata of the message. The size of the metadata is 8 byte. This function should only be called from handlers running in a task’s context."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgRequest",
+      "display": "PxMsgRequest()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxMsgMetadata_t MetaData = PxMsgGetMetaData_Hnd(msgid);"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`msgid` must be a valid message object, requested via `PxMsgRequest...` or `PxMsgEnvelop...` or received by a `PxMsgReceive...` call (V). This message object may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "AfterCall": [
+      "`PxMsgGetMetadata_Hnd` returns a null value on failure \\(C)."
+    ],
+    "BestPractice": ["This function should be called from handlers only. (V)"]
+  }
+}

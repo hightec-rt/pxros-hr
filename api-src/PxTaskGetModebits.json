@@ -1,0 +1,78 @@
+{
+  "name": {
+    "key": "PxTaskGetModebits",
+    "display": "PxTaskGetModebits()"
+  },
+  "synopsis": ["PxTmode_t PxTaskGetModebits (PxTask_t TaskId);"],
+  "arguments": [
+    {
+      "name": "TaskId",
+      "description": "Task whose modebits are requested"
+    }
+  ],
+  "retValues": ["Modebits of given task"],
+  "errCodes": [
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested task is not on the same core",
+    "PXERR_TASK_ILLTASK - `TaskId` is not a valid task object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the modebits of a task",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTaskGetModebits returns the modebits from the task’s task control block. The taskmode specifies how a task reacts on external events. More specifically, the task mode contains the following modebits:"
+      },
+      {
+        "type": "BL",
+        "text": [
+          "PXTmodeDisableAborts to control the abort mechanism",
+          "PXTmodeDisableTimeslicing to control the timeslice mechanism"
+        ]
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxExpectAbort",
+      "display": "PxExpectAbort()"
+    },
+    {
+      "key": "PxClearModebits",
+      "display": "PxClearModebits()"
+    },
+    {
+      "key": "PxSetModebits",
+      "display": "PxSetModebits()"
+    },
+    {
+      "key": "xref:chapter/section/Event_handling_services.adoc",
+      "display": "Event Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxTmode_t Tmode = PxTaskGetModebits(TaskId);",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The parameter `TaskId` must be a valid task object id. This id may be",
+      "   - the calling task's own id read by calling `PxGetId()` (V)",
+      "   - the return value of a `PxTaskCreate()` call (V)",
+      "   - the result of a nameserver query (V)",
+      "   - part of a message sent by another task (V)",
+      "The task object must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxTaskCoreId` and the own core id with `PxGetCoreId` \\(C).\nAdditionally the task id may be checked with `PxTaskCheck()` (F)."
+    ],
+    "AfterCall": [
+      "`PxGetError` must be called to check if an error has occurred. (F)"
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

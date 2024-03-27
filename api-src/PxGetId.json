@@ -1,0 +1,39 @@
+{
+  "name": {
+    "key": "PxGetId",
+    "display": "PxGetId()"
+  },
+  "synopsis": ["PxTask_t PxGetId (void);"],
+  "retValues": ["The calling task's id"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the calling task's identifier",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxGetId returns the PXROS object identifier of the calling task."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "xref:chapter/section/Application_information_services.adoc",
+      "display": "Application Information Services"
+    },
+    {
+      "key": "xref:chapter/section/Task_mode_manipulation_services.adoc",
+      "display": "Task Mode Manipulation Services"
+    }
+  ],
+  "usage": ["#include \"pxdef.h\"", "", "PxTask_t id = PxGetId();", ""],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

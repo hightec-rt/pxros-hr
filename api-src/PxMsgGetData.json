@@ -1,0 +1,100 @@
+{
+  "name": {
+    "key": "PxMsgGetData",
+    "display": "PxMsgGetData()"
+  },
+  "synopsis": ["PxMsgData_t PxMsgGetData (PxMsg_t msgid);"],
+  "arguments": [
+    {
+      "name": "msgid",
+      "description": "Message object"
+    }
+  ],
+  "retValues": ["Pointer to message data area"],
+  "errCodes": [
+    {
+      "ARM-CMX": [
+        "PXERR_MSG_ILLMSG - `msgid` is not a valid message object",
+        "PXERR_MSG_ILLUSER - The calling task is not user of this message",
+        "PXERR_PROT_NOFREE_ENTRY - No free protection entry",
+        "PXERR_PROT_ILL_HANDLE - The associated protection handle is not valid",
+        "PXERR_REQUEST_INVALID_PARAMETER - Invalid pair parameter",
+        "PXERR_ILL_NULLPOINTER_PARAMETER - Illegal null pointer parameter in the call",
+        "PXERR_PROT_ILL_SIZE - The size of the protection region is not valid",
+        "PXERR_PROT_ILL_ALIGN - Alignment of protection region not valid",
+        "PXERR_MSG_NOT_IMPLEMENTED - The function is called by a system interrupt handler"
+      ],
+      "TC23": [
+        "PXERR_MSG_ILLMSG - `msgid` is not a valid message object",
+        "PXERR_MSG_ILLUSER - The calling task is not user of this message",
+        "PXERR_PROT_NOFREE_ENTRY - No free protection entry",
+        "PXERR_PROT_ILL_HANDLE - The associated protection handle is not valid",
+        "PXERR_REQUEST_INVALID_PARAMETER - Invalid pair parameter",
+        "PXERR_MSG_NOT_IMPLEMENTED - The function is called by a system interrupt handler"
+      ]
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Get data area of a message (task service)",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgGetData returns a C-pointer to the data area corresponding to message msgid. If an invalid message is given a null pointer is returned. PxMsgGetData function can only be called from task, othewise PXERR_TASK_ILLCALL error is returned."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgReceive",
+      "display": "PxMsgReceive()"
+    },
+    {
+      "key": "PxMsgRelDataAccess",
+      "display": "PxMsgRelDataAccess()"
+    },
+    {
+      "key": "PxMsgRequest",
+      "display": "PxMsgRequest()"
+    },
+    {
+      "key": "PxMsgSend",
+      "display": "PxMsgSend()"
+    },
+    {
+      "key": "PxMsgSetData",
+      "display": "PxMsgSetData()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxMsgData_t DataArea = PxMsgGetData(msgid)",
+    "",
+    "if (DataArea != NULL) {",
+    "    // Handle data",
+    "}",
+    "else {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`msgid` must be a valid message object, requested via `PxMsgRequest...` or `PxMsgEnvelop...` or received by a `PxMsgReceive...` call (V). This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "AfterCall": ["`PxMsgGetData` returns a null pointer on failure \\(C)."],
+    "BestPractice": ["No restrictions."]
+  }
+}

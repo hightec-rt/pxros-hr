@@ -1,0 +1,79 @@
+{
+  "name": {
+    "key": "PxMsgSetData",
+    "display": "PxMsgSetData()"
+  },
+  "synopsis": ["PxError_t PxMsgSetData (PxMsg_t msgid, PxMsgData_t new_data);"],
+  "arguments": [
+    {
+      "name": "msgid",
+      "description": "Message object for which the new data pointer is set"
+    },
+    {
+      "name": "new_data",
+      "description": "New message data"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_MSG_ILLMSG - The passed message handle is invalid",
+    "PXERR_MSG_ILLOWNER - The calling task is not the owner of the message",
+    "PXERR_MSG_ILLUSER - The calling task is not the user of the message",
+    "PXERR_MSG_ILL_NEW_DATA - The new data pointer not within the corresponding data area"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Set message data pointer",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgSetData sets the data pointer of message msgid to new_data. The calling task must be the user of msgid. new_data must be part of the messages data area. If new_data is NULL, the message’s data pointer is reset to the start of the data area. In this case the calling task must be the owner of msgid."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgGetData",
+      "display": "PxMsgGetData()"
+    },
+    {
+      "key": "PxMsgRequest",
+      "display": "PxMsgRequest()"
+    },
+    {
+      "key": "PxMsgSetSize",
+      "display": "PxMsgSetSize()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxMsgSetData(msgid, (PxMsgData_t) 0);",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`msgid` must be a valid message object, requested via `PxMsgRequest...` or `PxMsgEnvelop...` or received by a `PxMsgReceive...` call (V). This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C).\n",
+      "`new_data` must be a pointer to an address within the message's orignial data buffer (V)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the message's data area is changed. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

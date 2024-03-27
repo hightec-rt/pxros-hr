@@ -1,0 +1,29 @@
+{
+  "name": {
+    "key": "PxTaskIdInvalidate",
+    "display": "PxTaskIdInvalidate()"
+  },
+  "synopsis": ["PxTask_t PxTaskIdInvalidate (void);"],
+  "retValues": ["An invalid Task handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return an invalid Task handle for initialization",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTaskIdInvalidate returns an invalid Task handle for initialization."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxTask_t task = PxTaskIdInvalidate();",
+    ""
+  ]
+}

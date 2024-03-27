@@ -1,0 +1,83 @@
+{
+  "name": {
+    "key": "PxSysInfoGetMsgsInMbx",
+    "display": "PxSysInfoGetMsgsInMbx()"
+  },
+  "synopsis": [
+    "int PxSysInfoGetMsgsInMbx (PxMbx_t mbxId, PxMsgType_t Type, PxObjId_t *MsgArray, int Max);"
+  ],
+  "arguments": [
+    {
+      "name": "mbxId",
+      "description": "Mailbox whose messages are counted"
+    },
+    {
+      "name": "Type",
+      "description": "Type of messages to be counted"
+    },
+    {
+      "name": "MsgArray",
+      "description": "Array to store the message's id"
+    },
+    {
+      "name": "Max",
+      "description": "Maximum number of messages to be counted"
+    }
+  ],
+  "retValues": [
+    "Number of message ids stored in the array",
+    "-1 if mbxId is not a valid mailbox or if an inconsistency is detected"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Get the ids of the messages stored in a mailbox",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxSysInfoGetMsgsInMbx counts the messages of type Type available in the mailbox mbxId. The message ids are stored in MsgArray until the maximum number of messages, which can be stored in this array, is reached. Max represents this number. The function returns the number of messages in the mailbox, or -1 if mbxId is not a valid mailbox object, or if an inconsistency is detected. Such an inconsistency may occur if messages are received from this mailbox when counting these messages."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "xref:chapter/section/Mailbox_services.adoc",
+      "display": "Mailbox Services"
+    },
+    {
+      "key": "xref:chapter/section/Message-related_services.adoc",
+      "display": "Message-related Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "int num = PxSysInfoGetMsgsInMbx(mbxId, PXMsgNormalMsg, MsgArray, MAX);",
+    "",
+    "if (num == -1) {",
+    "    // Report Error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`MsgArray` must be a pointer to a valid data area containing space for `Max` object ids.\n",
+      "The parameter `mbxId` must be a valid mailbox object id. This id may be\n",
+      "   - the calling task's own mailbox (V)",
+      "   - the return value of a `PxTaskGetMbx()` call (V)",
+      "   - the result of a nameserver query (V)",
+      "   - part of a message sent by another task (V)\n",
+      "The PXROS-HR message type given in `Type` must be of type `PxMsgType_t` and may have one of the following values (V):\n",
+      "   - `PXMsgAnyMsg`",
+      "   - `PXMsgNormalMsg`",
+      "   - `PXMsgPrioMsg`"
+    ],
+    "AfterCall": [
+      "The function returns -1 if the number of messages in a mailbox could not be determined \\(C)."
+    ],
+    "BestPractice": ["No restrictions"]
+  }
+}

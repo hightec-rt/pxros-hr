@@ -1,0 +1,48 @@
+{
+  "name": {
+    "key": "PxBcmp",
+    "display": "PxBcmp()"
+  },
+  "synopsis": [
+    "PxInt_t PxBcmp(PxUChar_t const *s, PxUChar_t const *d, PxSize_t len);"
+  ],
+  "arguments": [
+    {
+      "name": "s",
+      "description": "Address of first byte areas to compare"
+    },
+    {
+      "name": "d",
+      "description": "Address of second byte areas to compare"
+    },
+    {
+      "name": "len",
+      "description": "Number of bytes to be compared"
+    }
+  ],
+  "retValues": [
+    "`0` if the compare byte areas are equal",
+    "`Nonzero` value if the compare byte areas are not equal"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Compare two byte areas",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxBcmp compares the byte areas of length `len` starting at `s` or `d`, respectively. It returns `0`, if they are equal, and nonzero otherwise."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxInt_t comp = PxBcmp(str1, str2, length);",
+    ""
+  ]
+}

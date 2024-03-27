@@ -1,0 +1,74 @@
+{
+  "name": {
+    "key": "PxDelayRelease",
+    "display": "PxDelayRelease()"
+  },
+  "synopsis": ["PxDelay_t PxDelayRelease (PxDelay_t Delay);"],
+  "arguments": [
+    {
+      "name": "Delay",
+      "description": "Delay object to be released"
+    }
+  ],
+  "retValues": ["Invalid delay handle on success", "Delay on failure"],
+  "errCodes": [
+    "PXERR_DELAY_ILLDELAY - Delay is not a valid delay object",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+    "PXERR_DELAY_USED_BY_INTERRUPT - Delay object currently in use by the interrupt handler",
+    "PXERR_OPOOL_ILLOPOOL - The object pool is not valid",
+    "PXERR_TASK_ILLTASK - The task is not a valid task object",
+    "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Release a delay object",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxDelayRelease releases the delay job handle Delay by converting it into a generic object and releasing this object. If Delay is in use, the corresponding job is cancelled."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxDelayRequest",
+      "display": "PxDelayRequest()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    },
+    {
+      "key": "xref:chapter/section/Time_management.adoc",
+      "display": "Time Management"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxDelay_t Delay = PxDelayRelease(Delay);",
+    "",
+    "if PxDelayIdError(Delay) == PXERR_NOERROR) {",
+    "  // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`Delay` must be a valid PXROS-HR delay object created with a `PxDelayRequest` call (V). The validity of `Delay` may also be checked by the `PxDelayIsValid` macro (F). The delay object must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxDelayCoreId` and the own core id with `PxGetCoreId` \\(C)."
+    ],
+    "AfterCall": [
+      "`PxDelayRelease` returns the delay object to the object pool it has been taken from. On success `PxDelayRelease` returns the invalidated delay object. This may be checked with one of the following macros:\n",
+      "   - `PxDelayIdIsValid()` must be false.",
+      "   - `PxDelayIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxDelayIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "After `PxDelayRelease`, the given delay object `Delay` is no longer valid and may never be used as delay object!"
+    ]
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "name": {
+    "key": "PxToStop",
+    "display": "PxToStop()"
+  },
+  "synopsis": ["PxError_t PxToStop (PxPe_t ToId);"],
+  "arguments": [
+    {
+      "name": "ToId",
+      "description": "Timeout handler object id"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_REQUEST_ILLEGAL - The caller is not the requester of the `ToId` object",
+    "PXERR_TO_ILLTO - `ToId` is not a valid timeout object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Stop timeout (task service)",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxToStop stops the timeout associated with ToId. This funcion can only be called from a task (not from a handler)."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxAwaitEvents",
+      "display": "PxAwaitEvents()"
+    },
+    {
+      "key": "PxResetEvents",
+      "display": "PxResetEvents()"
+    },
+    {
+      "key": "xref:chapter/section/Delay_job_services.adoc",
+      "display": "Delay Job Services"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxToStop(ToId);",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`ToId` must be a valid PXROS-HR timeout object created with a `PxToRequest` call (V). The validity of `ToId` may also be checked by the `PxToIsValid` macro (F)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the timeout could be stopped. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

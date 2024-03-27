@@ -1,0 +1,55 @@
+{
+  "name": {
+    "key": "PxGetAbortingEvents",
+    "display": "PxGetAbortingEvents()"
+  },
+  "synopsis": ["PxEvents_t PxGetAbortingEvents (void);"],
+  "retValues": ["Event mask of calling task"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the event mask of the currently active events of the calling task",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxGetAbortingEvents returns the events able to abort the current activity (when the abort mechanism is enabled)."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxClearModebits",
+      "display": "PxClearModebits()"
+    },
+    {
+      "key": "PxExpectAbort",
+      "display": "PxExpectAbort()"
+    },
+    {
+      "key": "PxSetModebits",
+      "display": "PxSetModebits()"
+    },
+    {
+      "key": "xref:chapter/section/Task_mode_manipulation_services.adoc",
+      "display": "Task Mode Manipulation Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxEvents_t Ev = PxGetAbortingEvents();",
+    "",
+    "if (Ev.error != PXERR_NOERROR) {",
+    "  // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

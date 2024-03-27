@@ -1,0 +1,175 @@
+{
+  "name": {
+    "key": "PxMsgRequest_NoWait",
+    "display": "PxMsgRequest_NoWait()"
+  },
+  "synopsis": [
+    "PxMsg_t PxMsgRequest_NoWait (PxSize_t msgsize, PxMc_t McId, PxOpool_t OpoolId);"
+  ],
+  "arguments": [
+    {
+      "name": "msgsize",
+      "description": "Size of the message"
+    },
+    {
+      "name": "McId",
+      "description": "Memory class where to take the data area from"
+    },
+    {
+      "name": "OpoolId",
+      "description": "Object pool where to take the message from"
+    }
+  ],
+  "retValues": [
+    "Valid message handle on success",
+    "Invalid message handle on failure"
+  ],
+  "errCodes": [
+    {
+      "ARM-CMX": [
+        "PXERR_OPOOL_ILLOPOOL - The passed object pool handle is invalid",
+        "PXERR_MC_ILLMC - The passed memory class handle is invalid",
+        "PXERR_MC_NOMEM - Not enough memory",
+        "PXERR_ACCESS_RIGHT - The calling task has not the right to access the object pool or the memory class",
+        "PXERR_GLOBAL_ILLEGAL_CORE - The passed memory class is not on the same core",
+        "PXERR_OBJ_NOOBJ - No free object is available",
+        "PXERR_EVENT_ZERO - The given event mask is zero",
+        "PXERR_OBJ_ABORTED - Request aborted by an event",
+        "PXERR_OBJ_ILLOBJ - The passed object handle is not valid",
+        "PXERR_MC_ILLTYPE - Illegal MC type",
+        "PXERR_MC_SIZETOOBIG - Fixed block size too small to satisfy the request",
+        "PXERR_INIT_ILLMCTYPE - The type for PXMcSystemdefault is different from PXMcVarsized, PXMcVarsizedAdjusted and PXMcVarsizedAligned",
+        "PXERR_REQUEST_ABORTED - Request aborted",
+        "PXERR_MC_DAMAGED_BLOCK - The block in the memory class has been damaged",
+        "PXERR_MC_INCONSISTENCY - Inconsistency in memory class: blk",
+        "PXERR_MC_ILLSIZE - Insufficient block size",
+        "PXERR_MC_ILLALIGN - Invalid memory block or size alignment in memory insert",
+        "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures",
+        "PXERR_UNSUPPORTED_MCTYPE - mc is not supported (If McId corresponds to PXMcVarsized, PXMcVarsizedAligned, PXMcVarsizedAdjusted)"
+      ],
+      "TC23": [
+        "PXERR_OPOOL_ILLOPOOL - The passed object pool handle is invalid",
+        "PXERR_MC_ILLMC - The passed memory class handle is invalid",
+        "PXERR_MC_NOMEM - Not enough memory",
+        "PXERR_ACCESS_RIGHT - The calling task has not the right to access the object pool or the memory class",
+        "PXERR_GLOBAL_ILLEGAL_CORE - The passed memory class is not on the same core",
+        "PXERR_OBJ_NOOBJ - No free object is available",
+        "PXERR_EVENT_ZERO - The given event mask is zero",
+        "PXERR_OBJ_ABORTED - Request aborted by an event",
+        "PXERR_OBJ_ILLOBJ - The passed object handle is not valid",
+        "PXERR_MC_ILLTYPE - Illegal MC type",
+        "PXERR_MC_SIZETOOBIG - Fixed block size too small to satisfy the request",
+        "PXERR_INIT_ILLMCTYPE - The type for PXMcSystemdefault is different from PXMcVarsized, PXMcVarsizedAdjusted and PXMcVarsizedAligned",
+        "PXERR_REQUEST_ABORTED - Request aborted",
+        "PXERR_MC_DAMAGED_BLOCK - The block in the memory class has been damaged",
+        "PXERR_MC_INCONSISTENCY - Inconsistency in memory class: blk",
+        "PXERR_MC_ILLSIZE - Insufficient block size",
+        "PXERR_MC_ILLALIGN - Invalid memory block or size alignment in memory insert",
+        "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures"
+      ]
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Create a message object together with data area with immediate return",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgRequest_NoWait function creates a messages with a data area of size msgsize specified in byte units. The data area is taken from memory class mc, and the message structure is taken from object pool opool. The message object handle is returned. If there is no free object available, the PxMsgRequest_NoWait immediately returns with error code PXERR_OBJ_NOOBJ."
+      },
+      {
+        "type": "PP",
+        "text": "The calling task becomes the (permanent) owner and the (temporary) user of the message created. The call also fails, if the memory class does not contain sufficient memory to meet the request. A fatal PXROS error occurs, if mc is fixsized and its block size is smaller than msgsize. If msgsize is zero, no data buffer is requested. Only the metadata of the message can be used."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgRequest",
+      "display": "PxMsgRequest()"
+    },
+    {
+      "key": "PxMsgRequest_EvWait",
+      "display": "PxMsgRequest_EvWait()"
+    },
+    {
+      "key": "PxMsgGetBuffersize",
+      "display": "PxMsgGetBuffersize()"
+    },
+    {
+      "key": "PxMsgGetData",
+      "display": "PxMsgGetData()"
+    },
+    {
+      "key": "PxMsgGetMetadata",
+      "display": "PxMsgGetMetadata()"
+    },
+    {
+      "key": "PxMsgGetOwner",
+      "display": "PxMsgGetOwner()"
+    },
+    {
+      "key": "PxMsgGetSender",
+      "display": "PxMsgGetSender()"
+    },
+    {
+      "key": "PxMsgGetSize",
+      "display": "PxMsgGetSize()"
+    },
+    {
+      "key": "PxMsgRelDataAccess",
+      "display": "PxMsgRelDataAccess()"
+    },
+    {
+      "key": "PxMsgRelease",
+      "display": "PxMsgRelease()"
+    },
+    {
+      "key": "PxMsgSetData",
+      "display": "PxMsgSetData()"
+    },
+    {
+      "key": "PxMsgSetMetadata",
+      "display": "PxMsgSetMetadata()"
+    },
+    {
+      "key": "PxMsgSetSize",
+      "display": "PxMsgSetSize()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxMsg_t msgHnd = PxMsgRequest_NoWait(64, McId, OpoolId)",
+    "",
+    "if (PxMsgIdIsValid (msgHnd)) {",
+    "    // Handle message",
+    "}",
+    "else {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`msgsize` must be a plausible value given as a constant (V) or a variable \\(C).\n",
+      "`McId` must be a valid PXROS-HR memory class and the calling task must have the access right to take memory from this memory class (V). The validity of `McId` may also be checked by the `PxMcIsValid` macro (F). The memory class must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxMcCoreId` and the own core id with `PxGetCoreId` \\(C). Typically the task's default memory class `PXMcTaskdefault` is used for this purpose.\n",
+      "`OpoolId` must be a valid PXROS-HR object pool and the calling task must have the access right to take objects from this object pool (V). The validity of `OpoolId` may also be checked by the `PxOpoolIsValid` macro (F). The object pool must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxOpoolCoreId` and the own core id with `PxGetCoreId` \\(C). Typically the task's default object pool `PXOpoolTaskdefault` is used for this purpose."
+    ],
+    "AfterCall": [
+      "The returned value is the id of type `PxMsg_t`. This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

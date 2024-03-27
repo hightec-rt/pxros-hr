@@ -1,0 +1,76 @@
+{
+  "name": {
+    "key": "PxTerminate",
+    "display": "PxTerminate()"
+  },
+  "synopsis": ["PxError_t PxTerminate (PxBool_t release);"],
+  "arguments": [
+    {
+      "name": "release",
+      "description": "If TRUE release all allocated objects of this task"
+    }
+  ],
+  "retValues": ["Error on failure", "No return on success"],
+  "errCodes": [
+    "All - errors available from Px...Release and PxMcReturnAllBlks"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Terminate the calling task and release all its allocated objects",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTerminate terminates the calling task and releases all its allocated objects by calling PxMsgReleaseAllMsg and PxSysObjReleaseAllObjects. If the release was successful PxTerminate calls PxDie to schedule the task for deletion. If no error occurs the call does not return."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxDie",
+      "display": "PxDie()"
+    },
+    {
+      "key": "PxDieService",
+      "display": "PxDieService()"
+    },
+    {
+      "key": "PxServiceTaskInit",
+      "display": "PxServiceTaskInit()"
+    },
+    {
+      "key": "PxTaskCreate",
+      "display": "PxTaskCreate()"
+    },
+    {
+      "key": "PxTaskForceTermination",
+      "display": "PxTaskForceTermination()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxTerminate(1);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`release` must be TRUE or FALSE. This parameter should be a constant (V)."
+    ],
+    "AfterCall": [
+      "On success the function does not return. Any return value describes an error, which has to be interpreted."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

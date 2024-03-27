@@ -1,0 +1,38 @@
+{
+  "name": {
+    "key": "PxTaskIdIsValid",
+    "display": "PxTaskIdIsValid()"
+  },
+  "synopsis": ["int PxTaskIdIsValid (PxTask_t Task);"],
+  "arguments": [
+    {
+      "name": "Task",
+      "description": "A Task handle"
+    }
+  ],
+  "retValues": ["TRUE if Task is a valid Task handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return TRUE if Task holds a valid Task handle",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTaskIdIsValid returns TRUE if obj holds a valid Task handle."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "int valid = PxTaskIdIsValid(Task);",
+    "",
+    "if (!valid) {",
+    "    // Handle invalid Mc handle",
+    "}"
+  ]
+}

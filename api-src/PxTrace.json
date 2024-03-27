@@ -1,0 +1,40 @@
+{
+    "name": {
+      "key": "PxTrace",
+      "display": "PxTrace()"
+    },
+    "synopsis": ["void PxTrace(PxInt_t sv, PxArg_t arg1, PxArg_t arg2, PxError_t err);"],
+    "arguments": [
+      {
+        "name": "sv",
+        "description": "PXROS service invoking the PxTrace call"
+      },
+      {
+        "name": "arg1",
+        "description": "First argument"
+      },
+      {
+        "name": "arg2",
+        "description": "Second argument"
+      },
+      {
+        "name": "err",
+        "description": "Error code that should be traced"
+      }
+    ],
+    "appliesTo": [
+      {
+        "ARM-CMX": ["1.0.0"],
+        "TC23": ["8.2.0"]
+      }
+    ],
+    "description": {
+      "short": "The trace function",
+      "long": [
+        {
+          "type": "PP",
+          "text": "PxTrace is a part of the PXROS trace mechanism."
+        }
+      ]
+    }
+  }

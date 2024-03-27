@@ -1,0 +1,83 @@
+{
+  "name": {
+    "key": "PxPeChange",
+    "display": "PxPeChange()"
+  },
+  "synopsis": [
+    "PxError_t PxPeChange (PxPe_t Pe, PxTicks_t period, PxEvents_t events);"
+  ],
+  "arguments": [
+    {
+      "name": "Pe",
+      "description": "Periodic event object"
+    },
+    {
+      "name": "period",
+      "description": "New period"
+    },
+    {
+      "name": "events",
+      "description": "New events"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_PE_ILLPE - `Pe` is not a valid periodic event handler object",
+    "PXERR_REQUEST_ILLEGAL - The caller is not the requester of the Pe object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Change the period and events associated with Pe",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxPeChange changes the period and events associated with Pe. It implicitly stops Pe."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxAwaitEvents",
+      "display": "PxAwaitEvents()"
+    },
+    {
+      "key": "PxResetEvents",
+      "display": "PxResetEvents()"
+    },
+    {
+      "key": "xref:chapter/section/Delay_job_services.adoc",
+      "display": "Delay Job Services"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "#define MY_EVENT 0x1l",
+    "",
+    "PxError_t Err = PxPeChange(Pe, 10, MY_EVENT);",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`PeId` must be a valid PXROS-HR periodic event object created with a `PxPeRequest` call (V). The validity of `PeId` may also be checked by the `PxPeIsValid` macro (F).",
+      "The `period` parameter must have a plausible value. It should be a constant or the result of a `PxTickGetTicksFromMilliSeconds` call (V);",
+      "The parameter `events` contains an event bit  and should not be zero. Typically the event is a constant (V)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the periodic event could be changed. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "name": {
+    "key": "PxExpectAbort",
+    "display": "PxExpectAbort()"
+  },
+  "synopsis": [
+    "PxEvents_t PxExpectAbort (PxEvents_t ev, void func, parms...);"
+  ],
+  "arguments": [
+    {
+      "name": "ev",
+      "description": "Events that make the call return"
+    },
+    {
+      "name": "func",
+      "description": "Function to call"
+    },
+    {
+      "name": "parms...",
+      "description": "Parameters to function"
+    }
+  ],
+  "retValues": ["Events that made the call return"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Call a function and expect abort during the call",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxExpectAbort enables the abort mechanism and calls the function func() with the specified argument. This call is aborted and PxExpectAbort returns prematurely provided that:"
+      },
+      {
+        "type": "OL",
+        "text": [
+          "One of the events specified in events is saved for task and there is no intervening active call to PxExpectAbort, PxAwaitEvents or a PxResetEvents service or a call with the _EvWait suffix (nested in func).",
+          "The abort mechanism is enabled."
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "Otherwise, PxExpectAbort returns when the call returns. If the call has been aborted, PxExpectAbort returns the events which led to abortion and clears them from the saved events (as they have been handled). If the call was not aborted, PxExpectAbort returns 0."
+      },
+      {
+        "type": "PP",
+        "text": "If the function call is aborted, PxExpectAbort must restore the context to its state before activation. Thus, PxExpectAbort saves the context in an abort frame taken from the tasks abort stack. This abort frame is released when PxExpectAbort returns. As this implies, the task must provide one abort frame for each nested PxExpectAbort call. The size of the abort frames are processor dependent and defined in the constant PxAbortFrameSize."
+      },
+      {
+        "type": "PP",
+        "text": "During their activation, nested PxExpectAbort calls disable the effects of an enclosing PxExpectAbort call. The current effective aborting events can be obtained via a call to PxGetAbortingEvents. On return from the PxExpectAbort also the task mode is restored and there with the state of the abort mechanism (enabled/disabled)."
+      },
+      {
+        "type": "PP",
+        "text": "func is a procedure, or PXROS call, with arbitrary arguments. However, any potential return value is lost."
+      },
+      {
+        "type": "PP",
+        "text": "The abort mechanism may be disabled with PxSetModebits and enabled with PxClearModebits or with a new PxExpectAbort call."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxClearModebits",
+      "display": "PxClearModebits()"
+    },
+    {
+      "key": "PxGetAbortFrameSize",
+      "display": "PxGetAbortFrameSize()"
+    },
+    {
+      "key": "PxGetAbortingEvents",
+      "display": "PxGetAbortingEvents()"
+    },
+    {
+      "key": "PxGetSavedEvents",
+      "display": "PxGetSavedEvents()"
+    },
+    {
+      "key": "PxSetModebits",
+      "display": "PxSetModebits()"
+    },
+    {
+      "key": "PxTaskCreate",
+      "display": "PxTaskCreate()"
+    },
+    {
+      "key": "PxTaskGetModebits",
+      "display": "PxTaskGetModebits()"
+    },
+    {
+      "key": "PxTaskSignalEvents",
+      "display": "PxTaskSignalEvents()"
+    },
+    {
+      "key": "xref:chapter/section/Task_mode_manipulation_services.adoc",
+      "display": "Task Mode Manipulation Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "#define MY_EVENT 0x1l",
+    "",
+    "PxEvents_t Ev = PxExpectAbort(MY_EVENT, MY_FUNC, OpoolId);",
+    "",
+    "if (Ev.error != PXERR_NOERROR) {",
+    "  // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The parameter `ev` contains a bitmask of events awaited and should not be zero. Typically the event mask is a constant (V)."
+    ],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

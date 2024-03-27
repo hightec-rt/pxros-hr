@@ -1,0 +1,84 @@
+{
+  "name": {
+    "key": "PxDelaySched",
+    "display": "PxDelaySched()"
+  },
+  "synopsis": [
+    "PxError_t PxDelaySched (PxDelay_t delayId, PxTicks_t ticks, void (*handler) (PxArg_t), PxArg_t arg);"
+  ],
+  "arguments": [
+    {
+      "name": "delayId",
+      "description": "Delay job handle"
+    },
+    {
+      "name": "ticks",
+      "description": "PXROS ticks after which the job is executed"
+    },
+    {
+      "name": "handler",
+      "description": "Handler function to be executed"
+    },
+    {
+      "name": "arg",
+      "description": "Argument for the handler function"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_DELAY_ILLDELAY - `delayId` is not a valid delay handler",
+    "PXERR_REQUEST_ILLEGAL - The caller task is not the requester of the `delayId` object",
+    "PXERR_TASK_ILLCALL - Task service called by the handler"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Schedule a delay job (task service)",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxDelaySched cancels a potential delay job associated with delayId. If ticks is not zero, PXROS schedules activation of the handler call handler(arg) after ticks PXROS ticks and associates this delay job with delayId object. The PxDelaySched can only be called from task level, otherwise PXERR_TASK_ILLCALL error is returned."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxDelaySched_Hnd",
+      "display": "PxDelaySched_Hnd()"
+    },
+    {
+      "key": "PxTickSetTicksPerSecond",
+      "display": "PxTickSetTicksPerSecond()"
+    },
+    {
+      "key": "xref:chapter/section/Time_management.adoc",
+      "display": "Time Management"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "#define TICKS 0x500l",
+    "",
+    "PxError_t Err = PxDelaySched(delayId, TICKS, DelHandler, (PxArg_t) 0);",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`delayId` must be a valid PXROS-HR delay object created with a `PxDelayRequest` call (V). The validity of `delayId` may also be checked by the `PxDelayIsValid` macro (F). The delay object must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxDelayCoreId` and the own core id with `PxGetCoreId` \\(C).",
+      "If `ticks` is zero, the delay job identified by `delayId` is stopped. \\(C)",
+      "The parameter `handler` must be a pointer to a valid function (V)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the delay job could be scheduled. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["This function may be called from tasks only. (V)"]
+  }
+}

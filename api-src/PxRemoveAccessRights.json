@@ -1,0 +1,48 @@
+{
+  "name": {
+    "key": "PxRemoveAccessRights",
+    "display": "PxRemoveAccessRights()"
+  },
+  "synopsis": ["PxUInt_t PxRemoveAccessRights (PxUInt_t accessrights);"],
+  "arguments": [
+    {
+      "name": "accessrights",
+      "description": "The accessrights no longer needed"
+    }
+  ],
+  "retValues": ["The new accessrights"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Remove access rights",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxRemoveAccessRights removes the given access rights from the calling task’s task control block. The task looses these access rights."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxTaskCreate",
+      "display": "PxTaskCreate()"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxUInt_t accessrights = PxRemoveAccessRights(PXACCESS_INSTALL_SERVICES);",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`accessrights` may be a combination of valid access rights (V)"
+    ],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

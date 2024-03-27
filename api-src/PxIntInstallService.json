@@ -1,0 +1,119 @@
+{
+  "name": {
+    "key": "PxIntInstallService",
+    "display": "PxIntInstallService()"
+  },
+  "synopsis": [
+    {
+      "ARM-CMX": "PxError_t PxIntInstallService(PxInt_t intno, PxUInt_t prio, PxUInt_t service, PxArg_t arg, PxEvents_t events);",
+      "TC23": "PxError_t PxIntInstallService (PxUInt_t intno, PxIntSvEnum_t service, PxArg_t arg, PxEvents_t events);"
+    }
+  ],
+  "arguments": [
+    {
+      "ARM-CMX": [
+        {
+          "name": "intno",
+          "description": "The number of the interrupt for which the PXROS service is installed"
+        },
+        {
+          "name": "prio",
+          "description": "Priority for interrupt controller. Two lowest priorities are reserved for the kernel. For information on the number of priorities, please refer to the device specification."
+        },
+        {
+          "name": "service",
+          "description": "The PXROS service"
+        },
+        {
+          "name": "arg",
+          "description": "Argument for PXROS service"
+        },
+        {
+          "name": "events",
+          "description": "Events sent to installing task"
+        }
+      ],
+      "TC23": [
+        {
+          "name": "intno",
+          "description": "The number of the interrupt for which the PXROS service is installed"
+        },
+        {
+          "name": "service",
+          "description": "The PXROS service"
+        },
+        {
+          "name": "arg",
+          "description": "Argument for PXROS service"
+        },
+        {
+          "name": "events",
+          "description": "Events sent to installing task"
+        }
+      ]
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_REQUEST_INVALID_PARAMETER - `intno` out of specification",
+    "PXERR_ACCESS_RIGHT - The calling task has not the right to install handlers",
+    "PXERR_INTR_ILL - The handler already installed from another task",
+    "PXERR_INTERRUPT_ILLINTERRUPT - intObj not valid interrupt object ",
+    "PXERR_ILLEGAL_SERVICE_CALLED - Service invalid"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Install a PXROS service call as an interrupt handler",
+    "long": [
+      {
+        "type": "PP",
+        "text": "Installs a PXROS handler service directly as an interrupt handler."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    {
+      "ARM-CMX": [
+        "#include \"pxdef.h\"",
+        "",
+        "PxError_t Err = PxIntInstallService(intno, 1, serviceNo, (PxArg_t)0, 0);",
+        "",
+        "if (Err != PXERR_NOERROR) {",
+        "    // Report error",
+        "}"
+      ],
+      "TC23": [
+        "#include \"pxdef.h\"",
+        "",
+        "PxError_t Err = PxIntInstallService(intno, serviceNo, (PxArg_t)0, 0);",
+        "",
+        "if (Err != PXERR_NOERROR) {",
+        "    // Report error",
+        "}"
+      ]
+    }
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The parameter `intno` must be a valid interrupt id. (V)\n",
+      "The parameter `service` must be a valid PXROS-HR service id. (V)"
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the service could be installed. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "The calling task must have the right to install services as interrupt handlers `(PXACCESS_INSTALL_SERVICES)`. (V)"
+    ]
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "name": {
+    "key": "PxSysInfoGetDelayInfo",
+    "display": "PxSysInfoGetDelayInfo()"
+  },
+  "synopsis": [
+    "PxError_t PxSysInfoGetDelayInfo (PxInfoDelay_t *DelayInfo, PxDelay_t delayId);"
+  ],
+  "arguments": [
+    {
+      "name": "DelayInfo",
+      "description": "Pointer to data area to store delay information to"
+    },
+    {
+      "name": "delayId",
+      "description": "Id of delay object"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_DELAY_ILLDELAY - The given object is no delay object",
+    "PXERR_PROT_PERMISSION - The task has no write permission on the `DelayInfo` object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Function to get delay info",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxSysInfoGetDelayInfo stores the contents of the delay structure delayId into the info structure DelayInfo. The structure DelayInfo has the following format:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef struct",
+          "{",
+          "\tPxInfoDelayType_t PxInfoDelay_Type; // delay type",
+          "\tvoid      (*PxInfoDelay_Handler) (PxArg_t); // delay handler function",
+          "\tPxULong_t PxInfoDelay_Param; // delay handler function’s arguments",
+          "\tPxULong_t PxInfoDelay_Ticks; // delay ticks",
+          "\tPxULong_t PxInfoDelay_RestTicks; // delay rest ticks",
+          "\tPxTask_t  PxInfoDelay_RequestingTask; // task which requested the delay object",
+          "} PxInfoDelay_t;"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "The delay objectdelayId may have one of the following types:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef enum",
+          "{",
+          "\tDelayType_InUse,",
+          "\tDelayType_NotUsed",
+          "} PxInfoDelayType_t;"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "There is a union available containing all sysinfo types:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef union",
+          "{",
+          "\tPxInfoMC_t  McInfo; // memory class information struct",
+          "\tPxInfoOpool_t  OpoolInfo; // Opool information struct",
+          "\tPxInfoMsg_t  MsgInfo; // message information struct",
+          "\tPxInfoMbx_t  MbxInfo; // mailbox information struct",
+          "\tPxInfoDelay_t  DelayInfo; // delay object information struct",
+          "\tPxInfoPe_t  PeInfo; // periodic event information struct",
+          "\tPxInfoTo_t  ToInfo; // timeout object information struct",
+          "\tPxInfoInterrupt_t  InterruptInfo; // interrupt object information struct",
+          "} PxObjInfo_T;"
+        ]
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "xref:chapter/section/Delay_job_services.adoc",
+      "display": "Delay Job Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxSysInfoGetDelayInfo(&DelayInfo, delayId);",
+    "",
+    "if (err == PXERR_NOERROR) {",
+    "    // Handle info",
+    "}",
+    "else {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`DelayInfo` must be a pointer to a valid data area.\n",
+      "`delayId` must be a valid PXROS-HR delay object created with a `PxDelayRequest` call (V). The validity of `delayId` may also be checked by the `PxDelayIsValid` macro (F). The delay object must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxDelayCoreId` and the own core id with `PxGetCoreId` \\(C)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the system information could be delivered. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions"]
+  }
+}

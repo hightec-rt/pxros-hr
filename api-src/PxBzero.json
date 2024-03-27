@@ -1,0 +1,32 @@
+{
+  "name": {
+    "key": "PxBzero",
+    "display": "PxBzero()"
+  },
+  "synopsis": ["void PxBzero(PxUChar_t *d, PxSize_t len);"],
+  "arguments": [
+    {
+      "name": "d",
+      "description": "A pointer to the first byte in a block of memory."
+    },
+    {
+      "name": "len",
+      "description": "The length of the block of memory (in bytes) that needs to be set to zero."
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Set byte string to zero",
+    "long": [
+      {
+        "type": "PP",
+        "text": "`PxBzero(d,len)` places `len` zero bytes at the area starting at `d`."
+      }
+    ]
+  }
+}

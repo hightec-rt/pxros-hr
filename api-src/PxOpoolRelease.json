@@ -1,0 +1,74 @@
+{
+  "name": {
+    "key": "PxOpoolRelease",
+    "display": "PxOpoolRelease()"
+  },
+  "synopsis": ["PxOpool_t PxOpoolRelease (PxOpool_t Opool);"],
+  "arguments": [
+    {
+      "name": "Opool",
+      "description": "Object pool object to be released"
+    }
+  ],
+  "retValues": [
+    "Invalid object pool handle on success",
+    "Object pool on failure"
+  ],
+  "errCodes": [
+    "PXERR_OPOOL_ILLOPOOL - `Opool` is not a valid pool object",
+    "PXERR_OPOOL_TASKWAITS - A task is waiting at the object pool",
+    "PXERR_OPOOL_ILLDELETE - Tried to delete a real object pool with no source",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+    "PXERR_TASK_ILLTASK - The task is not a valid task object",
+    "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Release an object pool object",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxOpoolRelease releases the object pool handle Opool by converting it into a generic object and releasing this object."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxOpoolRequest",
+      "display": "PxOpoolRequest()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxOpool_t Opool = PxOpoolRelease(Opool);",
+    "",
+    "if (PxOpoolIdError(Opool) == PXERR_NOERROR) {",
+    "    // Report error",
+    "}",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`Opool` must be a valid PXROS-HR object pool created with a `PxOpoolRequest` call (V). The validity of `Opool` may also be checked by the `PxOpoolIsValid` macro (F)."
+    ],
+    "AfterCall": [
+      "`PxOpoolRelease` returns the object pool to the object pool it has been taken from. On success `PxOpoolRelease` returns the invalidated object pool. This may be checked with one of the following macros:",
+      "   - `PxOpoolIdIsValid()` must be false.",
+      "   - `PxOpoolIdGet()` must be `_PXIllegalObjId`.",
+      "   - `PxOpoolIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "After `PxOpoolRelease`, the given object pool `Opool` is no longer valid and may never be used as object pool!"
+    ]
+  }
+}

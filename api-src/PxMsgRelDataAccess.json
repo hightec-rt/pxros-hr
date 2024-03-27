@@ -1,0 +1,90 @@
+{
+  "name": {
+    "key": "PxMsgRelDataAccess",
+    "display": "PxMsgRelDataAccess()"
+  },
+  "synopsis": ["PxError_t PxMsgRelDataAccess (PxMsg_t msgid);"],
+  "arguments": [
+    {
+      "name": "msgid",
+      "description": "Message object"
+    }
+  ],
+  "errCodes": [
+    {
+      "ARM-CMX": [
+        "PXERR_MSG_ILLMSG - `msgid` is not a valid message object",
+        "PXERR_MSG_ILLUSER - The calling task is not user of this message",
+        "PXERR_PROT_ILL_HANDLE - The associated protection handle is not valid",
+        "PXERR_REQUEST_INVALID_PARAMETER - Request with invalid parameter",
+        "PXERR_ILL_NULLPOINTER_PARAMETER - Illegal null pointer parameter in the call",
+        "PXERR_PROT_ILL_SIZE - The size of the protection region is not valid",
+        "PXERR_PROT_ILL_ALIGN - Alignment of protection region is not valid"
+      ],
+      "TC23": [
+        "PXERR_MSG_ILLMSG - `msgid` is not a valid message object",
+        "PXERR_MSG_ILLUSER - The calling task is not user of this message",
+        "PXERR_PROT_ILL_HANDLE - The associated protection handle is not valid",
+        "PXERR_REQUEST_INVALID_PARAMETER - Request with invalid parameter"
+      ]
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Release the access to the data area of a message (task service)",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgRelDataAccess releases the access to the data area of the message msgid. It is required that the calling task is the current user of msg. After calling PxMsgRelDataAccess no access to the data area of the message msg is possible. The access right may be recovered through PxMsgGetData."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgGetData",
+      "display": "PxMsgGetData()"
+    },
+    {
+      "key": "PxMsgReceive",
+      "display": "PxMsgReceive()"
+    },
+    {
+      "key": "PxMsgRequest",
+      "display": "PxMsgRequest()"
+    },
+    {
+      "key": "PxMsgSend",
+      "display": "PxMsgSend()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxMsgRelDataAccess(msgid);",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`msgid` must be a valid message object, requested via `PxMsgRequest...` or `PxMsgEnvelop...` or received by a `PxMsgReceive...` call (V). This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the access to the message data could be released. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

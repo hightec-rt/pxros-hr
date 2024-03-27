@@ -1,0 +1,79 @@
+{
+  "name": {
+    "key": "PxObjSetName",
+    "display": "PxObjSetName()"
+  },
+  "synopsis": [
+    "PxError_t PxObjSetName (PxObjId_t objid, const PxChar_t *name, PxUInt_t namelen);"
+  ],
+  "arguments": [
+    {
+      "name": "objid",
+      "description": "The object's id"
+    },
+    {
+      "name": "name",
+      "description": "Name to assign to the object"
+    },
+    {
+      "name": "namelen",
+      "description": "Size of given name"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object is not on the same core",
+    "PXERR_NAME_BUFOVERFLOW - The name has been truncated",
+    "PXERR_OBJ_ILLOBJ - The passed object handle is not valid",
+    "PXERR_PROT_PERMISSION - The name is not readable for the calling task",
+    "PXERR_SERVICE_NOT_CONFIGURED - Service has not been configured",
+    "PXERR_ILLEGAL_ACCESS - Access through parameter pointer in size is illegal"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Assign a name to an object",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxObjSetName assigns the name to the object with handle objid."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxObjGetName",
+      "display": "PxObjGetName()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxObjSetName(objid, buffer, bufsize);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`objid` must be a valid PXROS-HR object, which may be checked with one of the following macros:",
+      "   - `PxObjIdIsValid()` must be true'",
+      "   - `PxObjIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxObjIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C).",
+      "The object objid must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxObjCoreId` and the own core id with `PxGetCoreId` \\(C).`name` must be a null terminated string."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the object name could be set. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

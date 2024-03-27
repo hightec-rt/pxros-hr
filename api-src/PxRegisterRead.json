@@ -1,0 +1,62 @@
+{
+  "name": {
+    "key": "PxRegisterRead",
+    "display": "PxRegisterRead()"
+  },
+  "synopsis": ["PxULong_t PxRegisterRead (volatile PxULong_t *addr);"],
+  "arguments": [
+    {
+      "name": "addr",
+      "description": "Address of the desired register to read"
+    }
+  ],
+  "retValues": [
+    "Value of the desired register",
+    "0 on error. If 0 is returned, the caller has to check the task error code with 'PxGetError()'."
+  ],
+  "errCodes": [
+    "PXERR_ACCESS_RIGHT - The task has not the right to access peripheral registers",
+    "PXERR_PROT_ILL_REGION - `addr` is not within additional protection region"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Read a value from a SFR register",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxRegisterRead returns the content of the peripheral register addr if the calling task has read access right to this special function register. It should only be used from a task (not from a handler)."
+      },
+      {
+        "type": "PP",
+        "text": "The peripheral register addr must be covered in the additional protection region table passed in the element ts_protect_region of PxTaskSpec_t during PxTaskCreate."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxULong_t registerReadReturn = PxRegisterRead(addr);",
+    "",
+    "if (0 == registerReadReturn) {",
+    "    // Report error",
+    "    errorCode = PxGetError();",
+    "}",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`addr` has to be a valid pointer to a special function register (V)."
+    ],
+    "AfterCall": [
+      "`PxGetError` must be called to check if an error has occurred. (F)"
+    ],
+    "BestPractice": [
+      "The peripheral register `addr` must be covered in the additional protection region table passed in the element `ts_protect_region` of `PxTaskSpec_t` during `PxTaskCreate`."
+    ]
+  }
+}

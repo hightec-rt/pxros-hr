@@ -1,0 +1,53 @@
+{
+  "name": {
+    "key": "PxSysInfoGetObjType",
+    "display": "PxSysInfoGetObjType()"
+  },
+  "synopsis": ["_PxObjType_t PxSysInfoGetObjType (PxObj_t oId);"],
+  "arguments": [
+    {
+      "name": "oId",
+      "description": "Object id to be checked"
+    }
+  ],
+  "retValues": [
+    "The type of the object",
+    "_PXObjIllObject if oId is not a valid PXROS object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Request the type of an object",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxSysInfoGetObjType returns the object type of the given object oId. If oId is not a valid PXROS object, _PxObjIllObject is returned."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "_PxObjType_t type = PxSysInfoGetObjType(oId);",
+    "",
+    "if (type != _PXObjMc) {",
+    "    // Report Error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`objid` must be a valid PXROS-HR object, which may be checked with one of the following macros:\n",
+      "   - `PxObjIdIsValid()` must be true.",
+      "   - `PxObjIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxObjIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "AfterCall": [
+      "The function returns _PXObjIllObject if the given object is invalid \\(C)."
+    ],
+    "BestPractice": ["No restrictions"]
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "name": {
+    "key": "PxMsgSend",
+    "display": "PxMsgSend()"
+  },
+  "synopsis": ["PxMsg_t PxMsgSend (PxMsg_t msg, PxMbx_t mbx);"],
+  "arguments": [
+    {
+      "name": "msg",
+      "description": "The message handle to send"
+    },
+    {
+      "name": "mbx",
+      "description": "The mailbox handle"
+    }
+  ],
+  "retValues": [
+    "Invalid message handle on success",
+    "Msg including PXROS error code on failure"
+  ],
+  "errCodes": [
+    {
+      "ARM-CMX": [
+        "PXERR_MBX_ILLMBX - The mailbox handle is invalid",
+        "PXERR_MSG_ILLMSG - The message handle is invalid",
+        "PXERR_MSG_ILLUSER - The sending task is not user of the message",
+        "PXERR_PROT_ILL_HANDLE - The associated protection handle is not valid",
+        "PXERR_REQUEST_INVALID_PARAMETER - Request with invalid parameter",
+        "PXERR_ILL_NULLPOINTER_PARAMETER - Illegal null pointer parameter in the call",
+        "PXERR_PROT_ILL_SIZE - The size of the protection region is not valid",
+        "PXERR_PROT_ILL_ALIGN - Alignment of protection region is not valid",
+        "PXERR_TASK_ILLTASK - The task is not a valid task object"
+      ],
+      "TC23": [
+        "PXERR_MBX_ILLMBX - The mailbox handle is invalid",
+        "PXERR_MSG_ILLMSG - The message handle is invalid",
+        "PXERR_MSG_ILLUSER - The sending task is not user of the message",
+        "PXERR_PROT_ILL_HANDLE - The associated protection handle is not valid",
+        "PXERR_REQUEST_INVALID_PARAMETER - Request with invalid parameter",
+        "PXERR_TASK_ILLTASK - The task is not a valid task object"
+      ]
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Send normal message (task service)",
+    "long": [
+      {
+        "type": "PP",
+        "text": "The PxMsgSend function sends the message msg into the mailbox mbxid. The calling task must be the user of msg. After the message is sent, it does not have a user (temporarily)."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMbxInstallHnd",
+      "display": "PxMbxInstallHnd()"
+    },
+    {
+      "key": "PxMsgGetData",
+      "display": "PxMsgGetData()"
+    },
+    {
+      "key": "PxMsgGetSender",
+      "display": "PxMsgGetSender()"
+    },
+    {
+      "key": "PxMsgInstallRelmbx",
+      "display": "PxMsgInstallRelmbx()"
+    },
+    {
+      "key": "PxMsgReceive",
+      "display": "PxMsgReceive()"
+    },
+    {
+      "key": "PxMsgRelDataAccess",
+      "display": "PxMsgRelDataAccess()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxMsg_t Msg = PxMsgSend(msg, mbx);",
+    "",
+    "if ((PxMsgIdError(Msg) != PXERR_NOERROR) || PxMsgIdIsValid(Msg)) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`Msg` must be a valid message object, requested via `PxMsgRequest...` or `PxMsgEnvelop...` or received by a `PxMsgReceive...` call (V). This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C).\n",
+      "The parameter `mbxid` must be a valid mailbox object id. This id may be\n+",
+      "   - the calling task's own mailbox (V)",
+      "   - the return value of a `PxTaskGetMbx()` call (V)",
+      "   - the result of a nameserver query (V)",
+      "   - part of a message sent by another task (V)\n",
+      "The mailbox may be checked with the macros",
+      "   - `PxMbxIdIsValid()` must be true.",
+      "   - `PxMbxIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMbxIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C).\n",
+      "or with a call of `PxMbxCheck()` \\(C)."
+    ],
+    "AfterCall": [
+      "On success `PxMsgSend` returns the invalidated message object. This may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be false.",
+      "   - `PxMsgIdGet()` must be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C).\n\n+"
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

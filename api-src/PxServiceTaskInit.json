@@ -1,0 +1,95 @@
+{
+  "name": {
+    "key": "PxServiceTaskInit",
+    "display": "PxServiceTaskInit()"
+  },
+  "synopsis": ["PxError_t PxServiceTaskInit (void);"],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_ACCESS_RIGHT - The calling task has not the right to act as a service task",
+    "PXERR_TASK_DIESRV_INITIALIZED - The dieserver is (seems to be) already initialized"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Instantiate the calling task as PXROS service task",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxServiceTaskInit instantiates the calling task as the PXROS service task. The PXROS service task is responsible to call PxDieService on request. There are two special events which announce the PXROS service task to call this service. The event PXSERVICE_TASK_DIED is signaled from the systemcall PxDie after the calling task has been suspended and is no longer scheduled and ready for deletion. In receiving this event the PXROS service task has to call PxDieService to remove the terminated task from the system."
+      },
+      {
+        "type": "PP",
+        "text": "An example for a PXROS service task could be:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "PxError_t ServiceTaskCode(void)",
+          "{",
+          "\tPxMbx_t relmbx;",
+          "\tPxEvents_t ev;",
+          "\tPxError_t  err;",
+          "\trelmbx = PxMbxRequest(PXOpoolTaskdefault);",
+          "\t// or relmbx = PxTaskGetMbx(PxGetId());",
+          "\tif (PxMbxIdError(relmbx) != PXERR_NOERROR)",
+          "\t\treturn PxMbxIdError(relmbx);",
+          "",
+          "\terr = PxServiceTaskInit();",
+          "\tif (err != PXERR_NOERROR)",
+          "\t\treturn err;",
+          "",
+          "\twhile(1)",
+          "\t{",
+          "\t\tev = PxAwaitEvents(PXSERVICE_TASK_DIED);",
+          "\t\tif (ev & PXSERVICE_TASK_DIED)",
+          "\t\t{",
+          "\t\t\terr = PxDieService();",
+          "\t\t\tif (err != PXERR_NOERROR)",
+          "\t\t\t{",
+          "\t\t\t\t// do error handling",
+          "\t\t\t}",
+          "\t\t}",
+          "\t}",
+          "}"
+        ]
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxDie",
+      "display": "PxDie()"
+    },
+    {
+      "key": "PxDieService",
+      "display": "PxDieService()"
+    },
+    {
+      "key": "PxTerminate",
+      "display": "PxTerminate()"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxServiceTaskInit();",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The calling task must have the right to act as service task `(PXACCESS_SYSTEM_CONTROL)`. (V)"
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the task could be installed as service task. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions"]
+  }
+}

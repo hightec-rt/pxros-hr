@@ -1,0 +1,38 @@
+{
+  "name": {
+    "key": "PxMbxIdIsValid",
+    "display": "PxMbxIdIsValid()"
+  },
+  "synopsis": ["int PxMbxIdIsValid (PxMbx_t Mbx);"],
+  "arguments": [
+    {
+      "name": "Mbx",
+      "description": "A Mbx handle"
+    }
+  ],
+  "retValues": ["TRUE if Mbx is a valid Mbx handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Returns TRUE if Mbx holds a valid Mbx handle",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMbxIdIsValid returns TRUE if obj holds a valid Mbx handle."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "int valid = PxMbxIdIsValid(Mbx);",
+    "",
+    "if (!valid) {",
+    "    // Handle invalid Mbx handle",
+    "}"
+  ]
+}

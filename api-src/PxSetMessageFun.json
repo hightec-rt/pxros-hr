@@ -1,0 +1,63 @@
+{
+  "name": {
+    "key": "PxSetMessageFun",
+    "display": "PxSetMessageFun()"
+  },
+  "synopsis": ["PxError_t PxSetMessageFun (PxMessageFun_t messagefun);"],
+  "arguments": [
+    {
+      "name": "messagefun",
+      "description": "The new PXROS error reporting function"
+    }
+  ],
+  "errCodes": [
+    "PXERR_ACCESS_RIGHT - The calling task does not have the right to change the error reporting function"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Set the PXROS error reporting function",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxSetMessageFun sets the PXROS error reporting function to messagefun."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMessage",
+      "display": "PxMessage()"
+    },
+    {
+      "key": "PxMessageFunDefault",
+      "display": "PxMessageFunDefault()"
+    },
+    {
+      "key": "PxPanic",
+      "display": "PxPanic()"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxSetMessageFun(messagefun);",
+    "",
+    "if (Err == PXERR_ACCESS_RIGHT) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The parameter must be a pointer to a valid error function (V)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the error reporting function could be set. Any other return value describes an error, which has to be interpreted. \\(C)"
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": {
+    "key": "PxGetCoreId",
+    "display": "PxGetCoreId()"
+  },
+  "synopsis": ["PxCoreId_t PxGetCoreId (void);"],
+  "retValues": ["core Id"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Get the Id of the running core",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxGetCoreId returns the Id of the running core."
+      }
+    ]
+  },
+  "usage": ["#include \"pxdef.h\"", "", "PxUInt_t coreId = PxGetCoreId();", ""],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

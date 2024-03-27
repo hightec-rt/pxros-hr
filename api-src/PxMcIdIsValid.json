@@ -1,0 +1,38 @@
+{
+  "name": {
+    "key": "PxMcIdIsValid",
+    "display": "PxMcIdIsValid()"
+  },
+  "synopsis": ["int PxMcIdIsValid (PxMc_t Mc);"],
+  "arguments": [
+    {
+      "name": "Mc",
+      "description": "A Mc handle"
+    }
+  ],
+  "retValues": ["TRUE if Mc is a valid Mc handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return TRUE if Mc holds a valid Mc handle",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMcIdIsValid returns TRUE if obj holds a valid Mc handle."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "int valid = PxMcIdIsValid(Mc);",
+    "",
+    "if (!valid) {",
+    "    // Handle invalid Mc handle",
+    "}"
+  ]
+}

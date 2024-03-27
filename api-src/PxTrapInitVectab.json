@@ -1,0 +1,64 @@
+{
+  "name": {
+    "key": "PxTrapInitVectab",
+    "display": "PxTrapInitVectab()"
+  },
+  "synopsis": [
+    {
+      "ARM-CMX": "void PxTrapInitVectab(ArmInstallExceptionHandler_t InstallTrapHandler);",
+      "TC23": "void PxTrapInitVectab (void);"
+    }
+  ],
+  "arguments": [
+    {
+      "ARM-CMX": [
+        {
+          "name": "InstallTrapHandler",
+          "description": "a pointer to a trap handler function"
+        }
+      ]
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Initialize trap vector table",
+    "long": [
+      {
+        "type": "PP",
+        "text": "This function initializes the PXROS trap interface."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxIntInitVectab",
+      "display": "PxIntInitVectab()"
+    }
+  ],
+  "usage": [
+    {
+      "ARM-CMX": [
+        "#include \"pxdef.h\"",
+        "",
+        "PxTrapInitVectab(trapandler);"
+      ],
+      "TC23" : [
+        "#include \"pxdef.h\"",
+        "",
+        "PxTrapInitVectab();"
+	    ]
+    }
+  ],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": [
+      "This function is automatically executed in `PxInit` and must not be called by the application!"
+    ]
+  }
+}

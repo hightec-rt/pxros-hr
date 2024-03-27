@@ -1,0 +1,43 @@
+{
+  "name": {
+    "key": "PxIsOnHndLvl",
+    "display": "PxIsOnHndLvl()"
+  },
+  "synopsis": ["PxInt_t PxIsOnHndLvl(void);"],
+  "retValues": ["Pointer to the protection set"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Retrives the handler or task type",
+    "long": [
+      {
+        "type": "PP",
+        "text": "Retrieves whether the calling function is running on task (non-privileged) or kernel/handler level (privileged).\n It can be used to determine whether a task level API function or the _hnd variant must be called."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "xref:chapter/section/Event_handling_services.adoc",
+      "display": "Event Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "if (PxIsOnHndLvl())",
+    "    PxTaskSignalEvents_Hnd(Task, EVENT_SUCCESS);",
+    "else",
+    "    PxTaskSignalEvents(Task, EVENT_SUCCESS);",
+    " "
+  ],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

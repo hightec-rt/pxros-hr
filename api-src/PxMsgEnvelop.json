@@ -1,0 +1,113 @@
+{
+  "name": {
+    "key": "PxMsgEnvelop",
+    "display": "PxMsgEnvelop()"
+  },
+  "synopsis": [
+    "PxMsg_t PxMsgEnvelop (PxMsgData_t data_area, PxSize_t msgsize, PxOpool_t opoolid);"
+  ],
+  "arguments": [
+    {
+      "name": "data_area",
+      "description": "The data area to be enveloped (start address)"
+    },
+    {
+      "name": "msgsize",
+      "description": "The size of the enveloped data area"
+    },
+    {
+      "name": "opoolid",
+      "description": "Object pool where to take the message object from"
+    }
+  ],
+  "retValues": ["The recieved message handle"],
+  "errCodes": [
+    "PXERR_OPOOL_ILLOPOOL - The passed object pool handle is invalid",
+    "PXERR_OBJ_NOOBJ - No free object is available",
+    "PXERR_OBJ_ABORTED - The request was aborted by an event",
+    "PXERR_OBJ_ILLOBJ - The passed object handle is not valid",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+    "PXERR_EVENT_ZERO - The given event mask is 0 for awaiting events",
+    "PXERR_PROT_PERMISSION - The data area is not writeable for the calling task",
+    "PXERR_MSG_ILL_ALIGN - Illegal aligned data pointer",
+    "PXERR_MSG_ILLMSG - Illegal aligned data pointer",
+    "PXERR_MSG_ILL_SIZE - Illegal data size",
+    "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Envelops a data area in a newly created message object",
+    "long": [
+      {
+        "type": "PP",
+        "text": "The PxMsgEnvelop function envelops a data area specified by arguments data_area (start address) and msgsize (size in bytes) in a new message object taken from object pool opool. The message object handle is returned. If there is no free object available, the PxMsgEnvelop waits until a free object is available."
+      },
+      {
+        "type": "PP",
+        "text": "In contrast to normal message object, The newly created envelope message object has implicitly set the await release flag. It is possible to wait for the message object release with function PxMsgAwaitRel or PxMsgAwaitRel_EvWait or check the release state by function PxMsgAwatRel_NoWait."
+      },
+      {
+        "type": "PP",
+        "text": "The task that called PxMsgEnvelop becomes the (permanent) owner and the (temporary) user of the created message. The task’s access rights to the data area is marked in the message object and can be read by calling PxMsgGetProtection. The owner may restrict the access right by calling PxMsgSetProtection."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgAwaitRel",
+      "display": "PxMsgAwaitRel()"
+    },
+    {
+      "key": "PxMsgGetProtection",
+      "display": "PxMsgGetProtection()"
+    },
+    {
+      "key": "PxMsgSetProtection",
+      "display": "PxMsgSetProtection()"
+    },
+    {
+      "key": "PxMsgSetToAwaitRel",
+      "display": "PxMsgSetToAwaitRel()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "char Buf[BUFFER_SIZE] PXMEM_ALIGNED; /* The buffer is aligned to 8 bytes */",
+    "",
+    "PxMsg_t Msg = PxMsgEnvelop(Buf, sizeof(Buf), opoolid)",
+    "",
+    "if (PxMsgIdIsValid (Msg)) {",
+    "    // Handle message",
+    "}",
+    "else {",
+    "    // Handle error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`data_area` must be a pointer to a valid data area.\n",
+      "`msgsize` must be a plausible value given as a constant (V) or a variable \\(C).\n",
+      "`opoolid` must be a valid PXROS-HR object pool and the calling task must have the access right to take objects from this object pool (V). The validity of `opoolid` may also be checked by the `PxOpoolIsValid` macro (F). The object pool must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxOpoolCoreId` and the own core id with `PxGetCoreId` \\(C). Typically the task's default object pool `PXOpoolTaskdefault` is used for this purpose."
+    ],
+    "AfterCall": [
+      "The returned value is the id of type `PxMsg_t`. This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "`PxMsgEnvelop` may block, if no PXROS-HR object is available. If blocking calls are prohibited, `PxMsgEnvelop_NoWait` should be used instead.",
+      "If the message requested with `PxMsgEnvelop` is sent to another task, the `data_area` must not be accessed by the requesting task until the recipient releases the message. `PxMsgAwaitRel` may be used to await the message’s release."
+    ]
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "name": {
+    "key": "PxAbortCleanup",
+    "display": "PxAbortCleanup()"
+  },
+  "synopsis": ["PxEventsOrError_t PxAbortCleanup (void);"],
+  "retValues": [
+    "If one of the aborting events is already received, it is returned.",
+    "An error code is returned if there is no abortstack used if the caller is not in user mode, or if the calling task's stack is invalid."
+  ],
+  "errCodes": [
+    "PXERR_NOERROR - one of the aborting events is already received",
+    "PXERR_TASK_STACKOVERFLOW - calling task's stack is too short",
+    "PXERR_TASK_ILLCALL - caller is not in user mode",
+    "PXERR_ABORTSTACK_OVERFLOW - no abortstack frame used"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Cleanup task",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxAbortCleanup cleanup task after the PxExpectAbort() returns."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "xref:chapter/section/Abort_mechanism_services.adoc",
+      "display": "Abort Mechanism Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "#define MY_EVENT 0x1l",
+    "",
+    "PxEvents_t Ev = PxExpectAbort(MY_EVENT, MY_FUNC, OpoolId);",
+    "",
+    "if (Ev.error != PXERR_NOERROR) {",
+    "  // Report error",
+    "} else {",
+    "   PxEventsOrError_t EventsErr = PxAbortCleanup();",
+    "   if (EventsErr.error != PXERR_NOERROR) {",
+    "      //Report Error",
+    "   }",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "name": {
+    "key": "PxPeGetName",
+    "display": "PxPeGetName()"
+  },
+  "synopsis": [
+    "PxError_t PxPeGetName (PxPe_t pe, PxChar_t *buffer, PxUInt_t bufsize);"
+  ],
+  "arguments": [
+    {
+      "name": "pe",
+      "description": "The periodic object whose name will be returned"
+    },
+    {
+      "name": "buffer",
+      "description": "Pointer to data area to copy the object's name to"
+    },
+    {
+      "name": "bufsize",
+      "description": "Size of data area"
+    }
+  ],
+  "retValues": ["PXROS-HR error code"],
+  "errCodes": [
+    "PXERR_NAME_BUFOVERFLOW - The data area is too short to store the object's name",
+    "PXERR_PROT_PERMISSION - The data area is not writeable for the calling task",
+    "PXERR_SERVICE_NOT_CONFIGURED - Service has not been configured",
+    "PXERR_OBJ_ILLOBJ - The passed periodic object handle is not valid",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The periodic object is not on the same core"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the name of a periodic object",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxPeGetName retrieves the name of the periodic object `pe` by copying characters into the `buffer` of length `bufsize`. The result is null-terminated."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxPeSetName",
+      "display": "PxPeSetName()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "const char peName[18] = \"PERIODIC-OBJ-NAME\"; // 17 characters + null character",
+    "",
+    "PxError_t err = PxPeSetName(pe, peName, 18);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}",
+    "",
+    "char retPeName[18];",
+    "",
+    "PxError_t err = PxPeGetName(pe, retPeName, 18);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ]
+}

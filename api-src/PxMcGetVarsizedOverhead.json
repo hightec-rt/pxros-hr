@@ -1,0 +1,71 @@
+{
+  "name": {
+    "key": "PxMcGetVarsizedOverhead",
+    "display": "PxMcGetVarsizedOverhead()"
+  },
+  "synopsis": ["PxSize_t PxMcGetVarsizedOverhead (PxMc_t mcid);"],
+  "arguments": [
+    {
+      "name": "mcid",
+      "description": "The memory class object"
+    }
+  ],
+  "retValues": [
+    "Overhead per block of a varsized memory class",
+    "PXMAXUINT in case of error"
+  ],
+  "errCodes": [
+    "PXERR_MC_ILLMC - `mcid` is not a valid memory class",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested memory class is not on the same core"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "return the overhead of a varsized memory class",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMcGetVarsizedOverhead returns the overhead per block of a varsized memory class."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMcGetSize",
+      "display": "PxMcGetSize()"
+    },
+    {
+      "key": "PxMcGetType",
+      "display": "PxMcGetType()"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxSize_t Size = PxMcGetVarsizedOverhead(mcid)",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": [
+      {
+        "ARM-CMX": [
+          "`mcid` must be the symbolic value `PXMcSystemdefault` specifying the system memory class (V)"
+        ],
+        "TC23": [
+          "`mcid` must be:\n",
+          "   - a valid PXROS-HR memory class created with a `PxMcRequest` call (V). The validity of `mcid` may also be checked by the `PxMcIsValid` macro (F).",
+          "   - the symbolic value `PXMcSystemdefault` specifying the system memory class (V)",
+          "   - the symbolic value `PXMcTaskdefault` specifying the task's memory class (V)"
+        ]
+      }
+    ],
+    "AfterCall": [
+      "The function returns 0xFFFFFFFF (-1U) if the given memory class is invalid. In this case `PxGetError` must be called to check which error has occurred. (F)"
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

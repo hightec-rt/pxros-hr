@@ -1,0 +1,34 @@
+{
+  "name": {
+    "key": "PxGetObjsize",
+    "display": "PxGetObjsize()"
+  },
+  "synopsis": ["PxSize_t PxGetObjsize(void);"],
+  "retValues": ["Size of a generic PXROS object"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the size of an object",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxGetObjsize returns the size (in bytes) for an object representation in the current PXROS version."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxSize_t Objsize = PxGetObjsize();",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

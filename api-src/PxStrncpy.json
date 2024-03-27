@@ -1,0 +1,45 @@
+{
+    "name": {
+      "key": "PxStrncpy",
+      "display": "PxStrncpy()"
+    },
+    "synopsis": ["PxChar_t* PxStrncpy(char *d, char const *s, PxSize_t n);"],
+    "arguments": [
+      {
+        "name": "d",
+        "description": "Address to copy the string to"
+      },
+      {
+        "name": "s",
+        "description": "Address to copy the string from"
+      },
+      {
+        "name": "n",
+        "description": "Maximal count of characters in strings to copy"
+      }
+    ],
+    "retValues": [
+        "Pointer to destination string"
+    ],
+    "appliesTo": [
+      {
+        "ARM-CMX": ["1.0.0"],
+        "TC23": ["8.2.0"]
+      }
+    ],
+    "description": {
+      "short": "Copy a string with fixed length",
+      "long": [
+        {
+          "type": "PP",
+          "text": "PxStrncpy copies at most \"n\" characters. If \"s\" has more than \"n\" characters, it is truncated to that length and the result is not null terminated."
+        }
+      ]
+    },
+    "usage": [
+      "#include \"pxdef.h\"",
+      "",
+      "PxStrncpy(d, s, len);",
+      ""
+    ]
+  }

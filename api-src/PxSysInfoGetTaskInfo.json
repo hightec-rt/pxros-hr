@@ -1,0 +1,144 @@
+{
+  "name": {
+    "key": "PxSysInfoGetTaskInfo",
+    "display": "PxSysInfoGetTaskInfo()"
+  },
+  "synopsis": [
+    "PxError_t PxSysInfoGetTaskInfo (PxInfoTask_t *TaskInfo, PxTask_t TaskId);"
+  ],
+  "arguments": [
+    {
+      "name": "TaskInfo",
+      "description": "Pointer to data area to store task information to"
+    },
+    {
+      "name": "TaskId",
+      "description": "Id of task object"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_PROT_PERMISSION - The task has no write permission on the `TaskInfo` object",
+    "PXERR_TASK_ILLTASK - The given object is not a task object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Function to get task info",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxSysInfoGetTaskInfo stores the contents of the task control block task into the info structure Taskinfo."
+      },
+      {
+        "type": "PP",
+        "text": "The structure TaskInfo has the following format:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef struct PxInfoTask_t",
+          "{",
+          "\tchar *PxInfoTask_Name; // task's name",
+          "\tPxUChar_t  PxInfoTask_Priority; // task's priority",
+          "\tPxError_t  PxInfoTask_Error; // task's last error code",
+          "\tPxTmode_t  PxInfoTask_Mode; // Bitmask of task's mode",
+          "\tPxInfoTaskState_t   PxInfoTask_State; // task's state",
+          "\tPxEvents_t  PxInfoTask_SavedEvents; // task's saved events",
+          "\tPxEvents_t  PxInfoTask_EventMask; // events, the task is waiting for",
+          "\tPxMc_t  PxInfoTask_Mc; // task's default memory class",
+          "\tPxOpool_t  PxInfoTask_Opool; // task's default object pool",
+          "\tPxMbx_t  PxInfoTask_PrivateMailbox; // task's private mailbox",
+          "\tPxInt_t  PxInfoTask_ExtremeStackSize; // task's extreme stack level",
+          "\tPxInt_t  PxInfoTask_CurrentStackSize; // task's current stack level",
+          "\tPxInt_t  PxInfoTask_TotalStackSize; // task's total stack size",
+          "\tPxInt_t  PxInfoTask_AbortStackSize; // task's abort stack size",
+          "\tPxTask_t  PxInfoTask_Creator; // task's creator task",
+          "\tPxUInt_t  PxInfoTask_AccessRights; // task's access rights",
+          "} PxInfoTask_t;"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "The task may be in one of the following states:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef enum",
+          "{",
+          "\tTaskState_Unknown, // unknown state",
+          "\tTaskState_Ready, // task is ready",
+          "\tTaskState_Waiting, // task is waiting",
+          "\tTaskState_Waiting_PxAwaitEvents, // task is waiting for events",
+          "\tTaskState_Waiting_PxMsgRcv, // task is waiting for a message",
+          "\tTaskState_Waiting_PxObjReq, // task is requesting an object",
+          "\tTaskState_Waiting_PxMcTakeBlk, // task is requesting a memory block",
+          "\tTaskState_Suspended, // task is suspended",
+          "\tTaskState_Suspended_PxAwaitEvents, // task is suspended while waiting for events",
+          "\tTaskState_Suspended_PxMsgRcv, // task is suspended while waiting for a message",
+          "\tTaskState_Suspended_PxObjReq, // task is suspended while requesting an object",
+          "\tTaskState_Suspended_PxMcTakeBlk, // task is suspended while requesting a memory block",
+          "} PxInfoTaskState_t;"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "There is a union available containing all sysinfo types:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef union",
+          "{",
+          "\tPxInfoMC_t  McInfo; // memory class information struct",
+          "\tPxInfoOpool_t  OpoolInfo; // Opool information struct",
+          "\tPxInfoMsg_t  MsgInfo; // message information struct",
+          "\tPxInfoMbx_t  MbxInfo; // mailbox information struct",
+          "\tPxInfoDelay_t  DelayInfo; // delay object information struct",
+          "\tPxInfoPe_t  PeInfo; // periodic event information struct",
+          "\tPxInfoTo_t  ToInfo; // timeout object information struct",
+          "\tPxInfoInterrupt_t  InterruptInfo; // interrupt object information struct",
+          "} PxObjInfo_T;"
+        ]
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "xref:chapter/section/Task_manipulation_services.adoc",
+      "display": "Task Manipulation Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxSysInfoGetTaskInfo(&TaskInfo, taskId);",
+    "",
+    "if (err == PXERR_NOERROR) {",
+    "    // Handle info",
+    "}",
+    "else {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`TaskInfo` must be a pointer to a valid data area.\n",
+      "The parameter `TaskId` must be a valid task object id. This id may be\n",
+      "   - the calling task's own id read by calling `PxGetId()` (V)",
+      "   - the return value of a `PxTaskCreate()` call (V)",
+      "   - the result of a nameserver query (V)",
+      "   - part of a message sent by another task (V)\n",
+      "Additionally the task id may be checked with `PxTaskCheck()` (F)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the system information could be delivered. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions"]
+  }
+}

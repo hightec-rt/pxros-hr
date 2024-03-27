@@ -1,0 +1,101 @@
+{
+  "name": {
+    "key": "PxMcReturnBlk",
+    "display": "PxMcReturnBlk()"
+  },
+  "synopsis": ["PxError_t PxMcReturnBlk (PxMc_t mcid, PxMptr_t blk);"],
+  "arguments": [
+    {
+      "name": "mcid",
+      "description": "The memory class handle, the block is returned to"
+    },
+    {
+      "name": "blk",
+      "description": "The block to be returned"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    {
+      "ARM-CMX": [
+        "PXERR_GLOBAL_ILLEGAL_CORE - The requested memory class is not on the same core",
+        "PXERR_MC_DAMAGED_BLOCK - The block is damaged",
+        "PXERR_MC_ILLMC - `mcid` is not a valid memory class",
+        "PXERR_MC_NOT_ALLOCATED - The block is not allocated",
+        "PXERR_MC_NOT_ALLOCATED_FROM - Block not taken from the memory class",
+        "PXERR_MC_INCONSISTENCY - Inconsistency in memory class: blk",
+        "PXERR_MC_ILLALIGN - Invalid memory block or size alignment in memory insert",
+        "PXERR_MC_ILLSIZE - Insufficient block size",
+        "PXERR_MC_NOMEM - Not enough memory in the memory class to satisfy the request",
+        "PXERR_INIT_ILLMCTYPE - The type for PXMcSystemdefault is different from PXMcVarsized, PXMcVarsizedAdjusted and PXMcVarsizedAligned",
+        "PXERR_UNSUPPORTED_MCTYPE - mc is not supported (If mcid corresponds to PXMcVarsized, PXMcVarsizedAligned, PXMcVarsizedAdjusted)"
+      ],
+      "TC23": [
+        "PXERR_GLOBAL_ILLEGAL_CORE - The requested memory class is not on the same core",
+        "PXERR_MC_DAMAGED_BLOCK - The block is damaged",
+        "PXERR_MC_ILLMC - `mcid` is not a valid memory class",
+        "PXERR_MC_NOT_ALLOCATED - The block is not allocated",
+        "PXERR_MC_NOT_ALLOCATED_FROM - Block not taken from the memory class",
+        "PXERR_MC_INCONSISTENCY - Inconsistency in memory class: blk",
+        "PXERR_MC_ILLALIGN - Invalid memory block or size alignment in memory insert",
+        "PXERR_MC_ILLSIZE - Insufficient block size",
+        "PXERR_MC_NOMEM - Not enough memory in the memory class to satisfy the request",
+        "PXERR_INIT_ILLMCTYPE - The type for PXMcSystemdefault is different from PXMcVarsized and PXMcVarsizedAdjusted"
+      ]
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return a block to the memory class",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMcReturnBlk returns block blk to mcid. blk is set to zero. blk must have been gotten by a PxMcTakeBlk call from the same memory class as it is returned to."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMcGetSize",
+      "display": "PxMcGetSize()"
+    },
+    {
+      "key": "PxMcGetType",
+      "display": "PxMcGetType()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxMcReturnBlk(mcid, blk)",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`mcid` must be:\n",
+      "   - a valid PXROS-HR memory class created with a `PxMcRequest` call (V). The validity of `mcid` may also be checked by the `PxMcIsValid` macro (F).",
+      "   - the symbolic value `PXMcSystemdefault` specifying the system memory class (V)",
+      "   - the symbolic value `PXMcTaskdefault` specifying the task's memory class (V)\n",
+      "The memory class must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxMcCoreId` and the own core id with `PxGetCoreId` \\(C).",
+      "`blk` must be the start of a memory block taken by `PxMcTakeBlk` from the memory class `mcid`."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the memory block has been returned to the memory class. Any other return value describes an error, which has to be interpreted. \\(C)"
+    ],
+    "BestPractice": [
+      "After `PxMcReturnBlk`, the given memory block `blk` is no longer valid and may never be used as a memory block!"
+    ]
+  }
+}

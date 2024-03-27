@@ -1,0 +1,68 @@
+{
+  "name": {
+    "key": "PxTickSetTicksPerSecond",
+    "display": "PxTickSetTicksPerSecond()"
+  },
+  "synopsis": ["PxError_t PxTickSetTicksPerSecond (PxUInt_t tickspersecond);"],
+  "arguments": [
+    {
+      "name": "tickspersecond",
+      "description": "number of calls to PxTickDefine_Hnd in one second"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_ACCESS_RIGHT - the calling task has not the right to set the frequency"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Set the frequency of the internal PXROS tick",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTickSetTicksPerSecond sets the frequency of the internal PXROS tick. tickspersecond defines the number of calls to PxTickDefine_Hnd in one second."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxDelaySched",
+      "display": "PxDelaySched()"
+    },
+    {
+      "key": "PxTickDefine_Hnd",
+      "display": "PxTickDefine_Hnd()"
+    },
+    {
+      "key": "PxTickGetCount",
+      "display": "PxTickGetCount()"
+    },
+    {
+      "key": "xref:chapter/section/Delay_job_services.adoc",
+      "display": "Delay Job Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxTickSetTicksPerSecond(2000);",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`tickspersecond` must be a plausible value given as a constant (V) or a variable \\(C)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the ticks per second could be set. Any other return value describes an error, which has to be interpreted. \\(C)"
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

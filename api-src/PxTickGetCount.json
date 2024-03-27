@@ -1,0 +1,44 @@
+{
+  "name": {
+    "key": "PxTickGetCount",
+    "display": "PxTickGetCount()"
+  },
+  "synopsis": ["PxTicks_t PxTickGetCount (void);"],
+  "retValues": ["PXROS tick counter"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Get PXROS tick counter",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PXROS maintains a tick counter, incremented by any call to PxTickDefine_Hnd. The value of this counter is returned by PxTickGetCount."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxTickSetTicksPerSecond",
+      "display": "PxTickSetTicksPerSecond()"
+    },
+    {
+      "key": "xref:chapter/section/Delay_job_services.adoc",
+      "display": "Delay Job Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxTicks_t ticks = PxTickGetCount();",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "name": {
+    "key": "PxToGetName",
+    "display": "PxToGetName()"
+  },
+  "synopsis": [
+    "PxError_t PxToGetName (PxTo_t to, PxChar_t *buffer, PxUInt_t bufsize);"
+  ],
+  "arguments": [
+    {
+      "name": "to",
+      "description": "The timeout object id"
+    },
+    {
+      "name": "buffer",
+      "description": "Data area to copy the object's name to"
+    },
+    {
+      "name": "bufsize",
+      "description": "Size of data area"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_NAME_BUFOVERFLOW - The data area is too short to store the objects name",
+    "PXERR_OBJ_ILLOBJ - `to` is not a valid object id",
+    "PXERR_PROT_PERMISSION - The data area is not writeable for the calling task",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object is not on the same core",
+    "PXERR_SERVICE_NOT_CONFIGURED - Service has not been configured"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the name of a timout object",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxToGetName copies the name of `to` into the `buffer` buffer of length `bufsize`. The result is zero-terminated."
+      },
+      {
+        "type": "PP",
+        "text": "PxToGetName is the specialized version of PxObjGetName applicable to timout objects."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxObjGetName",
+      "display": "PxObjGetName()"
+    },
+    {
+      "key": "PxToSetName",
+      "display": "PxToSetName()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ]
+ }

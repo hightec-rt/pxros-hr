@@ -1,0 +1,71 @@
+{
+  "name": {
+    "key": "PxMbxRelease",
+    "display": "PxMbxRelease()"
+  },
+  "synopsis": ["PxMbx_t PxMbxRelease (PxMbx_t Mbx);"],
+  "arguments": [
+    {
+      "name": "Mbx",
+      "description": "Mailbox object to be released"
+    }
+  ],
+  "retValues": ["Invalid mailbox handle on success", "Mailbox on failure"],
+  "errCodes": [
+    "PXERR_MBX_ILLMBX - `Mbx` is not a valid mailbox object",
+    "PXERR_MBX_PRIVMBXDELETE - Mailbox delete failed: private mailbox",
+    "PXERR_MBX_LEFTMESSAGES - Mailbox delete failed: messages left in the mailbox",
+    "PXERR_MBX_TASKWAITS - Mailbox delete failed: task(s) waiting at the mailbox",
+    "PXERR_OPOOL_ILLOPOOL - The object pool is not valid",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+    "PXERR_TASK_ILLTASK - The task is not a valid task object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Release a mailbox object",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMbxRelease releases the mailbox handle Mbx by converting it into a generic object and releasing this object."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMbxRequest",
+      "display": "PxMbxRequest()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxMbx_t Mbx = PxMbxRelease(Mbx);",
+    "",
+    "if (PxMbxIdError(Mbx) == PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`Mbx` must be a valid PXROS-HR mailbox object created with a `PxMbxRequest` call (V). The validity of `Mbx` may also be checked by the `PxMbxIsValid` macro (F)."
+    ],
+    "AfterCall": [
+      "`PxMbxRelease` returns the mailbox object to the object pool it has been taken from. On success `PxMbxRelease` returns the invalidated mailbox object. This may be checked with one of the following macros:\n",
+      "   - `PxMbxIsValid()` must be false.",
+      "   - `PxMbxGet()` must be `_PXIllegalObjId`.",
+      "   - `PxMbxError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "After `PxMbxRelease`, the given mailbox object `Mbx` is no longer valid and may never be used as mailbox object!"
+    ]
+  }
+}

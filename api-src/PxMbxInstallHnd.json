@@ -1,0 +1,120 @@
+{
+  "name": {
+    "key": "PxMbxInstallHnd",
+    "display": "PxMbxInstallHnd()"
+  },
+  "synopsis": [
+    "PxError_t PxMbxInstallHnd (PxMbx_t mbx, PxMsg_t (*hnd) (PxMsg_t, PxMsgType_t, PxArg_t), PxMsgType_t mode, PxArg_t arg);"
+  ],
+  "arguments": [
+    {
+      "name": "mbx",
+      "description": "Mailbox where to install the handler"
+    },
+    {
+      "name": "hnd",
+      "description": "Pointer to the handler"
+    },
+    {
+      "name": "mode",
+      "description": "Activating messages"
+    },
+    {
+      "name": "arg",
+      "description": "Argument (private data) for the handler"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_ACCESS_RIGHT - The calling task has not the right to install handlers",
+    "PXERR_MBX_HNDINSTALLED - There is already a handler installed",
+    "PXERR_MBX_ILLMBX - `mbx` is not a valid mailbox",
+    "PXERR_MBX_ILLMODE - `mode` is not a known mode for a mailbox handler"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Install or remove a mailbox handler",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMbxInstallHnd installs or removes a mailbox handler. If hnd is zero, a possibly existing handler at the mailbox specified in mbx is removed. If hnd is nonzero, PxMbxInstallHnd installs the handler hnd at the mailbox mbx with private data arg. msgtype specifies the type of messages activating the handler. msgtype may be one of the following values:"
+      },
+      {
+        "type": "BL",
+        "text": [
+          "PXMsgNormalMsg for normal messages",
+          "PXMsgPrioMsg for prioritized messages, or",
+          "PXMsgAnyMsg for both normal and prioritized messages."
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "When a message msg of type msgtype is sent to the mailbox, PXROS activates the mailbox handler assigned to the mailbox with the call:"
+      },
+      {
+        "type": "CS",
+        "text": ["hnd(&msg, msgtype, arg)."]
+      },
+      {
+        "type": "PP",
+        "text": "PXROS expects diagnostic information from the handler:"
+      },
+      {
+        "type": "BL",
+        "text": [
+          "If the handler returns PxMsgId(id == _PXIllegalObjId, error == PXERR_NOERROR) PXROS assumes that the message has been completely processed by the handler. The application’s send call then returns successfully, and the message is not placed in the mailbox.",
+          "If the handler returns PxMsgId(id != _PXIllegalObjId, error == PXERR_NOERROR) PXROS places the message in the mailbox. The application’s send call returns successfully.",
+          "If the handler returns PxMsgId(id != _PXIllegalObjId, error != PXERR_NOERROR), PXROS assumes that the handler has refused the message by returning an error indicator. The application’s send call then fails by propagating the handler’s error code."
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "When the mailbox handler is called the message's user is set to the installer task of the handler, so the mailbox handler may call all message-related functions that require a valid user."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgReceive",
+      "display": "PxMsgReceive()"
+    },
+    {
+      "key": "PxMsgSend",
+      "display": "PxMsgSend()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxMbxInstallHnd(mbx, MbxHnd, PXMsgAnyMsg, (PxArg_t) 0);",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`Mbx` must be a valid PXROS-HR mailbox object created with a `PxMbxRequest` call or the task's private mailbox (V). The validity of `Mbx` may also be checked by the `PxMbxIsValid` macro (F).\n",
+      "`hnd` has to be a pointer to a valid function (V).\n",
+      "The PXROS-HR message type given in `mode` must be of type `PxMsgType_t` and may have one of the following values (V):\n",
+      "   - `PXMsgAnyMsg`",
+      "   - `PXMsgNormalMsg`",
+      "   - `PXMsgPrioMsg`"
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the mailbox handler has been installed. Any other return value describes an error, which has to be interpreted. \\(C)"
+    ],
+    "BestPractice": [
+      "`PxMbxInstallHnd` should only be called during initialization to ensure the availability of the mailbox handler."
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": {
+    "key": "PxOpoolIdGet",
+    "display": "PxOpoolIdGet()"
+  },
+  "synopsis": ["PxObjId_t PxOpoolIdGet (PxOpool_t Opool);"],
+  "arguments": [
+    {
+      "name": "Opool",
+      "description": "An Opool handle"
+    }
+  ],
+  "retValues": ["Object ID of the object handle Opool"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the object ID of the object handle Opool",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxOpoolIdGet returns the object ID of the object handle Opool."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxObjId_t objid = PxOpoolIdGet(Opool);",
+    ""
+  ]
+}

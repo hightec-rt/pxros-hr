@@ -1,0 +1,51 @@
+{
+  "name": {
+    "key": "PxGetTimeslices",
+    "display": "PxGetTimeslices()"
+  },
+  "synopsis": ["PxTicks_t PxGetTimeslices (void);"],
+  "retValues": ["Reload value for the calling task's timeslice mechanism"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return timeslices",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxGetTimeslices returns the reload value for the calling task’s timeslice mechanism."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxTaskCreate",
+      "display": "PxTaskCreate()"
+    },
+    {
+      "key": "xref:chapter/section/Application_information_services.adoc",
+      "display": "Application Information Services"
+    },
+    {
+      "key": "xref:chapter/section/Task_mode_manipulation_services.adoc",
+      "display": "Task Mode Manipulation Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxSetTimeslices(7);",
+    "",
+    "if (PxGetTimeslices() != 7) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

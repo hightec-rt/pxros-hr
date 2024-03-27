@@ -1,0 +1,47 @@
+{
+    "name": {
+      "key": "PxStrncmp",
+      "display": "PxStrncmp()"
+    },
+    "synopsis": ["PxInt_t PxStrncmp(char const *s, char const *s2, PxSize_t n);"],
+    "arguments": [
+      {
+        "name": "s",
+        "description": "First string to compare"
+      },
+      {
+        "name": "s2",
+        "description": "Second string to compare"
+      },
+      {
+        "name": "n",
+        "description": "Maximal count of characters in strings to compare"
+      }
+    ],
+    "retValues": [
+        "0 if both strings are equal",
+        "1 if s1 is lexicographically greater then s2",
+        "-1 if s2 is lexicographically greater then s1"
+    ],
+    "appliesTo": [
+      {
+        "ARM-CMX": ["1.0.0"],
+        "TC23": ["8.2.0"]
+      }
+    ],
+    "description": {
+      "short": "Compare two strings with fixed length",
+      "long": [
+        {
+          "type": "PP",
+          "text": "PxStrncmp compare two strings with fixed length. It returns \"0\", if they are equal."
+        }
+      ]
+    },
+    "usage": [
+      "#include \"pxdef.h\"",
+      "",
+      "PxInt_t comp = PxStrncmp(str1, str2, len);",
+      ""
+    ]
+  }

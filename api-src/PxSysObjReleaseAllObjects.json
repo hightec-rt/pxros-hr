@@ -1,0 +1,94 @@
+{
+  "name": {
+    "key": "PxSysObjReleaseAllObjects",
+    "display": "PxSysObjReleaseAllObjects()"
+  },
+  "synopsis": ["PxError_t PxSysObjReleaseAllObjects (void);"],
+  "retValues": ["Release error on failure", "`PXERR_NOERROR` on success"],
+  "errCodes": [
+    {
+      "ARM-CMX": [
+        "PXERR_TO_ILLTO - `to` is not a valid timeout object",
+        "PXERR_OPOOL_ILLOPOOL - The object pool is not valid",
+        "PXERR_GLOBAL_ILLEGAL_CORE - The requested memory class is not on the same core",
+        "PXERR_TASK_ILLTASK - The task is not a valid task object",
+        "PXERR_PE_ILLPE - `pe` is not a valid periodic event object",
+        "PXERR_DELAY_ILLDELAY - `delay is not a valid delay object",
+        "PXERR_DELAY_USED_BY_INTERRUPT - Delay object currently in use by the interrupt handler",
+        "PXERR_MSG_ILLMSG - The passed message handle is invalid",
+        "PXERR_MSG_ILLUSER - The calling task is not the user of the message",
+        "PXERR_PROT_ILL_HANDLE - The associated protection handle is not valid",
+        "PXERR_REQUEST_INVALID_PARAMETER - Request with invalid parameter",
+        "PXERR_ILL_NULLPOINTER_PARAMETER - Illegal null pointer parameter in the call",
+        "PXERR_PROT_ILL_SIZE - The size of the protection region is not valid",
+        "PXERR_PROT_ILL_ALIGN - Alignment of protection region is not valid",
+        "PXERR_MBX_ILLMBX - The passed mailbox handle is invalid",
+        "PXERR_MSG_ILLOWNER - The message has no owner",
+        "PXERR_MC_ILLMC - The memory class for the message is invalid",
+        "PXERR_INIT_ILLMCTYPE - The type for PXMcSystemdefault is different from PXMcVarsized, PXMcVarsizedAdjusted and PXMcVarsizedAligned",
+        "PXERR_MC_DAMAGED_BLOCK - The block in memory class has been damaged",
+        "PXERR_MC_INCONSISTENCY - Inconsistency in memory class: blk",
+        "PXERR_MC_ILLALIGN - Invalid memory block or size alignment in memory insert",
+        "PXERR_MC_ILLSIZE - Insufficient block size",
+        "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+        "PXERR_TASK_ILLTASK - The task is not a valid task object",
+        "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures"
+      ],
+      "TC23": [
+        "PXERR_TO_ILLTO - `to` is not a valid timeout object",
+        "PXERR_OPOOL_ILLOPOOL - The object pool is not valid",
+        "PXERR_GLOBAL_ILLEGAL_CORE - The requested memory class is not on the same core",
+        "PXERR_TASK_ILLTASK - The task is not a valid task object",
+        "PXERR_PE_ILLPE - `pe` is not a valid periodic event object",
+        "PXERR_DELAY_ILLDELAY - `delay is not a valid delay object",
+        "PXERR_DELAY_USED_BY_INTERRUPT - Delay object currently in use by the interrupt handler",
+        "PXERR_MSG_ILLMSG - The passed message handle is invalid",
+        "PXERR_MSG_ILLUSER - The calling task is not the user of the message",
+        "PXERR_PROT_ILL_HANDLE - The associated protection handle is not valid",
+        "PXERR_REQUEST_INVALID_PARAMETER - Request with invalid parameter",
+        "PXERR_MBX_ILLMBX - The passed mailbox handle is invalid",
+        "PXERR_MSG_ILLOWNER - The message has no owner",
+        "PXERR_MC_ILLMC - The memory class for the message is invalid",
+        "PXERR_INIT_ILLMCTYPE - The type for PXMcSystemdefault is different from PXMcVarsized, PXMcVarsizedAdjusted and PXMcVarsizedAligned",
+        "PXERR_MC_DAMAGED_BLOCK - The block in memory class has been damaged",
+        "PXERR_MC_INCONSISTENCY - Inconsistency in memory class: blk",
+        "PXERR_MC_ILLALIGN - Invalid memory block or size alignment in memory insert",
+        "PXERR_MC_ILLSIZE - Insufficient block size",
+        "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+        "PXERR_TASK_ILLTASK - The task is not a valid task object",
+        "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures"
+      ]
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Release all objects requested by the caller",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxSysObjReleaseAllObjects releases all objects which are requested by the calling task. Right now only PxDelay, PxTo, PxPe, PxMbx, and PxTask are handled."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxSysObjReleaseAllObjects();",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the objects could be released. Any other return value describes an error, which has to be interpreted. \\(C)"
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

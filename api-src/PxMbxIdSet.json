@@ -1,0 +1,30 @@
+{
+  "name": {
+    "key": "PxMbxIdSet",
+    "display": "PxMbxIdSet()"
+  },
+  "synopsis": ["PxMbx_t PxMbxIdSet (PxObjId_t id);"],
+  "arguments": [
+    {
+      "name": "id",
+      "description": "The object id"
+    }
+  ],
+  "retValues": ["Mbx handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return an object handle which holds id as the object ID",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMbxIdSet returns an object handle which holds id as the object ID."
+      }
+    ]
+  },
+  "usage": ["#include \"pxdef.h\"", "", "PxMbx_t id = PxMbxIdSet(oid);", ""]
+}

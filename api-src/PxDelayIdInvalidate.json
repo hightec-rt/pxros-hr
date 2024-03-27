@@ -1,0 +1,29 @@
+{
+  "name": {
+    "key": "PxDelayIdInvalidate",
+    "display": "PxDelayIdInvalidate()"
+  },
+  "synopsis": ["PxDelay_t PxDelayIdInvalidate (void);"],
+  "retValues": ["An invalid Delay handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return an invalid Delay handle for initialization",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxDelayIdInvalidate returns an invalid Delay handle for initialization."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxDelay_t Delay = PxDelayIdInvalidate();",
+    ""
+  ]
+}

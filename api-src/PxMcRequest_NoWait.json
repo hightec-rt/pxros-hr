@@ -1,0 +1,160 @@
+{
+  "name": {
+    "key": "PxMcRequest_NoWait",
+    "display": "PxMcRequest_NoWait()"
+  },
+  "synopsis": [
+    "PxMc_t PxMcRequest_NoWait (PxMcType_t mctype, PxSize_t size, PxOpool_t OpoolId);"
+  ],
+  "arguments": [
+    {
+      "name": "mctype",
+      "description": "Type of the memory class"
+    },
+    {
+      "name": "size",
+      "description": "Size parameter"
+    },
+    {
+      "name": "OpoolId",
+      "description": "Object pool where to take the memory class object from"
+    }
+  ],
+  "retValues": [
+    "Valid memory class handle on success",
+    "Invalid memory class handle on failure"
+  ],
+  "errCodes": [
+    {
+      "ARM-CMX": [
+        "PXERR_ACCESS_RIGHT - the calling task has not the right to access the object pool",
+        "PXERR_OPOOL_ILLOPOOL - `opoolid` is not a valid object pool",
+        "PXERR_OBJ_ABORTED - Request aborted by an event",
+        "PXERR_OBJ_NOOBJ - No free object is available",
+        "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+        "PXERR_OBJ_ILLOBJ - The passed object handle is not valid",
+        "PXERR_MC_ILLTYPE - Illegal MC type",
+        "PXERR_MC_ILLSIZE - Insufficient block size",
+        "PXERR_MC_ILLALIGN - Invalid memory block or size alignment in memory insert",
+        "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures",
+        "PXERR_UNSUPPORTED_MCTYPE - mctype is not supported (If mctype is PXMcVarsized, PXMcVarsizedAligned, PXMcVarsizedAdjusted)"
+      ],
+      "TC23": [
+        "PXERR_ACCESS_RIGHT - the calling task has not the right to access the object pool",
+        "PXERR_OPOOL_ILLOPOOL - `opoolid` is not a valid object pool",
+        "PXERR_OBJ_ABORTED - Request aborted by an event",
+        "PXERR_OBJ_NOOBJ - No free object is available",
+        "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+        "PXERR_OBJ_ILLOBJ - The passed object handle is not valid",
+        "PXERR_MC_ILLTYPE - Illegal MC type",
+        "PXERR_MC_ILLSIZE - Insufficient block size",
+        "PXERR_MC_ILLALIGN - Invalid memory block or size alignment in memory insert",
+        "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures"
+      ]
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Create a memory class object with immediate return",
+    "long": [
+      {
+        "type": "PP",
+        "text": "The PxMcRequest_NoWait function creates a memory class of type mctype by converting a generic object from object pool OpoolId. The memory class object handle is returned. If there is no free object available, the PxMcRequest_NoWait immediately returns with error code PXERR_OBJ_NOOBJ. For each memory class type the size parameter has different meaning."
+      },
+      {
+        "type": "PP",
+        "text": "The following memory class types exist:"
+      },
+      {
+        "type": "BL",
+        "ARM-CMX": [
+          "PXMcFixsized",
+					"PXMcBuddyMemory"
+        ],
+        "TC23": [
+          "PXMcFixsized",
+					"PXMcVarsized",
+					"PXMcVarsizedAligned",
+					"PXMcVarsizedAdjusted"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "The PXMcFixsized memory class can only manage memory blocks of the same size. The size parameter is set during memory class creation and defines the (common) size of any memory block managed by the memory class. The size parameter can be read by PxMcGetSize function."
+      },
+      {
+        "type": "PP",
+        "ARM-CMX": [
+          "The PXMcBuddyMemory classes can manage memory blocks of different power of two sizes. Each block in the memory class is aligned to its size. The minimum block size is 32 bytes."
+        ],
+        "TC23": [
+          "The PXMcVarsized, PXMcVarsizedAligned and PXMcVarsizedAdjusted memory classes can manage memory blocks of different sizes. For PXMcVarsized memory classes the size parameter has no meaning and can be set to any value. For PXMcVarsizedAligned memory classes the size parameter defines the user alignment of memory blocks returned by function PxTakeBlk. For PXMcVarsizedAdjusted memory classes the size parameter defines the minimum size (adjustment) of the memory blocks returned by function PxTakeBlk. Minimum alignment and size of any memory block is 8 bytes."
+        ]
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMcRequest",
+      "display": "PxMcRequest()"
+    },
+    {
+      "key": "PxMcRequest_EvWait",
+      "display": "PxMcRequest_EvWait()"
+    },
+    {
+      "key": "PxMcGetSize",
+      "display": "PxMcGetSize()"
+    },
+    {
+      "key": "PxMcGetType",
+      "display": "PxMcGetType()"
+    },
+    {
+      "key": "PxMcRelease",
+      "display": "PxMcRelease()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxMc_t mcHnd = PxMcRequest_NoWait(64, PXMcFixsized, OpoolId)",
+    "",
+    "if (!PxMcIdIsValid (mcHnd)) {",
+    "    // Report error;",
+    "}",
+    "else {",
+    "    // Handle memory class",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`OpoolId` must be a valid PXROS-HR object pool and the calling task must have the access right to take objects from this object pool (V). The validity of `OpoolId` may also be checked by the `PxOpoolIsValid` macro (F). The object pool must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxOpoolCoreId` and the own core id with `PxGetCoreId` \\(C). Typically the task's default object pool `PXOpoolTaskdefault` is used for this purpose.\n",
+      "The memory class type given in `mctype` must be of type `PxMcType_t` and may have one of the following values (V):\n",
+      "   - `PXMcFixsized`",
+      "   - `PXMcVarsized`",
+      "   - `PXMcVarsizedAligned`",
+      "   - `PXMcVarsizedAdjusted`\n",
+      "The `size` parameter must have a plausible value (V).\n",
+      "The calling task must have the access right to create new resources (V)."
+    ],
+    "AfterCall": [
+      "The returned value is the id of type `PxMc_t`. This id may be checked with one of the following macros:\n",
+      "   - `PxMcIdIsValid()` must be true.",
+      "   - `PxMcIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMcIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "`PxMcRequest_NoWait` should only be called during initialization to ensure the availability of the memory class."
+    ]
+  }
+}

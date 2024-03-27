@@ -1,0 +1,88 @@
+{
+  "name": {
+    "key": "PxMsgInstallRelmbx",
+    "display": "PxMsgInstallRelmbx()"
+  },
+  "synopsis": ["PxError_t PxMsgInstallRelmbx (PxMsg_t msgid, PxMbx_t mbxid);"],
+  "arguments": [
+    {
+      "name": "msgid",
+      "description": "Message object for which the release mailbox has to be installed"
+    },
+    {
+      "name": "mbxid",
+      "description": "Release mailbox for the message object"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_MBX_ILLMBX - The passed mailbox handle is invalid",
+    "PXERR_MSG_ILLMSG - The passed message handle is invalid",
+    "PXERR_MSG_ILLUSER - The calling task is not the user of the message",
+    "PXERR_MSG_NOT_IMPLEMENTED - The message has not been requested",
+    "PXERR_MSG_RELMBX_INSTALLED - A release mailbox is already installed for the message"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Install a mailbox as a release mailbox",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgInstallRelmbx installs mbxid as release mailbox for msgid, if mbxid is a valid mailbox object; if mbxid is an illegal object a potential release mailbox for msgid is de-installed. To use this service, the calling task must be the user of msgid."
+      },
+      {
+        "type": "PP",
+        "text": "If a release mailbox mbxid is installed at msgid and msgid is later released, msgid is not destroyed but sent to mbxid."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgSend",
+      "display": "PxMsgSend()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxMsgInstallRelmbx(msgid, mbxid);",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`msgid` must be a valid message object, requested via `PxMsgRequest...` or `PxMsgEnvelop...` or received by a `PxMsgReceive...` call (V). This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C).\n",
+      "The parameter `mbxid` must be a valid mailbox object id. This id may be\n",
+      "   - the calling task's own mailbox (V)",
+      "   - the return value of a `PxTaskGetMbx()` call (V)",
+      "   - the result of a nameserver query (V)",
+      "   - part of a message sent by another task (V)\n",
+      "The mailbox may be checked with the macros",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C).\n",
+      "or with a call of `PxMbxCheck()` \\(C).\n",
+      "The mailbox mbxid must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxMbxCoreId` and the own core id with `PxGetCoreId` \\(C)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the mailbox is registered as release mailbox for the appropriate message. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "This function typically is used to create so called \"message pools\". These message pools should be created during initialization to ensure their availability."
+    ]
+  }
+}

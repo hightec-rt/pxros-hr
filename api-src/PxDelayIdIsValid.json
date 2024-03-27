@@ -1,0 +1,38 @@
+{
+  "name": {
+    "key": "PxDelayIdIsValid",
+    "display": "PxDelayIdIsValid()"
+  },
+  "synopsis": ["int PxDelayIdIsValid (PxDelay_t Delay);"],
+  "arguments": [
+    {
+      "name": "Delay",
+      "description": "A Delay handle"
+    }
+  ],
+  "retValues": ["TRUE if Delay is a valid Delay handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Returns TRUE if Delay holds a valid Delay handle",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxDelayIdIsValid returns TRUE if obj holds a valid Delay handle."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "int valid = PxDelayIdIsValid(Delay);",
+    "",
+    "if (!valid) {",
+    "    // Handle invalid delay handle",
+    "}"
+  ]
+}

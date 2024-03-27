@@ -1,0 +1,72 @@
+{
+  "name": {
+    "key": "PxTrapAbort",
+    "display": "PxTrapAbort()"
+  },
+  "synopsis": [
+    {
+      "ARM-CMX": "void PxTrapAbort (int trapno);",
+      "TC23": "void PxTrapAbort (int trapno, int tin, TC_CSA_t *csa);"
+    }
+  ],
+  "arguments": [
+    {
+      "ARM-CMX": [
+        {
+          "name": "trapno",
+          "description": "Trap number"
+        }
+      ],
+      "TC23": [
+        {
+          "name": "trapno",
+          "description": "Trap number"
+        },
+        {
+          "name": "tin",
+          "description": "Trap identification number"
+        },
+        {
+          "name": "csa",
+          "description": "Pointer to context save area"
+        }
+      ]
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Default trap handler",
+    "long": [
+      {
+        "type": "PP",
+        "ARM-CMX": [
+          "This function will be called as the default trap handling routine. Since it is called for all traps this function should avoid to use additional CSAs; therefore it is called through a jump +++(__attribute__ ((interrupt_handler)))+++ and should return with the standard return sequence of interrupt handler."
+        ],
+        "TC23": [
+          "This function will be called as the default trap handling routine."
+        ]
+      }
+    ]
+  },
+  "usage": [
+    {
+      "ARM-CMX": [
+        "#include \"pxdef.h\"",
+        "",
+        "PxTrapAbort(0xff);",
+        ""
+      ],
+      "TC23" : [
+        "#include \"pxdef.h\"",
+        "",
+        "PxTrapAbort(0xff, 0xff, (TC_CSA_t *) 0);",
+        ""
+	    ]
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "name": {
+    "key": "PxIntInstallHandler",
+    "display": "PxIntInstallHandler()"
+  },
+  "synopsis": [
+    {
+      "ARM-CMX": "PxError_t PxIntInstallHandler (PxInt_t intno, PxUInt_t prio, PxInterrupt_t intObj, PxIntHandler_t inthandler, PxArg_t arg);",
+      "TC23": "PxError_t PxIntInstallHandler (PxUInt_t intno, PxInterrupt_t intObj, void(* inthandler)(PxArg_t), PxArg_t arg);"
+    }
+  ],
+  "arguments": [
+    {
+      "ARM-CMX": [
+        {
+          "name": "intno",
+          "description": "The number of the interrupt for which the handler is installed"
+        },
+        {
+          "name": "prio",
+          "description": "Priority for interrupt controller. Two lowest priorities are reserved for the kernel. For information on the number of priorities, please refer to the device specification."
+        },
+        {
+          "name": "inthandler",
+          "description": "The interrupt handler to be installed"
+        },
+        {
+          "name": "arg",
+          "description": "Argument for interrupt handler"
+        },
+        {
+          "name": "intObj",
+          "description": "The interrupt object"
+        }
+      ],
+      "TC23": [
+        {
+          "name": "intno",
+          "description": "The number of the interrupt for which the handler is installed"
+        },
+        {
+          "name": "inthandler",
+          "description": "The interrupt handler to be installed"
+        },
+        {
+          "name": "arg",
+          "description": "Argument for interrupt handler"
+        },
+        {
+          "name": "intObj",
+          "description": "The interrupt object"
+        }
+      ]
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_REQUEST_INVALID_PARAMETER - `intno` out of specification",
+    "PXERR_ACCESS_RIGHT - The calling task has not the right to install handlers",
+    "PXERR_INTR_ILL - The handler already installed from another task",
+    "PXERR_INTERRUPT_ILLINTERRUPT - intObj not valid interrupt object ",
+    "PXERR_ILLEGAL_SERVICE_CALLED - Service invalid"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Install an interrupt handler",
+    "long": [
+      {
+        "type": "PP",
+        "text": "Installs the C-function handler as interrupt handler for interrupt number intno. Whenever this interrupt occurs, handler is queued into the PXROS sysjob list via the interrupt object intObj. When the interrupt level is left to system level, handler is executed with argument arg on the installing task’s interrupt stack."
+      },
+      {
+        "type": "PP",
+        "text": "Handler MUST FOLLOW the standard GNU C calling conventions!"
+      },
+      {
+        "type": "PP",
+        "text": "The function is not protected against the abort mechanism!"
+      },
+      {
+        "type": "PP",
+        "text": "The installation is NOT ATOMIC! The application MUST ENSURE that no intno interrupts occur during a call to PxIntInstallHandler (intno,...)!"
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxTaskCreate",
+      "display": "PxTaskCreate()"
+    },
+    {
+      "key": "PxTrapInstallHandler",
+      "display": "PxTrapInstallHandler()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    {
+      "ARM-CMX": [
+        "#include \"pxdef.h\"",
+        "",
+        "PxError_t Err = PxIntInstallHandler(intno, 1, intObj, interruptHandler, (PxArg_t) 0);",
+        "",
+        "if (Err != PXERR_NOERROR) {",
+        "    // Report error",
+        "}"
+      ],
+      "TC23": [
+        "#include \"pxdef.h\"",
+        "",
+        "PxError_t Err = PxIntInstallHandler(intno, intObj, interruptHandler, (PxArg_t) 0);",
+        "",
+        "if (Err != PXERR_NOERROR) {",
+        "    // Report error",
+        "}"
+      ]
+    }
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The parameter `intno` must be a valid interrupt id. (V)\n",
+      "`intObj` must be a valid PXROS-HR interrupt object created with a `PxInterruptRequest` call (V). The validity of `intObj` may also be checked by the `PxInterruptIsValid` macro (F).\n",
+      "`inthandler` must be a pointer to an interrupt handler function.(V)"
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the interrupt handler could be installed. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "The calling task must have the right to install interrupt handlers `(PXACCESS_INSTALL_HANDLERS)`. (V)"
+    ]
+  }
+}

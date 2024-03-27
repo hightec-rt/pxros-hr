@@ -1,0 +1,63 @@
+{
+  "name": {
+    "key": "PxTaskGetAccessRights",
+    "display": "PxTaskGetAccessRights()"
+  },
+  "synopsis": ["PxUInt_t PxTaskGetAccessRights (PxTask_t TaskId);"],
+  "arguments": [
+    {
+      "name": "TaskId",
+      "description": "Task whose access rights are requested"
+    }
+  ],
+  "retValues": ["Access rights of given task"],
+  "errCodes": [
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested task is not on the same core",
+    "PXERR_TASK_ILLTASK - `TaskId` is not a valid task object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the access rights of a task",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTaskGetAccessRights returns the access rights of the task TaskId."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxTaskCreate",
+      "display": "PxTaskCreate()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxUInt_t Rights = PxTaskGetAccessRights(TaskId);",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The parameter `TaskId` must be a valid task object id. This id may be",
+      "   - the calling task's own id read by calling `PxGetId()` (V)",
+      "   - the return value of a `PxTaskCreate()` call (V)",
+      "   - the result of a nameserver query (V)",
+      "   - part of a message sent by another task (V)",
+      "Additionally the task id may be checked with `PxTaskCheck()` (F).The task object must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxTaskCoreId` and the own core id with `PxGetCoreId` \\(C)."
+    ],
+    "AfterCall": [
+      "`PxTaskGetAccessRights` returns a null value on failure \\(C). In this case the task must call `PxGetError` to check which error has occurred (F)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

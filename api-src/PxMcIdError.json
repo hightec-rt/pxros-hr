@@ -1,0 +1,38 @@
+{
+  "name": {
+    "key": "PxMcIdError",
+    "display": "PxMcIdError()"
+  },
+  "synopsis": ["PxError_t PxMcIdError (PxMc_t Mc);"],
+  "arguments": [
+    {
+      "name": "Mc",
+      "description": "A Mc handle"
+    }
+  ],
+  "retValues": ["The last error of the object handle Mc"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the last error of the object handle Mc",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMcIdError returns the last error of the object handle Mc."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxMcIdError(Mc);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ]
+}

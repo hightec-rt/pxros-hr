@@ -1,0 +1,44 @@
+{
+  "name": {
+    "key": "PxInitcall",
+    "display": "_PxInitcall()"
+  },
+  "synopsis": ["_PxInitcall (void func, parms...);"],
+  "arguments": [
+    {
+      "name": "func",
+      "description": "Function to call"
+    },
+    {
+      "name": "parms...",
+      "description": "Parameters to function"
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Define a function which can be called before PxInit",
+    "long": [
+      {
+        "type": "PP",
+        "text": "+++_PxInitcall defines a wrapper function func___ to call the function func(...) with the proper arguments. The wrapper function func___ will get an entry in __PxInitializeTable.+++"
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxInitializeBeforePxInit",
+      "display": "PxInitializeBeforePxInit()"
+    }
+  ],
+  "usage": ["#include \"pxdef.h\"", "", "_PxInitcall(MyInitFunc);", ""],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

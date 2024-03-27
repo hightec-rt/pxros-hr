@@ -1,0 +1,94 @@
+{
+  "name": {
+    "key": "PxMcGetSize",
+    "display": "PxMcGetSize()"
+  },
+  "synopsis": ["PxSize_t PxMcGetSize (PxMc_t mcid);"],
+  "arguments": [
+    {
+      "name": "mcid",
+      "description": "The memory class object"
+    }
+  ],
+  "retValues": ["0 if `mcid` is varsized", "Blocksize if `mcid` is fixsized"],
+  "errCodes": [
+    "PXERR_MC_ILLMC - `mcid` is not a valid memory class",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested memory class is not on the same core"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Get size of a memory class",
+    "long": [
+      {
+        "type": "PP",
+        "ARM-CMX": [
+          "PxMcGetSize returns blocksize if `mcid` is fixsized and 0 otherwise."
+        ],
+        "TC23": [
+          "PxMcGetSize returns 0 if `mcid` is varsized or blocksize if `mcid` is fixsized."
+        ]
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMcGetType",
+      "display": "PxMcGetType()"
+    },
+    {
+      "key": "PxMcGetVarsizedOverhead",
+      "display": "PxMcGetVarsizedOverhead()"
+    },
+    {
+      "key": "PxMcInsertBlk",
+      "display": "PxMcInsertBlk()"
+    },
+    {
+      "key": "PxMcRelease",
+      "display": "PxMcRelease()"
+    },
+    {
+      "key": "PxMcRequest",
+      "display": "PxMcRequest()"
+    },
+    {
+      "key": "PxMcResolveDefault",
+      "display": "PxMcResolveDefault()"
+    },
+    {
+      "key": "PxMcReturnBlk",
+      "display": "PxMcReturnBlk()"
+    },
+    {
+      "key": "PxMcTakeBlk",
+      "display": "PxMcTakeBlk()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxSize_t Size = PxMcGetSize(mcid)",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`mcid` must be:\n",
+      "   - a valid PXROS-HR memory class created with a `PxMcRequest` call (V). The validity of `mcid` may also be checked by the `PxMcIsValid` macro (F).",
+      "   - the symbolic value `PXMcSystemdefault` specifying the system memory class (V)",
+      "   - the symbolic value `PXMcTaskdefault` specifying the task's memory class (V)"
+    ],
+    "AfterCall": [
+      "`PxGetError` must be called to check if an error has occurred. (F)"
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

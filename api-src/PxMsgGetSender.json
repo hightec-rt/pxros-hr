@@ -1,0 +1,90 @@
+{
+  "name": {
+    "key": "PxMsgGetSender",
+    "display": "PxMsgGetSender()"
+  },
+  "synopsis": ["PxTask_t PxMsgGetSender (PxMsg_t msgid);"],
+  "arguments": [
+    {
+      "name": "msgid",
+      "description": "The message object"
+    }
+  ],
+  "retValues": ["Message sender"],
+  "errCodes": [
+    "PXERR_MSG_ILLMSG - `msgid` is not a valid object id",
+    "PXERR_MSG_ILLUSER - The calling task is not user of this message"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the sender TaskId of the message",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgGetSender returns the message's sender. If the message has been sent by a handler the previous user of the message is returned."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgReceive",
+      "display": "PxMsgReceive()"
+    },
+    {
+      "key": "PxMsgRequest",
+      "display": "PxMsgRequest()"
+    },
+    {
+      "key": "PxMsgSend",
+      "display": "PxMsgSend()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxTask_t msgOwner = PxMsgGetSender(msgid);",
+    "",
+    "if (msgOwner.error == PXERR_NOERROR)",
+    "{",
+    "\tif (msgOwner.id != _PXIllegalObjId)",
+    "\t{",
+    "\t\t// The msgOwner contains the task ID of the sender",
+    "\t}",
+    "\telse",
+    "\t{",
+    "\t\t// Cannot get the message sender because",
+    "\t\t// the calling task is not the message user",
+    "\t}",
+    "}",
+    "else",
+    "{",
+    "\t// The message handle is invalid (msgOwner.error == PXERR_MSG_ILLMSG)",
+    "}",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`msgid` must be a valid message object, requested via `PxMsgRequest...` or `PxMsgEnvelop...` or received by a `PxMsgReceive...` call (V). This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "AfterCall": [
+      "The returned value is the task object id of type `PxTask_t`. This id may be checked with one of the following macros:\n",
+      "   - `PxTaskIdIsValid()` must be true.",
+      "   - `PxTaskIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxTaskIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C).\n",
+      "Additionally the task object may be checked with `PxTaskCheck()` (F)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

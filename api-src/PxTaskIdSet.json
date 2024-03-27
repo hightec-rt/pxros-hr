@@ -1,0 +1,30 @@
+{
+  "name": {
+    "key": "PxTaskIdSet",
+    "display": "PxTaskIdSet()"
+  },
+  "synopsis": ["PxTask_t PxTaskIdSet (PxObjId_t id);"],
+  "arguments": [
+    {
+      "name": "id",
+      "description": "The object id"
+    }
+  ],
+  "retValues": ["Task handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return an object handle which holds id as the object ID",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTaskIdSet returns an object handle which holds id as the object ID."
+      }
+    ]
+  },
+  "usage": ["#include \"pxdef.h\"", "", "PxTask_t id = PxTaskIdSet(oid);", ""]
+}

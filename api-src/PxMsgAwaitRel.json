@@ -1,0 +1,76 @@
+{
+  "name": {
+    "key": "PxMsgAwaitRel",
+    "display": "PxMsgAwaitRel()"
+  },
+  "synopsis": ["PxMsg_t PxMsgAwaitRel (PxMsg_t Msg);"],
+  "arguments": [
+    {
+      "name": "Msg",
+      "description": "Message object to await release"
+    }
+  ],
+  "retValues": ["Msg on success", "Invalid message handle on failure"],
+  "errCodes": [
+    "PXERR_MSG_ABORTED - The service was aborted by an event",
+    "PXERR_MSG_ILLMSG - The passed message handle is invalid",
+    "PXERR_MSG_ILLOWNER - The calling task is not the owner of the message",
+    "PXERR_MSG_NOT_IMPLEMENTED - The message has not been set to wait for its release"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Waits until a message is released",
+    "long": [
+      {
+        "type": "PP",
+        "text": "The PxMsgAwaitRel waits for the message Msg to be released. The message Msg must be created by PxMsgEnvelop or set to AwaitRelease. The calling task must be the owner of the message whose release is being awaited. The owner is always the task that created the message."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgEnvelop",
+      "display": "PxMsgEnvelop()"
+    },
+    {
+      "key": "PxMsgSetToAwaitRel",
+      "display": "PxMsgSetToAwaitRel()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxMsg_t RetMsg = PxMsgAwaitRel(Msg)",
+    "",
+    "if (PxMsgIdIsValid (RetMsg)) {",
+    "    // Handle message",
+    "}",
+    "else {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`Msg` must be a valid message object, requested via `PxMsgRequest...` or `PxMsgEnvelop...` or received by a `PxMsgReceive...` call (V). This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C).\n",
+      "The calling task must be the message's creator (V), and if the message is created with `PxMsgRequest...`, the message must be prepared by calling `PxMsgSetToAwaitRel` (V)."
+    ],
+    "AfterCall": [
+      "The return value of `PxMsgAwaitRel` contains the id of the original message. This may also be checked with the appropriate macros. If the message id is valid, the message may be released by `PxMsgRelease`."
+    ],
+    "BestPractice": [
+      "`PxMsgAwaitRel` may block, if the message is never released. If blocking calls are prohibited, `PxMsgAwaitRel_NoWait` should be used instead."
+    ]
+  }
+}

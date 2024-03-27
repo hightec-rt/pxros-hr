@@ -1,0 +1,38 @@
+{
+  "name": {
+    "key": "PxMbxIdError",
+    "display": "PxMbxIdError()"
+  },
+  "synopsis": ["PxError_t PxMbxIdError (PxMbx_t Mbx);"],
+  "arguments": [
+    {
+      "name": "Mbx",
+      "description": "A Mbx handle"
+    }
+  ],
+  "retValues": ["The last error of the object handle Mbx"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the last error of the object handle Mbx",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMbxIdError returns the last error of the object handle Mbx."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxMbxIdError(Mbx);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ]
+}

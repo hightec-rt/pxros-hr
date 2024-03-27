@@ -1,0 +1,73 @@
+{
+  "name": {
+    "key": "PxMsgGetSize",
+    "display": "PxMsgGetSize()"
+  },
+  "synopsis": ["PxSize_t PxMsgGetSize (PxMsg_t msgid);"],
+  "arguments": [
+    {
+      "name": "msgid",
+      "description": "The message object"
+    }
+  ],
+  "retValues": ["Message size"],
+  "errCodes": [
+    "PXERR_MSG_ILLMSG - `msgid` is not a valid object id",
+    "PXERR_MSG_ILLUSER - The calling task is not user of this message"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the message size",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgGetSize returns the size of message msgid. If an invalid message is given, 0 is returned."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgRequest",
+      "display": "PxMsgRequest()"
+    },
+    {
+      "key": "PxMsgSetSize",
+      "display": "PxMsgSetSize()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxSize_t Size = PxMsgGetSize(msgid);",
+    "",
+    "if (Size == 0)",
+    "{",
+    "\t// Check the error via PxGetError()",
+    "}",
+    "else",
+    "{",
+    "\t// Use the size of message data",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`msgid` must be a valid message object, requested via `PxMsgRequest...` or `PxMsgEnvelop...` or received by a `PxMsgReceive...` call (V). This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "AfterCall": [
+      "The function returns 0 if the given message has no data area (e.g., short message) or is invalid. In this case `PxGetError` must be called to check which error has occurred. (F)"
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": {
+    "key": "PxToIdIsValid",
+    "display": "PxToIdIsValid()"
+  },
+  "synopsis": ["int PxToIdIsValid (PxTo_t To);"],
+  "arguments": [
+    {
+      "name": "To",
+      "description": "A To handle"
+    }
+  ],
+  "retValues": ["TRUE if To is a valid To handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return TRUE if To holds a valid To handle",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxToIdIsValid returns TRUE if obj holds a valid To handle."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "int valid = PxToIdIsValid(To);",
+    "",
+    "if (!valid) {",
+    "    // Handle invalid To handle",
+    "}"
+  ]
+}

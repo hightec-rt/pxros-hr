@@ -1,0 +1,71 @@
+{
+  "name": {
+    "key": "PxHndcall",
+    "display": "_PxHndcall()"
+  },
+  "synopsis": ["PxArg_t _PxHndcall (handler, task, varsize, parms...);"],
+  "arguments": [
+    {
+      "name": "handler",
+      "description": "Function to be called in supervisor mode"
+    },
+    {
+      "name": "task",
+      "description": "Calling task"
+    },
+    {
+      "name": "varsize",
+      "description": "Total size of the arguments in bytes"
+    },
+    {
+      "name": "parms...",
+      "description": "Arguments for handler function"
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "PXROS-HR handler call",
+    "long": [
+      {
+        "type": "PP",
+        "text": "`_PxHndcall` calls the passed function handler with its arguments `parms...` in supervisor mode. Since the function is executed in the context of the calling task using the task stack, the function can only access data of the task context."
+      }
+    ]
+  },
+  "usage": [
+    {
+      "ARM-CMX": [
+        "#include \"pxdef.h\"",
+        "",
+        "#define UNUSED_TID 0 // TASK ID - argument not used",
+        "#define UNUSED_VARSIZE 0 // VARIABLE SIZE - argument not used",
+        "",
+        "int HandlerFunc(va_list ap) {",
+        " int arg1 = va_arg(ap, int);",
+        " return arg1;",
+        "}",
+        "",
+        "PxArg_t retval = _PxHndcall(HandlerFunc, UNUSED_TID, UNUSED_VARSIZE, arg1);",
+        ""
+      ],
+      "TC23": [
+        "#include \"pxdef.h\"",
+        "",
+        "#define UNUSED_TID 0 // TASK ID - argument not used",
+        "#define UNUSED_VARSIZE 0 // VARIABLE SIZE - argument not used",
+        "",
+        "int HandlerFunc(int arg1) {",
+        " return arg1;",
+        "}",
+        "",
+        "PxArg_t retVal = _PxHndcall(HandlerFunc, UNUSED_TID, UNUSED_VARSIZE, 0);",
+        ""
+      ]
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+    "name": {
+      "key": "PxStrcpy",
+      "display": "PxStrcpy()"
+    },
+    "synopsis": ["PxChar_t* PxStrcpy(char *d, char const *s);"],
+    "arguments": [
+      {
+        "name": "d",
+        "description": "Address to copy the string to"
+      },
+      {
+        "name": "s",
+        "description": "Address to copy the string from"
+      }
+    ],
+    "retValues": [
+        "Pointer to destination"
+    ],
+    "appliesTo": [
+      {
+        "ARM-CMX": ["1.0.0"],
+        "TC23": ["8.2.0"]
+      }
+    ],
+    "description": {
+      "short": "Copy a string",
+      "long": [
+        {
+          "type": "PP",
+          "text": "PxStrcpy copies the null terminated string at \"s\" to \"d\" and returns \"d\"."
+        }
+      ]
+    },
+    "usage": [
+      "#include \"pxdef.h\"",
+      "",
+      "PxChar_t* des = PxStrcpy(d, s);",
+      ""
+    ]
+  }

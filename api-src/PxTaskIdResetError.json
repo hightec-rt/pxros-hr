@@ -1,0 +1,35 @@
+{
+  "name": {
+    "key": "PxTaskIdResetError",
+    "display": "PxTaskIdResetError()"
+  },
+  "synopsis": ["PxError_t PxTaskIdResetError (PxTask_t *Task);"],
+  "arguments": [
+    {
+      "name": "Task",
+      "description": "Pointer to the Task handle"
+    }
+  ],
+  "retValues": ["The last error of the object handle Task"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Reset the last error of the object handle Task",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTaskIdResetError resets the last error of the object handle Task."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxTaskIdResetError(Task);",
+    ""
+  ]
+}

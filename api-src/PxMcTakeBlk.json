@@ -1,0 +1,105 @@
+{
+  "name": {
+    "key": "PxMcTakeBlk",
+    "display": "PxMcTakeBlk()"
+  },
+  "synopsis": ["PxMptr_t PxMcTakeBlk (PxMc_t mcid, PxSize_t size);"],
+  "arguments": [
+    {
+      "name": "mcid",
+      "description": "The memory class handle, the block is taken from"
+    },
+    {
+      "name": "size",
+      "description": "Requested size"
+    }
+  ],
+  "retValues": ["Start adress of block on success", "Null pointer on failure"],
+  "errCodes": [
+    {
+      "ARM-CMX": [
+        "PXERR_MC_ILLMC - `mcid` is not a valid memory class",
+        "PXERR_MC_NOMEM - Not enough memory in the memory class to satisfy the request",
+        "PXERR_ACCESS_RIGHT - The calling task has not the right to access the memory class",
+        "PXERR_MC_USE_BUDDY_FOR_MSG_ONLY - Buddy memory classes must only be used for messages",
+        "PXERR_GLOBAL_ILLEGAL_CORE - The requested memory class is not on the same core",
+        "PXERR_MC_ILLTYPE - Illegal MC type for PxMcTakeBlk",
+        "PXERR_INIT_ILLMCTYPE - The type for PXMcSystemdefault is different from PXMcVarsized, PXMcVarsizedAdjusted and PXMcVarsizedAligned ",
+        "PXERR_MC_DAMAGED_BLOCK - The block in the memory class has been damaged",
+        "PXERR_MC_INCONSISTENCY - Inconsistency in memory class: blk ",
+        "PXERR_MC_ILLALIGN - Invalid memory block or size alignment in memory insert",
+        "PXERR_MC_ILLSIZE - Insufficient block size",
+        "PXERR_REQUEST_ABORTED - Request aborted",
+        "PXERR_MC_SIZETOOBIG - Fixed block size too small to satisfy the request",
+        "PXERR_UNSUPPORTED_MCTYPE - mc is not supported (If mcid corresponds to PXMcVarsized, PXMcVarsizedAligned, PXMcVarsizedAdjusted)"
+      ],
+      "TC23": [
+        "PXERR_MC_ILLMC - `mcid` is not a valid memory class",
+        "PXERR_MC_NOMEM - Not enough memory in the memory class to satisfy the request",
+        "PXERR_ACCESS_RIGHT - The calling task has not the right to access the memory class",
+        "PXERR_MC_USE_BUDDY_FOR_MSG_ONLY - Buddy memory classes must only be used for messages",
+        "PXERR_GLOBAL_ILLEGAL_CORE - The requested memory class is not on the same core",
+        "PXERR_MC_ILLTYPE - Illegal MC type for PxMcTakeBlk",
+        "PXERR_INIT_ILLMCTYPE - The type for PXMcSystemdefault is different from PXMcVarsized and PXMcVarsizedAdjusted ",
+        "PXERR_MC_DAMAGED_BLOCK - The block in the memory class has been damaged",
+        "PXERR_MC_INCONSISTENCY - Inconsistency in memory class: blk ",
+        "PXERR_MC_ILLALIGN - Invalid memory block or size alignment in memory insert",
+        "PXERR_MC_ILLSIZE - Insufficient block size",
+        "PXERR_REQUEST_ABORTED - Request aborted",
+        "PXERR_MC_SIZETOOBIG - Fixed block size too small to satisfy the request"
+      ]
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Take a block from memory class",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMcTakeBlk takes a block of a size no less than size (specified in byte units) from mcid and returns its address."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMcGetSize",
+      "display": "PxMcGetSize()"
+    },
+    {
+      "key": "PxMcGetType",
+      "display": "PxMcGetType()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxMptr_t Buf = PxMcTakeBlk(mcid, 16)",
+    "",
+    "if (Buf == NULL) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`mcid` must be:\n",
+      "   - a valid PXROS-HR memory class created with a `PxMcRequest` call (V). The validity of `mcid` may also be checked by the `PxMcIsValid` macro (F).",
+      "   - the symbolic value `PXMcSystemdefault` specfying the system memory class (V)",
+      "   - the symbolic value `PXMcTaskdefault` specifying the task's memory class (V)\n",
+      "The memory class must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxMcCoreId` and the own core id with `PxGetCoreId` \\(C).\n",
+      "`size` must be a plausible value given as a constant (V) or a variable \\(C)."
+    ],
+    "AfterCall": ["`PxMcTakeBlk` returns a null pointer on failure \\(C)."],
+    "BestPractice": [
+      "`PxMcTakeBlk` should only be called during initialization to ensure the availability of the memory block."
+    ]
+  }
+}

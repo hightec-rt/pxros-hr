@@ -1,0 +1,49 @@
+{
+  "name": {
+    "key": "PxTickDefine_Hnd",
+    "display": "PxTickDefine_Hnd()"
+  },
+  "synopsis": ["void PxTickDefine_Hnd (void);"],
+  "errCodes": [
+    "PXERR_TIMESLOTLIST_OVERFLOW - The system could not execute delay jobs due to exceptional interrupt load"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Define a PXROS tick",
+    "long": [
+      {
+        "type": "PP",
+        "text": "Each time PxTickDefine_Hnd is called, PXROS internal clock is incremented. After interrupt and pending handler processing, PXROS checks whether any delay job is associated with the current time and activates the corresponding delay handlers."
+      },
+      {
+        "type": "PP",
+        "text": "PxTickDefine_Hnd is a handler service. There is no corresponding task service."
+      },
+      {
+        "type": "PP",
+        "text": "Usually, a real time application is equipped with system clock hardware to provide a clock interrupt at periodic intervals. If so, PxTicksDefine_Hnd is usually called in the corresponding interrupt service routine."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxTickSetTicksPerSecond",
+      "display": "PxTickSetTicksPerSecond()"
+    },
+    {
+      "key": "xref:chapter/section/Delay_job_services.adoc",
+      "display": "Delay Job Services"
+    }
+  ],
+  "usage": ["#include \"pxdef.h\"", "", "PxTickDefine_Hnd();", ""],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["This function should be called from handlers only. (V)"]
+  }
+}

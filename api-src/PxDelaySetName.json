@@ -1,0 +1,59 @@
+{
+  "name": {
+    "key": "PxDelaySetName",
+    "display": "PxDelaySetName()"
+  },
+  "synopsis": [
+    "PxError_t PxDelaySetName (PxDelay_t delay, const PxChar_t *buffer, PxUInt_t bufsize);"
+  ],
+  "arguments": [
+    {
+      "name": "delay",
+      "description": "The delay object."
+    },
+    {
+      "name": "buffer",
+      "description": "Data area used to copy the delay object name from."
+    },
+    {
+      "name": "bufsize",
+      "description": "The length of the delay object name."
+    }
+  ],
+  "retValues": [
+    "`PXERR_NOERROR` if successful, or a PXROS-HR error code otherwise."
+  ],
+  "errCodes": [
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object is not on the same core",
+    "PXERR_NAME_BUFOVERFLOW - The name has been truncated",
+    "PXERR_OBJ_ILLOBJ - The passed object handle is not valid",
+    "PXERR_PROT_PERMISSION - The name is not readable for the calling task",
+    "PXERR_SERVICE_NOT_CONFIGURED - Service has not been configured",
+    "PXERR_ILLEGAL_ACCESS - Access through parameter pointer in size is illegal"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Assign a name to an object",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxDelaySetName assigns the name to the object with handle `delay`."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxObjSetName",
+      "display": "PxObjSetName()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ]
+}

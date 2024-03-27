@@ -1,0 +1,75 @@
+{
+  "name": {
+    "key": "PxTaskGetPrio",
+    "display": "PxTaskGetPrio()"
+  },
+  "synopsis": ["PxPrio_t PxTaskGetPrio (PxTask_t TaskId);"],
+  "arguments": [
+    {
+      "name": "TaskId",
+      "description": "Task whose priority is asked for"
+    }
+  ],
+  "retValues": ["Priority of the given task"],
+  "errCodes": [
+    "PXERR_TASK_ILLTASK - `TaskId` is not a valid task object",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested task is not on the same core"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Get task priority",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTaskGetPrio returns the current priority of the task TaskId."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxTaskCreate",
+      "display": "PxTaskCreate()"
+    },
+    {
+      "key": "PxTaskSetPrio",
+      "display": "PxTaskSetPrio()"
+    },
+    {
+      "key": "xref:chapter/section/Application_information_services.adoc",
+      "display": "Application Information Services"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    },
+    {
+      "key": "xref:chapter/section/Task_mode_manipulation_services.adoc",
+      "display": "Task Mode Manipulation Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxPrio_t Prio = PxTaskGetPrio(TaskId);",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The parameter `task` must be a valid task object id. This id may be",
+      "   - the calling task's own id read by calling `PxGetId()` (V)",
+      "   - the return value of a `PxTaskCreate()` call (V)",
+      "   - the result of a nameserver query (V)",
+      "   - part of a message sent by another task (V)",
+      "Additionally the task id may be checked with `PxTaskCheck()` (F)."
+    ],
+    "AfterCall": [
+      "This function returns a plausible priority value (typically between 0 and 31) \\(C)"
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

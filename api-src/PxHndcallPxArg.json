@@ -1,0 +1,38 @@
+{
+  "name": {
+    "key": "PxHndcallPxArg",
+    "display": "_PxHndcallPxArg()"
+  },
+  "synopsis": ["PxArg_t _PxHndcallPxArg (f, arg);"],
+  "arguments": [
+    {
+      "name": "f",
+      "description": "Function to be called in supervisor mode"
+    },
+    {
+      "name": "arg",
+      "description": "Argument for function"
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "PXROS-HR handler call with one argument",
+    "long": [
+      {
+        "type": "PP",
+        "text": "_PxHndcallPxArg calls the passed function handler with one argument in supervisor mode."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxArg_t retVal = _PxHndcallPxArg(function, value);",
+    ""
+  ]
+}

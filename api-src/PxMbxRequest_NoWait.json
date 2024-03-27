@@ -1,0 +1,85 @@
+{
+  "name": {
+    "key": "PxMbxRequest_NoWait",
+    "display": "PxMbxRequest_NoWait()"
+  },
+  "synopsis": ["PxMbx_t PxMbxRequest_NoWait (PxOpool_t opoolid);"],
+  "arguments": [
+    {
+      "name": "opoolid",
+      "description": "The object pool, where the mailbox object is requested from"
+    }
+  ],
+  "retValues": [
+    "Invalid mailbox object handle on failure",
+    "Valid mailbox object handle on success"
+  ],
+  "errCodes": [
+    "PXERR_ACCESS_RIGHT - The calling task has not the right to access the object pool",
+    "PXERR_OPOOL_ILLOPOOL - `opoolid` is not a valid object pool",
+    "PXERR_OBJ_ABORTED - Request aborted by an event ",
+    "PXERR_MBX_ILLMBX - Invalid mailbox in mailbox command",
+    "PXERR_EVENT_ZERO - The given event mask is zero",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+    "PXERR_OBJ_NOOBJ - No free object is available",
+    "PXERR_OBJ_ILLOBJ - The passed object handle is not valid",
+    "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Request a mailbox handle while waiting for events",
+    "long": [
+      {
+        "type": "PP",
+        "text": "The PxMbxRequest_NoWait function creates a mailbox object by converting a free object from object pool opool. If there is no free object available, the PxMbxRequest_NoWait immediately returns with error code PXERR_OBJ_NOOBJ, otherwise it returns the valid mailbox object handle."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMbxRequest",
+      "display": "PxMbxRequest()"
+    },
+    {
+      "key": "PxMbxRequest_NoWait",
+      "display": "PxMbxRequest_NoWait()"
+    },
+    {
+      "key": "PxMbxRelease",
+      "display": "PxMbxRelease()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxMbx_t Mbx = PxMbxRequest_NoWait(opoolid);",
+    "",
+    "if (PxMbxIdError(Mbx) != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`opoolid` must be a valid PXROS-HR object pool and the calling task must have the access right to take objects from this object pool (V). The validity of `opoolid` may also be checked by the `PxOpoolIsValid` macro (F).",
+      "The object pool must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxOpoolCoreId` and the own core id with `PxGetCoreId` \\(C). Typically the task's default object pool `PXOpoolTaskdefault` is used for this purpose."
+    ],
+    "AfterCall": [
+      "The returned value is the id of type `PxMbx_t`. This id may be checked with one of the following macros:\n",
+      "   - `PxMbxIdIsValid()` must be true.",
+      "   - `PxMbxIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMbxIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "`PxMbxRequest_NoWait` should only be called during initialization to ensure the availability of the mailbox object."
+    ]
+  }
+}

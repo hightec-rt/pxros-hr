@@ -1,0 +1,103 @@
+{
+  "name": {
+    "key": "PxMsgSetProtection",
+    "display": "PxMsgSetProtection()"
+  },
+  "synopsis": [
+    "PxError_t PxMsgSetProtection (PxMsg_t msgid, PxProtectType_t protection);"
+  ],
+  "arguments": [
+    {
+      "name": "msgid",
+      "description": "Message object for which the protection mode is changed"
+    },
+    {
+      "name": "protection",
+      "description": "New protection mode for the message data"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    {
+      "ARM-CMX": [
+        "PXERR_MSG_ILLMSG - The passed message handle is invalid",
+        "PXERR_MSG_ILLUSER - The calling task is not the user of the message",
+        "PXERR_PROT_PERMISSION - The calling task has no permission to change the protection",
+        "PXERR_MSG_ILLOWNER - The calling task is not the owner of the message",
+        "PXERR_PROT_ILL_HANDLE - Invalid pair number is given",
+        "PXERR_REQUEST_INVALID_PARAMETER - Request with invalid parameter",
+        "PXERR_ILL_NULLPOINTER_PARAMETER - Illegal null pointer parameter in the call",
+        "PXERR_PROT_ILL_SIZE - The size of the protection region is not valid",
+        "PXERR_PROT_ILL_ALIGN - Alignment of protection region is not valid"
+      ],
+      "TC23": [
+        "PXERR_MSG_ILLMSG - The passed message handle is invalid",
+        "PXERR_MSG_ILLUSER - The calling task is not the user of the message",
+        "PXERR_PROT_PERMISSION - The calling task has no permission to change the protection",
+        "PXERR_MSG_ILLOWNER - The calling task is not the owner of the message",
+        "PXERR_PROT_ILL_HANDLE - Invalid pair number is given",
+        "PXERR_REQUEST_INVALID_PARAMETER - Request with invalid parameter"
+      ]
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Set protection mode of a message",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgSetProtection sets the protection mode for the data area of a given message object msgid. The task has to be the owner (creator) of the message msgid! The following values are possible:"
+      },
+      {
+        "type": "BL",
+        "text": [
+          "NoAccessProtection, the caller has no access to the messages data area",
+          "ReadProtection, the caller has read only access to the messages data area",
+          "WriteProtection, the caller has write only access to the messages data area",
+          "WRProtection, the caller has read and write access to the messages data area"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "The protection mode can only be changed if the caller has the appropriate permission. For example, the caller cannot set WriteProtection if it has no write access to the data area."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgEnvelop",
+      "display": "PxMsgEnvelop()"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxMsgSetProtection(msgid, ReadPermission);",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`msgid` must be a valid message object, requested via `PxMsgRequest...` or `PxMsgEnvelop...` or received by a `PxMsgReceive...` call (V). This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C).\n",
+      "`protection` must be of type `PxProtectType_t` and may have one of the following values (V):\n",
+      "   - `NoAccessProtection` neither read nor write access",
+      "   - `ReadProtection` read access",
+      "   - `WriteProtection` write access",
+      "   - `WRProtection` read and write access"
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the message's protection mode is changed. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

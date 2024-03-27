@@ -1,0 +1,38 @@
+{
+  "name": {
+    "key": "PxOpoolIdIsValid",
+    "display": "PxOpoolIdIsValid()"
+  },
+  "synopsis": ["int PxOpoolIdIsValid (PxOpool_t Opool);"],
+  "arguments": [
+    {
+      "name": "Opool",
+      "description": "An Opool handle"
+    }
+  ],
+  "retValues": ["TRUE if Opool is a valid Opool handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return TRUE if Opool holds a valid Opool handle",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxOpoolIdIsValid returns TRUE if obj holds a valid Opool handle."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "int valid = PxOpoolIdIsValid(Opool);",
+    "",
+    "if (!valid) {",
+    "    // Handle invalid Opool handle",
+    "}"
+  ]
+}

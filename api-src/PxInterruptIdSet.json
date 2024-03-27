@@ -1,0 +1,35 @@
+{
+  "name": {
+    "key": "PxInterruptIdSet",
+    "display": "PxInterruptIdSet()"
+  },
+  "synopsis": ["PxInterrupt_t PxInterruptIdSet (PxObjId_t id);"],
+  "arguments": [
+    {
+      "name": "id",
+      "description": "The object id"
+    }
+  ],
+  "retValues": ["Interrupt handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return an object handle which holds id as the object ID",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxInterruptIdSet returns an object handle which holds id as the object ID."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxInterrupt_t id = PxInterruptIdSet(oid);",
+    ""
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "name": {
+    "key": "PxMsgRelease_Hnd",
+    "display": "PxMsgRelease_Hnd()"
+  },
+  "synopsis": ["PxMsg_t PxMsgRelease_Hnd (PxMsg_t Msg);"],
+  "arguments": [
+    {
+      "name": "Msg",
+      "description": "Message object to be released"
+    }
+  ],
+  "errCodes": [
+    {
+      "ARM-CMX": [
+        "PXERR_MSG_ILLMSG - The passed message handle is invalid",
+        "PXERR_MSG_ILLUSER - The calling task is not the user of the message",
+        "PXERR_MBX_ILLMBX - The passed message’s release mailbox handle is invalid",
+        "PXERR_MSGREL_NOT_INITED - The message release server is not yet initialized",
+        "PXERR_PROT_ILL_HANDLE - The associated protection handle is not valid",
+        "PXERR_REQUEST_INVALID_PARAMETER - Request with invalid parameter ",
+        "PXERR_ILL_NULLPOINTER_PARAMETER - Illegal null pointer parameter in the call",
+        "PXERR_PROT_ILL_SIZE - The size of the protection region is not valid",
+        "PXERR_PROT_ILL_ALIGN - Alignment of protection region is not valid"
+      ],
+      "TC23": [
+        "PXERR_MSG_ILLMSG - The passed message handle is invalid",
+        "PXERR_MSG_ILLUSER - The calling task is not the user of the message",
+        "PXERR_MBX_ILLMBX - The passed message’s release mailbox handle is invalid",
+        "PXERR_MSGREL_NOT_INITED - The message release server is not yet initialized",
+        "PXERR_PROT_ILL_HANDLE - The associated protection handle is not valid",
+        "PXERR_REQUEST_INVALID_PARAMETER - Request with invalid parameter "
+      ]
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Release a message object (handler service)",
+    "long": [
+      {
+        "type": "PP",
+        "text": "The PxMsgRelease_Hnd function releases the message Msg. All necessary cleanup operations are performed. For a envelope messages the release service checks if a task is waiting for the message being released. If so, the task is readied."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgForceRelease",
+      "display": "PxMsgForceRelease()"
+    },
+    {
+      "key": "PxMsgReleaseAllMsg",
+      "display": "PxMsgReleaseAllMsg()"
+    },
+    {
+      "key": "PxMsgRequest",
+      "display": "PxMsgRequest()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxMsg_t Msg = PxMsgRelease_Hnd(Msg);",
+    "",
+    "if (PxMsgIdIsValid(Msg)) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`Msg` must be a valid message object, requested via `PxMsgRequest...` or `PxMsgEnvelop...` or received by a `PxMsgReceive...` call (V). This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "AfterCall": [
+      "`PxMsgRelease_Hnd` returns the message object to the object pool it has been taken from. On success `PxMsgRelease_Hnd` returns the invalidated message object. This may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be false.",
+      "   - `PxMsgIdGet()` must be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "After `PxMsgRelease_Hnd`, the given message object `Msg` is no longer valid and may never be used as message object!\n",
+      "This function should be called from handlers only. (V)"
+    ]
+  }
+}

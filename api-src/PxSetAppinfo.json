@@ -1,0 +1,34 @@
+{
+  "name": {
+    "key": "PxSetAppinfo",
+    "display": "PxSetAppinfo()"
+  },
+  "synopsis": ["void PxSetAppinfo (PxArg_t info);"],
+  "arguments": [
+    {
+      "name": "info",
+      "description": "The application information"
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Set the calling task's application information",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxSetAppinfo puts the application information info in the calling task's task control block. It overwrites any information previously stored in the control block."
+      }
+    ]
+  },
+  "usage": ["#include \"pxdef.h\"", "", "PxSetAppinfo((PxArg_t) 7);", ""],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

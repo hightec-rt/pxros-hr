@@ -1,0 +1,62 @@
+{
+  "name": {
+    "key": "PxTaskForceTermination",
+    "display": "PxTaskForceTemination()"
+  },
+  "synopsis": ["PxError_t PxTaskForceTermination (PxTask_t TaskId);"],
+  "arguments": [
+    {
+      "name": "TaskId",
+      "description": "Id of the task to terminate"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_TASK_ILLPRIV - The calling task is not the creator",
+    "PXERR_TASK_ILLTASK - The `TaskId` is illegal",
+    "PXERR_ACCESS_RIGHT - The calling task has not the right to terminate other tasks"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Terminate a task",
+    "long": [
+      {
+        "type": "PP",
+        "text": "If the caller is the creator of the task to terminate, the task will be forced to call PxTerminate for self destruction. If the task is waiting elsewhere it will be activated to terminate immediatly."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxTerminate",
+      "display": "PxTerminate()"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxTaskForceTermination(taskId);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "The parameter `TaskId` must be a valid task object id. This id may be",
+      "   - the return value of a `PxTaskCreate()` call (V)",
+      "   - the result of a nameserver query (V)",
+      "   - part of a message sent by another task (V)",
+      "Additionally the task id may be checked with `PxTaskCheck()` (F).The task object must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxTaskCoreId` and the own core id with `PxGetCoreId` \\(C)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the task could be terminated. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

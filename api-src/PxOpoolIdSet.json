@@ -1,0 +1,30 @@
+{
+  "name": {
+    "key": "PxOpoolIdSet",
+    "display": "PxOpoolIdSet()"
+  },
+  "synopsis": ["PxOpool_t PxOpoolIdSet (PxObjId_t id);"],
+  "arguments": [
+    {
+      "name": "id",
+      "description": "The object id"
+    }
+  ],
+  "retValues": ["Opool handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return an object handle which holds id as the object ID",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxOpoolIdSet returns an object handle which holds id as the object ID."
+      }
+    ]
+  },
+  "usage": ["#include \"pxdef.h\"", "", "PxOpool_t id = PxOpoolIdSet(oid);", ""]
+}

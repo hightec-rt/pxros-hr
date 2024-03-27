@@ -1,0 +1,87 @@
+{
+  "name": {
+    "key": "PxMsgGetProtection",
+    "display": "PxMsgGetProtection()"
+  },
+  "synopsis": ["PxAccessPerm_t PxMsgGetProtection (PxMsg_t msgid);"],
+  "arguments": [
+    {
+      "name": "msgid",
+      "description": "Message object for which the protection mode is requested"
+    }
+  ],
+  "retValues": [
+    "Protection mode (NoAccessProtection, ReadProtection, WriteProtection, WRProtection)"
+  ],
+  "errCodes": [
+    "PXERR_MSG_ILLMSG - `msgid` is not a valid object id",
+    "PXERR_MSG_ILLUSER - The calling task is not user of this message"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Get protection mode of a message",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgGetProtection returns the protection mode for the data area of a given message object msgid. The following values are possible:"
+      },
+      {
+        "type": "BL",
+        "text": [
+          "NoAccessProtection the caller has no access to the messages data area",
+          "ReadProtection the caller has read only access to the messages data area",
+          "WriteProtection the caller has write only access to the messages data area",
+          "WRProtection the caller has read and write access to the messages data area"
+        ]
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgEnvelop",
+      "display": "PxMsgEnvelop()"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxProtectType_t protType = PxMsgGetProtection(msgid);",
+    "switch (protType)",
+    "{",
+    "case NoAccessProtection:",
+    "\t// Task has no permission to access message data",
+    "\tbreak;",
+    "case ReadProtection:",
+    "\t// Task has read-only permission to access message data",
+    "\tbreak;",
+    "case WriteProtection:",
+    "\t// Task has write-only permission to access message data",
+    "\tbreak;",
+    "case WRProtection:",
+    "\t// Task has read and write permission to access message data",
+    "\tbreak;",
+    "}",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`msgid` must be a valid message object, requested via `PxMsgRequest...` or `PxMsgEnvelop...` or received by a `PxMsgReceive...` call (V). This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "AfterCall": [
+      "`PxMsgGetProtection` returns a value of type `PxProtectType_t`, which may have one of the following values (V):\n",
+      "   - `NoAccessProtection` neither read nor write access",
+      "   - `ReadProtection` read access",
+      "   - `WriteProtection` write access",
+      "   - `WRProtection` read and write access"
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

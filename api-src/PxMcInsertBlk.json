@@ -1,0 +1,104 @@
+{
+  "name": {
+    "key": "PxMcInsertBlk",
+    "display": "PxMcInsertBlk()"
+  },
+  "synopsis": [
+    "PxError_t PxMcInsertBlk (PxMc_t McId, PxMptr_t blk, PxSize_t size);"
+  ],
+  "arguments": [
+    {
+      "name": "McId",
+      "description": "Memory class"
+    },
+    {
+      "name": "blk",
+      "description": "The memory block to insert"
+    },
+    {
+      "name": "size",
+      "description": "Size of the memory block"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    {
+      "ARM-CMX": [
+        "PXERR_ACCESS_RIGHT - The calling task has not the right to access the memory class",
+        "PXERR_MC_ILLMC - mc is not a valid memory class object",
+        "PXERR_GLOBAL_ILLEGAL_CORE - The requested memory class is not on the same core",
+        "PXERR_MC_ILLSIZE - `size` is less than the required minimum size or not a power of 2 (for Buddy memory class)",
+        "PXERR_MC_ILLALIGN - `blk` address is not properly aligned",
+        "PXERR_INIT_ILLMCTYPE - The type for PXMcSystemdefault is different from PXMcVarsized, PXMcVarsizedAdjusted and PXMcVarsizedAligned",
+        "PXERR_MC_DAMAGED_BLOCK - The block in memory class has been damaged",
+        "PXERR_MC_INCONSISTENCY - Inconsistency in memory class: `blk`",
+        "PXERR_UNSUPPORTED_MCTYPE - mc is not supported (If McId corresponds to PXMcVarsized, PXMcVarsizedAligned, PXMcVarsizedAdjusted)"
+      ],
+      "TC23": [
+        "PXERR_ACCESS_RIGHT - The calling task has not the right to access the memory class",
+        "PXERR_MC_ILLMC - mc is not a valid memory class object",
+        "PXERR_GLOBAL_ILLEGAL_CORE - The requested memory class is not on the same core",
+        "PXERR_MC_ILLSIZE - `size` is less than the required minimum size or not a power of 2 (for Buddy memory class)",
+        "PXERR_MC_ILLALIGN - `blk` address is not properly aligned",
+        "PXERR_INIT_ILLMCTYPE - The type for PXMcSystemdefault is different from PXMcVarsized, PXMcVarsizedAdjusted and PXMcVarsizedAligned",
+        "PXERR_MC_DAMAGED_BLOCK - The block in memory class has been damaged",
+        "PXERR_MC_INCONSISTENCY - Inconsistency in memory class: `blk`"
+      ]
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Insert a new block into a memory class",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMcInsertBlk inserts a new block of the size _size_ into the memory class mc."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMcGetSize",
+      "display": "PxMcGetSize()"
+    },
+    {
+      "key": "PxMcGetType",
+      "display": "PxMcGetType()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxMcInsertBlk(mcId, (PxMptr_t)memoryTask, MEMORY_SIZE_TASK);;",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`McId` must be:\n",
+      "   - a valid PXROS-HR memory class created with a `PxMcRequest` call (V). The validity of `McId` may also be checked by the `PxMcIsValid` macro (F).",
+      "   - the symbolic value `PXMcSystemdefault` specifying the system memory class (V)",
+      "   - the symbolic value `PXMcTaskdefault` specifying the task's memory class (V)\n",
+      "The memory class must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxMcCoreId` and the own core id with `PxGetCoreId` \\(C).",
+      "`blk` must be a valid memory pointer. The memory must be an area, which has never been part of a memory class or it has to be removed from a memory class with `PxMcRemoveBlk`.",
+      "`size` must be a plausible value given as a constant (V) or as a result of a `PxMcRemoveBlk` call (parameter `*Size` (V)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the memory block has been inserted into the memory class. Any other return value describes an error, which has to be interpreted. \\(C)"
+    ],
+    "BestPractice": [
+      "`PxMcInsertBlk` should only be called during initialization to ensure the availability of the memory in a memory class."
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": {
+    "key": "PxInterruptIdInvalidate",
+    "display": "PxInterruptIdInvalidate()"
+  },
+  "synopsis": ["PxInterrupt_t PxInterruptIdInvalidate (void);"],
+  "retValues": ["An invalid Interrupt handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return an invalid Interrupt handle for initialization",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxInterruptIdInvalidate returns an invalid Interrupt handle for initialization."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxInterrupt_t Interrupt = PxInterruptIdInvalidate();",
+    ""
+  ]
+}

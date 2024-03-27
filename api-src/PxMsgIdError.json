@@ -1,0 +1,38 @@
+{
+  "name": {
+    "key": "PxMsgIdError",
+    "display": "PxMsgIdError()"
+  },
+  "synopsis": ["PxError_t PxMsgIdError (PxMsg_t Msg);"],
+  "arguments": [
+    {
+      "name": "Msg",
+      "description": "A Msg handle"
+    }
+  ],
+  "retValues": ["The last error of the object handle Msg"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return the last error of the object handle Msg",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgIdError returns the last error of the object handle Msg."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxMsgIdError(Msg);",
+    "",
+    "if (err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ]
+}

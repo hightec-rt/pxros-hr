@@ -1,0 +1,24 @@
+{
+  "name": {
+    "key": "PxPeIdInvalidate",
+    "display": "PxPeIdInvalidate()"
+  },
+  "synopsis": ["PxPe_t PxPeIdInvalidate (void);"],
+  "retValues": ["An invalid Pe handle"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return an invalid Pe handle for initialization",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxPeIdInvalidate returns an invalid Pe handle for initialization."
+      }
+    ]
+  },
+  "usage": ["#include \"pxdef.h\"", "", "PxPe_t Pe = PxPeIdInvalidate();", ""]
+}

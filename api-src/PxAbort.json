@@ -1,0 +1,40 @@
+{
+  "name": {
+    "key": "PxAbort",
+    "display": "PxAbort()"
+  },
+  "synopsis": ["void PxAbort (PxError_t err);"],
+  "arguments": [
+    {
+      "name": "err",
+      "description": "PXROS error code"
+    }
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Abort routine",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxAbort tries to do something sensible in case of a fatal error. The exact behavior depends on the processor. Usually, PxAbort performs a breakpoint or illegal instruction, hoping that it is caught by either a monitor or by the application itself and performs an endless loop."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMessageFunDefault",
+      "display": "PxMessageFunDefault()"
+    }
+  ],
+  "usage": ["#include \"pxdef.h\"", "", "PxAbort(err);", ""],
+  "cop": {
+    "BeforeCall": ["No checks necessary."],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions."]
+  }
+}

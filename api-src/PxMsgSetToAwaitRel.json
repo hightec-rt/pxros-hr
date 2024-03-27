@@ -1,0 +1,70 @@
+{
+  "name": {
+    "key": "PxMsgSetToAwaitRel",
+    "display": "PxMsgSetToAwaitRel()"
+  },
+  "synopsis": ["PxError_t PxMsgSetToAwaitRel (PxMsg_t Msg);"],
+  "arguments": [
+    {
+      "name": "Msg",
+      "description": "The message object to be marked"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_MSG_ILLMSG - `Msg` is not a valid message object",
+    "PXERR_MSG_ILLOWNER - The calling task is not the message’s owner"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Sets the message to AwaitRelease",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMsgSetToAwaitRel sets the message to AwaitRelease. Further calls to PxMsgRelease will only mark this message as released but doesn't really release it. The owner of this message has to wait for the release and is also responsible for releasing the message. This call is only valid for the message owner."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMsgAwaitRel",
+      "display": "PxMsgAwaitRel()"
+    },
+    {
+      "key": "PxMsgEnvelop",
+      "display": "PxMsgEnvelop()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t Err = PxMsgSetToAwaitRel(Msg);",
+    "",
+    "if (Err != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`Msg` must be a valid message object, requested via `PxMsgRequest...` or `PxMsgEnvelop...` or received by a `PxMsgReceive...` call (V). This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the message is set to `AwaitRelease`. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": [
+      "`PxMsgSetToAwaitRel` sets the message to `AwaitRelease`. Further calls to `PxMsgRelease` will only mark this message as released but don't really release them. The owner of this message has to wait for the release and is also responsible for releasing the message. This call is only valid for the message owner."
+    ]
+  }
+}

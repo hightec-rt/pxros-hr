@@ -1,0 +1,35 @@
+{
+  "name": {
+    "key": "PxInterruptIdResetError",
+    "display": "PxInterruptIdResetError()"
+  },
+  "synopsis": ["PxError_t PxInterruptIdResetError (PxInterrupt_t *Interrupt);"],
+  "arguments": [
+    {
+      "name": "Interrupt",
+      "description": "Pointer to the Interrupt handle"
+    }
+  ],
+  "retValues": ["The last error of the object handle Interrupt"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Reset the last error of the object handle Interrupt",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxInterruptIdResetError resets the last error of the object handle Interrupt."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxInterruptIdResetError(Interrupt);",
+    ""
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "name": {
+    "key": "PxGetGlobalServerMbx",
+    "display": "PxGetGlobalServerMbx()"
+  },
+  "synopsis": [
+    "PxError_t PxGetGlobalServerMbx (PxCoreId_t ServerCore, PxMbxReq_t mbxreqid);"
+  ],
+  "arguments": [
+    {
+      "name": "ServerCore",
+      "description": "The coreId to get the mailbox from"
+    },
+    {
+      "name": "mbxreqid",
+      "description": "The request service mailbox"
+    }
+  ],
+  "errCodes": [
+    "PXERR_OPOOL_ILLOPOOL - The passed object pool handle is not valid",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+    "PXERR_REQUEST_FAILED - The requested object is not valid",
+    "PXERR_NAME_ILL_REQUEST - The `mbxreqid` is not known",
+    "PXERR_INTERNAL_INCONSISTENCY - Allocated object not convertible",
+    "PXERR_OBJ_NOOBJ - No free object is available",
+    "PXERR_OBJ_ILLOBJ - The passed object handle is not valid",
+    "PXERR_ACCESS_RIGHT - The calling task has not the right to access the object pool "
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Get the requested application-specific server mailbox from an other core",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxGetGlobalServerMbx requests a system specific mailbox id for a defined service (mbxreqid) from another core (ServerCore)."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxMbxRegisterMbx",
+      "display": "PxMbxRegisterMbx()"
+    },
+    {
+      "key": "PxMbxRequestMbx",
+      "display": "PxMbxRequestMbx()"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxGetGlobalServerMbx(ServerCore, mbxreqid);",
+    "",
+    "if (err == PXERR_NOERROR) {",
+    "    // Handle mailbox",
+    "}",
+    "else {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`ServerCore` must not exceed the number of available cores(V). `mbxreqid` must be a valid PXROS-HR service mailbox (V)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the mailbox could be requested for the service mailbox. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions"]
+  }
+}

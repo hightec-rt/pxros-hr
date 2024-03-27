@@ -1,0 +1,59 @@
+{
+  "name": {
+    "key": "PxTraceGetBuffer",
+    "display": "PxTraceGetBuffer()"
+  },
+  "synopsis": ["PxMsg_t PxTraceGetBuffer (PxOpool_t OpoolId);"],
+  "arguments": [
+    {
+      "name": "OpoolId",
+      "description": "Objectpool to get the message object from"
+    }
+  ],
+  "errCodes": [
+    "PXERR_OPOOL_ILLOPOOL - Illegal opool passed",
+    "PXERR_GLOBAL_ILLEGAL_CORE - The requested object pool is not on the same core",
+    "PXERR_OBJ_ABORTED - The request was aborted by an event",
+    "PXERR_OBJ_ILLOBJ - The passed object handle is not valid",
+    "PXERR_OBJ_NOOBJ - No free object is available",
+    "PXERR_MSG_ILLMSG - The passed message handle is invalid ",
+    "PXERR_SERVICE_NOT_CONFIGURED - Service has not been configured into your PXROS",
+    "PXERR_INTERNAL_INCONSISTENCY - Inconsistency of internal structures"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Return a message object containing the trace buffer",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTraceGetBuffer returns a message containing the circular buffer of the PXROS trace mechanism."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxMsg_t Msg = PxTraceGetBuffer(opoolId);",
+    "",
+    "if (PxMsgIdError(Msg) != PXERR_NOERROR) {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`OpoolId` must be a valid PXROS-HR object pool and the calling task must have the access right to take objects from this object pool (V). The validity of `OpoolId` may also be checked by the `PxOpoolIsValid` macro (F). The object pool must be created on the same core as the caller runs on. The creator core id can be read with the macro `PxOpoolCoreId` and the own core id with `PxGetCoreId` \\(C). Typically the task's default object pool `PXOpoolTaskdefault` is used for this purpose."
+    ],
+    "AfterCall": [
+      "The returned value is the id of type `PxMsg_t`. This id may be checked with one of the following macros:\n",
+      "   - `PxMsgIdIsValid()` must be true.",
+      "   - `PxMsgIdGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxMsgIdError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions"]
+  }
+}

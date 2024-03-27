@@ -1,0 +1,45 @@
+{
+  "name": {
+    "key": "PxInitializeBeforePxInit",
+    "display": "PxInitializeBeforePxInit()"
+  },
+  "synopsis": ["void PxInitializeBeforePxInit (void);"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Call all functions from the _PxInitializeTable",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxInitializeBeforePxInit calls all functions entered into the __PxInitializeTable. These functions should initialize hardware and special function registers, where supervisor mode is needed. Endinit protection has to be removed if necessary. This function should be called before PxInit is called."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxInitcall",
+      "display": "_PxInitcall()"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxInitializeBeforePxInit();",
+    "",
+    "PxError_t error = PxInit(InitSpecsArray, CORE_COUNT);",
+    "",
+    "if (error != PXERR_NOERROR) {",
+    "    // Report error",
+    "    PxPanic();",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": ["This function has to be called before `PxInit()`. (V)"],
+    "AfterCall": ["No checks necessary."],
+    "BestPractice": ["No restrictions"]
+  }
+}

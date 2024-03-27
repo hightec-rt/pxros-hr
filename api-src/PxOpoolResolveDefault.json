@@ -1,0 +1,71 @@
+{
+  "name": {
+    "key": "PxOpoolResolveDefault",
+    "display": "PxOpoolResolveDefault()"
+  },
+  "synopsis": ["PxOpool_t PxOpoolResolveDefault (PxOpool_t opoolid);"],
+  "arguments": [
+    {
+      "name": "opoolid",
+      "description": "An object pool id"
+    }
+  ],
+  "retValues": ["Object pool id"],
+  "errCodes": [
+    "PXERR_OPOOL_ILLOPOOL - `opoolid` is not a valid object pool id"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Resolve an object pool default",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxOpoolResolveDefault resolves an object pool default. More precisely, it returns opoolid if opoolid is not PXOpoolSystemdefault or PXOpoolTaskdefault. Otherwise, it returns the object pool id corresponding to the specified default."
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "PxInit",
+      "display": "PxInit()"
+    },
+    {
+      "key": "PxTaskCreate",
+      "display": "PxTaskCreate()"
+    },
+    {
+      "key": "xref:chapter/section/Error_handling_services.adoc",
+      "display": "Error Handling Services"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxOpool_t RetOpool = PxOpoolResolveDefault(opoolid);",
+    "",
+    "if (PxopoolidError(RetOpool) != PXERR_NOERROR) {",
+    "    // Report error",
+    "}",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`opoolid` must be:\n",
+      "   - a valid PXROS-HR object pool created with a `PxOpoolRequest` call (V). The validity of `opoolid` may also be checked by the `PxOpoolIsValid` macro (F).",
+      "   - the symbolic value `PXOpoolSystemdefault` specifying the system object pool(V)",
+      "   - the symbolic value `PXOpoolTaskdefault` specifying the task's object pool(V)"
+    ],
+    "AfterCall": [
+      "The returned value is the id of type `PxOpool_t`. This id may be checked with one of the following macros:\n+\n* `PxopoolidIsValid()` must be true.\n* `PxopoolidGet()` must not be `_PXIllegalObjId`.\n* `PxopoolidError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C).\n\n+",
+      "   - `PxopoolidIsValid()` must be true.",
+      "   - `PxopoolidGet()` must not be `_PXIllegalObjId`.",
+      "   - `PxopoolidError()` must be `PXERR_NOERROR` otherwise the returned error code has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions."]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": {
+    "key": "PxMcIdResetError",
+    "display": "PxMcIdResetError()"
+  },
+  "synopsis": ["PxError_t PxMcIdResetError (PxMc_t *Mc);"],
+  "arguments": [
+    {
+      "name": "Mc",
+      "description": "Pointer to the Mc handle"
+    }
+  ],
+  "retValues": ["The last error of the object handle Mc"],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Reset the last error of the object handle Mc",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxMcIdResetError resets the last error of the object handle Mc."
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxMcIdResetError(Mc);",
+    ""
+  ]
+}

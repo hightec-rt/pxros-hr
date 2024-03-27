@@ -1,0 +1,104 @@
+{
+  "name": {
+    "key": "PxSysInfoGetPeInfo",
+    "display": "PxSysInfoGetPeInfo()"
+  },
+  "synopsis": [
+    "PxError_t PxSysInfoGetPeInfo (PxInfoPe_t *PeInfo, PxPe_t peId);"
+  ],
+  "arguments": [
+    {
+      "name": "PeInfo",
+      "description": "Pointer to data area to store periodic event object information to"
+    },
+    {
+      "name": "peId",
+      "description": "Id of periodic event object"
+    }
+  ],
+  "retValues": ["PXROS error code"],
+  "errCodes": [
+    "PXERR_PE_ILLPE - The given object is no periodic event object",
+    "PXERR_PROT_PERMISSION - The task has no write permission on the `PeInfo` object"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Function to get Pe info",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxSysInfoGetPeInfo stores the contents of the periodiec event handler peId into the info structure PeInfo."
+      },
+      {
+        "type": "PP",
+        "text": "The structure PeInfo has the following format:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef struct",
+          "{",
+          "\tPxTask_t PxInfoPe_Task; // task to receive periodic event",
+          "\tPxEvents_t  PxInfoPe_Event; // periodic event",
+          "\tPxULong_t  PxInfoPe_Period; // period",
+          "\tPxULong_t  PxInfoPe_RestTicks; // rest ticks",
+          "\tPxTask_t   PxInfoPe_RequestingTask; // task which requested the pe object",
+          "} PxInfoPe_t;"
+        ]
+      },
+      {
+        "type": "PP",
+        "text": "There is a union available containing all sysinfo types:"
+      },
+      {
+        "type": "CS",
+        "text": [
+          "typedef union",
+          "{",
+          "\tPxInfoMC_t  McInfo; // memory class information struct",
+          "\tPxInfoOpool_t  OpoolInfo; // Opool information struct",
+          "\tPxInfoMsg_t  MsgInfo; // message information struct",
+          "\tPxInfoMbx_t  MbxInfo; // mailbox information struct",
+          "\tPxInfoDelay_t  DelayInfo; // delay object information struct",
+          "\tPxInfoPe_t  PeInfo; // periodic event information struct",
+          "\tPxInfoTo_t  ToInfo; // timeout object information struct",
+          "\tPxInfoInterrupt_t  InterruptInfo; // interrupt object information struct",
+          "} PxObjInfo_T;"
+        ]
+      }
+    ]
+  },
+  "seeAlso": [
+    {
+      "key": "xref:chapter/section/Time_management.adoc",
+      "display": "Time Management"
+    }
+  ],
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxError_t err = PxSysInfoGetPeInfo(&PeInfo, peId);",
+    "",
+    "if (err == PXERR_NOERROR) {",
+    "    // Handle info",
+    "}",
+    "else {",
+    "    // Report error",
+    "}"
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`PeInfo` must be a pointer to a valid data area.\n",
+      "`peId` must be a valid PXROS-HR periodic event handler object created with a `PxPeRequest` call (V). The validity of `peId` may also be checked by the `PxPeIsValid` macro (F)."
+    ],
+    "AfterCall": [
+      "The function returns `PXERR_NOERROR` if the system information could be delivered. Any other return value describes an error, which has to be interpreted \\(C)."
+    ],
+    "BestPractice": ["No restrictions"]
+  }
+}

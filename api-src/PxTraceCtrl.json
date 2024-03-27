@@ -1,0 +1,70 @@
+{
+  "name": {
+    "key": "PxTraceCtrl",
+    "display": "PxTraceCtrl()"
+  },
+  "synopsis": ["PxULong_t PxTraceCtrl (PxTraceCtrl_t cmd, PxArg_t arg);"],
+  "arguments": [
+    {
+      "name": "cmd",
+      "description": "Command to be executed"
+    },
+    {
+      "name": "arg",
+      "description": "Argument for the command"
+    }
+  ],
+  "errCodes": [
+    "PXERR_ACCESS_RIGHT - The calling task does not have the right to control the trace interface",
+    "PXERR_TASK_ILLTASK - Invalid TaskId passed",
+    "PXERR_TRACE_ILLCTRL - `cmd` is illegal or unknown",
+    "PXERR_SERVICE_NOT_CONFIGURED - Service has not been configured into your PXROS"
+  ],
+  "appliesTo": [
+    {
+      "ARM-CMX": ["1.0.0"],
+      "TC23": ["8.2.0"]
+    }
+  ],
+  "description": {
+    "short": "Set or get trace relevant data",
+    "long": [
+      {
+        "type": "PP",
+        "text": "PxTraceCtrl controls the PXROS trace mechanism. There are commands to set or get trace relevant data. The following commands are available:"
+      },
+      {
+        "type": "BL",
+        "text": [
+          "PXTraceSetTraceFunction set the PXROS trace function",
+          "PXTraceStart start PXROS tracing, the original trace state is returned",
+          "PXTraceStop stop PXROS tracing, the original trace state is returned",
+          "PXTraceGetState get the actual PXROS trace state",
+          "PXTraceSetGroupMask set the complete PXROS trace group mask",
+          "PXTraceGetGroupMask get the complete PXROS trace group mask",
+          "PXTraceEnableGroup enables the specified group of services",
+          "PXTraceDisableGroup disables the specified group of services",
+          "PXTraceEnableTask enables the PXROS tracing for the specified task",
+          "PXTraceDisableTask disables the PXROS tracing for the specified task",
+          "PXTraceGetTaskState get the actual trace state of the task (disabled or enabled)"
+        ]
+      }
+    ]
+  },
+  "usage": [
+    "#include \"pxdef.h\"",
+    "",
+    "PxULong_t val = PxTraceCtrl(PXTraceStart, 0);",
+    ""
+  ],
+  "cop": {
+    "BeforeCall": [
+      "`cmd` must be a valid trace control command. (V)\n",
+      "`arg` must be a valid parameter to the appropriate trace control command. (V)"
+    ],
+    "AfterCall": [
+      "The function returns -1 if the trace control command could not be executed. In this case `PxGetError` must be called to check which error has occurred. (F)"
+    ],
+    "BestPractice": ["No restrictions"]
+  }
+}
