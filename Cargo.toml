@@ -1,6 +1,6 @@
 [package]
 name = "pxros-hr"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["HighTec EDV-Systeme GmbH - info@hightec-rt.com"]
 description = "PXROS-HR v8.2.0 tc3xx Evaluation Version"
 repository = "https://github.com/hightec-rt/pxros-hr"

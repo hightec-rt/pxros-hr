@@ -26,9 +26,10 @@ This PXROS-HR Kernel package is intended to be used for evaluation purposes. Com
 
 ## Generated Environment
 
-This package generates an environment file `.env` in the project root directory including environment variables to access PXROS-HR header files and libraries
-
--   PXROS_ROOT_PATH:        Absolute path to the PXROS-HR kernel directory
-
--   PXROS_UTILS:            Absolute path to the PXROS-HR utilities
-
+This package generates constant strings to refer to the absolute paths of the PXROS-HR kernel and PXROS-HR utilities directory
+```
+/// PXROS v8.2.1.eval root/kernel directory.
+pub const TRI_8_2_1_EVAL_KERNEL;
+/// PXROS v8.2.1.eval utils directory.
+pub const TRI_8_2_1_EVAL_UTILS;
+```
